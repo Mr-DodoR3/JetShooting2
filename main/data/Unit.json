@@ -37,17 +37,17 @@
     },
     {
       "id" : "005",
-      "path" : "a02.png",
-      "number" : "A02M1",
+      "path" : "ab2.png",
+      "number" : "AB2M1",
       "name" : "Furai",
       "name_jp" : "風籟"
     },
     {
       "id" : "006",
-      "path" : "f-xx.png",
-      "number" : "f-xx",
-      "name" : "NoData",
-      "name_jp" : "NoData"
+      "path" : "xfs23.png",
+      "number" : "XFS-23",
+      "name" : "BlackPhantom",
+      "name_jp" : "ブラックファントム"
     }
   ]
 }

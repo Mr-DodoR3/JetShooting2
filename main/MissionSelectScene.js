@@ -1,7 +1,6 @@
 class MissionSelectScene extends GameScene {
   constructor () {
     super("missionSelectScene");
-    selectMission = 0;
     this.selecter;
   }
 
@@ -67,7 +66,7 @@ class MissionSelectScene extends GameScene {
     else {
       this.selecter.scaleX = 0;
       this.fade.alpha = 1;
-      next = "title";
+      next = "aircraftSelectScene";
       this.scene.start(next);
     }
   }

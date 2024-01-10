@@ -3,13 +3,13 @@ class GameScene extends Phaser.Scene {
     super(sceneName);
     this.fade;
     this.nextScene = "-1";
-    this.nextSceneDelta = 1;
     this.cursors;
     this.space;
   }
 
   init() {
     this.nextScene = "-1";
+    this.nextSceneDelta = 1;
     this.nextSceneDelta = 1;
   }
 
@@ -22,7 +22,13 @@ class GameScene extends Phaser.Scene {
 
   create() {
     this.fade = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "fade_layer");
-    this.fade.alpha = this.nextSceneDelta;
+    this.fade.alpha = 1;
+    
+    if (DEBUG_MODE) {
+      this.input.on("pointerdown", function(pointer) {
+        console.log(pointer.x + "," + pointer.y)
+      }, this)
+    }
   }
 
   update() {
