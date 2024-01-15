@@ -69,7 +69,7 @@ class TekeoffScene extends GameScene {
       this.cvn.image.setY(this.cvn.image.y + this.cvn.acceleration);
       this.player.image.setY(this.player.image.y -= 8);
       if (this.player.image.y < -100) {
-        this.nextScene = "Scene"
+        this.nextScene = "shootingScene"
       }
     }
 

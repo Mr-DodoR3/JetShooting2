@@ -8,9 +8,11 @@ var selectAircraft = 0;
 var playerData;
 
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.CANVAS,
+  perent: "gameCanvas",
   width: DISPLAY_WIDTH,
   height: DISPLAY_HEIGHT,
+  canvas: document.getElementById("canvas"),
   scene: [ Title, MissionSelectScene, AircraftSelectScene, TekeoffScene, ShootingScene ],
   physics: {
     default: "arcade"

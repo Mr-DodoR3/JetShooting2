@@ -22,6 +22,7 @@ class GameScene extends Phaser.Scene {
 
   create() {
     this.fade = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "fade_layer");
+    this.fade.depth = 999;
     this.fade.alpha = 1;
     
     if (DEBUG_MODE) {
