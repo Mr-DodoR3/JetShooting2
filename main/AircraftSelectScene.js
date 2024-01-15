@@ -7,7 +7,7 @@ class AircraftSelectScene extends GameScene {
     
     this.text_unitName; 
     this.text_specName;
-    this.specBar = new Array(3);
+    this.specBar = new Array(4);
     for (let i = 0; i < this.specBar.length; i++) {
       this.specBar[i] = new Array(10);
     }
@@ -37,13 +37,13 @@ class AircraftSelectScene extends GameScene {
   create() {
     this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "aircraft_select_background");
     this.selecter = this.add.image(96+128, 154+(this.selectAircraft * 32), "select_ui_selecter");
-    this.add.image(96+128, 168+82, "aircraft_select_ui");
+    this.add.image(96+128, 184+82, "aircraft_select_ui");
     this.aircraft = this.add.image(800, 286, "fsb18");
 
     this.text_unitName = this.add.text(440, 156, '', { font: '36px monospace', fill: '#00ff00' });
     this.text_specName = this.add.text(440, 224, '', { font: '24px monospace', fill: '#00ff00' });
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 10; j++) {
         this.specBar[i][j] = this.add.image(496 + j * 16, 236 + i * 50, j < 3 ? "specBar_1" : (j < 7 ? "specBar_2" : "specBar_3"));
         this.specBar[i][j].scaleX = this.specBar[i][j].scaleX * 0.5;
@@ -63,8 +63,8 @@ class AircraftSelectScene extends GameScene {
 
   writeText() {
     this.text_unitName.setText(UNIT_DATA[this.selectAircraft].serial + " " + UNIT_DATA[this.selectAircraft].name);
-    this.text_specName.setText("SPD\n\nDEF\n\nCHG");
-    for (let i = 0; i < 3; i++) {
+    this.text_specName.setText("SPD\n\nDEF\n\nCHG\n\nSTL");
+    for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 10; j++) {
         this.specBar[i][j].setTexture(UNIT_DATA[this.selectAircraft].spec[i] <= j ? "specBar_0" : (j < 3 ? "specBar_1" : (j < 7 ? "specBar_2" : "specBar_3")))
       }
@@ -74,14 +74,15 @@ class AircraftSelectScene extends GameScene {
   contller() {
     if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
       this.selectAircraft--;
-      if (this.selectAircraft < 0) this.selectAircraft = 6;
+      if (this.selectAircraft < 0) this.selectAircraft = 7;
     }
     if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
       this.selectAircraft++;
-      if (this.selectAircraft > 6) this.selectAircraft = 0;
+      if (this.selectAircraft > 7) this.selectAircraft = 0;
     }
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       this.nextScene = this.selectAircraft;
+      selectAircraft = this.selectAircraft;
       // switch (this.selectAircraft) {
       //   case 0:
       //     break;
@@ -108,7 +109,7 @@ class AircraftSelectScene extends GameScene {
     else {
       this.selecter.scaleX = 0;
       this.fade.alpha = 1;
-      next = "shootingScene";
+      next = "tekeoffScene";
       this.scene.start(next);
     }
   }
