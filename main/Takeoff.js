@@ -23,7 +23,7 @@ class TekeoffScene extends GameScene {
   preload() {
     super.preload();
 
-    this.load.image("cvn-96", "assets/images/npc/cvn-96_2.png");
+    // this.load.image("cvn-96", "assets/images/npc/cvn-96_2.png");
   }
 
   create() {

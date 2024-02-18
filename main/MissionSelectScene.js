@@ -12,9 +12,9 @@ class MissionSelectScene extends GameScene {
   preload() {
     super.preload();
 
-    this.load.image("mission_select_background", "assets/images/mission_select.png");
-    this.load.image("select_ui", "assets/images/mission_select_ui.png");
-    this.load.image("select_ui_selecter", "assets/images/ui_selecter.png");
+    // this.load.image("mission_select_background", "assets/images/mission_select.png");
+    // this.load.image("select_ui", "assets/images/mission_select_ui.png");
+    // this.load.image("select_ui_selecter", "assets/images/ui_selecter.png");
   }
 
   create() {

@@ -16,6 +16,9 @@ const config = {
   scene: [ Title, MissionSelectScene, AircraftSelectScene, TekeoffScene, ShootingScene ],
   physics: {
     default: "arcade"
+  },
+  arcade: {
+    debug: true
   }
 }
 

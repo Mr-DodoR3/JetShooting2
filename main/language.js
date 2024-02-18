@@ -1,0 +1,3 @@
+const language_jp = [
+  
+]

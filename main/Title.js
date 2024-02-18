@@ -13,10 +13,42 @@ class Title extends GameScene {
   preload() {
     super.preload();
 
+    // Title
     this.load.image("title_ui_selecter", "assets/images/title_ui_selecter.png");
     this.load.image("title", "assets/images/title.png");
     this.load.image("title_ui", "assets/images/title_ui.png");
     this.load.image("fade_layer", "assets/images/fade_layer.png");
+    
+    // MissionSelect
+    this.load.image("mission_select_background", "assets/images/mission_select.png");
+    this.load.image("select_ui", "assets/images/mission_select_ui.png");
+    this.load.image("select_ui_selecter", "assets/images/ui_selecter.png");
+
+    // aircraftselect
+    this.load.image("aircraft_select_background", "assets/images/aircraft_select_select.png");
+    this.load.image("aircraft_select_ui", "assets/images/aircraft_select_ui.png");
+    
+    let spec_temp = ["n", "b", "g", "r"];
+    for (let i = 0; i < spec_temp.length; i++) {
+      this.load.image("specBar_" + i, "assets/images/specBar_" + spec_temp[i] +".png");
+    }
+    
+    for (let i = 0; i < UNIT_DATA.length; i++) {
+      this.load.image("unitSelect_" + UNIT_DATA[i].tag, "assets/images/uiButton/unitSelect_" + UNIT_DATA[i].tag +".png");
+      this.load.image(UNIT_DATA[i].tag, "assets/images/player/" + UNIT_DATA[i].tag +".png");
+    }
+
+    let unittype_temp = ["fighter", "attacker", "multirole", "interceptor", "bomber", "trainer"];
+    for (let i = 0; i < unittype_temp.length; i++) {
+      this.load.image("unittype_" + unittype_temp[i], "assets/images/unittype_" + unittype_temp[i] + ".png");
+    }
+    
+    for (let i = 0; i < SKIL_DATA.length; i++) {
+      this.load.image(SKIL_DATA[i].tag, "assets/images/skilIcon/" + SKIL_DATA[i].tag + ".png");
+    }
+
+    // takeoff
+    this.load.image("cvn-96", "assets/images/npc/cvn-96_2.png");
   }
 
   create() {
@@ -43,7 +75,8 @@ class Title extends GameScene {
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       switch (this.mode) {
         case 0:
-          this.nextScene = "missionSelectScene";
+          // this.nextScene = "missionSelectScene";
+          this.nextScene = "shootingScene";
           break;
         case 1:
           break;
