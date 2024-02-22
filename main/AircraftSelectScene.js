@@ -47,7 +47,7 @@ class AircraftSelectScene extends GameScene {
     this.unittype = this.add.image(539, 151, "unittype_multirole");
     
     for (let i = 0; i < SKIL_DATA.length; i++) {
-      this.skilIcon[i] = this.add.image(458 + i * 36, 380, SKIL_DATA[i].tag);
+      this.skilIcon[i] = this.add.image(458 + (i > 11 ? i - 12 : i) * 36, 380 + (i > 11 ? 36 : 0), SKIL_DATA[i].tag);
     }
 
     this.text_unitName = this.add.text(440, 172, '', { font: '36px monospace', fill: '#00ff00' });

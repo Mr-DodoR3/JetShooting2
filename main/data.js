@@ -15,6 +15,11 @@ const SKIL_DATA = [
     explanation : ""
   },
   {
+    tag : "vtol",
+    name_jp : "VTOL",
+    explanation : ""
+  },
+  {
     tag : "vt",
     name_jp : "推力偏向ノズル",
     explanation : ""
@@ -32,6 +37,11 @@ const SKIL_DATA = [
   {
     tag : "maintain",
     name_jp : "現地整備",
+    explanation : ""
+  },
+  {
+    tag : "flare",
+    name_jp : "追加フレアディスペンサ",
     explanation : ""
   },
   {
@@ -59,12 +69,17 @@ const SKIL_DATA = [
     name_jp : "COIN機",
     explanation : ""
   },
+  {
+    tag : "ucav",
+    name_jp : "チーミング",
+    explanation : ""
+  }
 ];
 
 const WEAPON_DATA = [
   {
-    tag : "",
-    serial : "",
+    tag : "m601",
+    serial : "M601",
     name : "",
     name_jp : "",
     explanation : ""
@@ -81,7 +96,7 @@ const UNIT_DATA = [
     type : "multirole",
     spec : [5, 5, 5],
     skil : ["cft"],
-    weapon : "",
+    weapon : "m601",
     specail_weapon : ""
   },
   {
@@ -102,7 +117,7 @@ const UNIT_DATA = [
     explanation : "FS-15制空戦闘機を元に開発された生存性の高い爆撃機です。",
     type : "bomber",
     spec : [3, 10, 6],
-    skil : ["cft", "wso"]
+    skil : ["cft", "flare", "wso"]
   },
   {
     tag : "xfs23",
@@ -121,8 +136,8 @@ const UNIT_DATA = [
     name_jp : "ヴォルク(ロシア語で狼)",
     explanation : "対地攻撃力が優秀な攻撃機です。",
     type : "attacker",
-    spec : [1, 8, 8],
-    skil : ["armor", "maintain"]
+    spec : [2, 7, 7],
+    skil : ["armor", "maintain", "flare"]
   },
   {
     tag : "sy30sm",
@@ -131,18 +146,28 @@ const UNIT_DATA = [
     name_jp : "バーバチカ(ロシア語で蝶)",
     explanation : "高水準の運動性能と耐久性能を持つ強力な戦闘機です。",
     type : "fighter",
-    spec : [10, 7, 4],
+    spec : [10, 5, 4],
     skil : ["supercruise", "vt", "irst", "wso"]
+  },
+  {
+    tag : "va8",
+    serial : "VA-8GR",
+    name : "SuperKestrel",
+    name_jp : "スーパーケストレル",
+    explanation : "珍しい垂直離着陸能力を持つ攻撃機です。",
+    type : "attacker",
+    spec : [1, 4, 10],
+    skil : ["vtol", "armor", "maintain", "flare", "irst"]
   },
   {
     tag : "md4000",
     serial : "MD.4000M",
     name : "Azur",
     name_jp : "アズュール(フランス語で紺碧)",
-    explanation : "軽量で運動性能特化の汎用戦闘機です。",
+    explanation : "特徴的な装備はないですが、総合スペックの高い汎用戦闘機です。",
     type : "multirole",
-    spec : [8, 4, 4],
-    skil : ["supercruise", "maintain"]
+    spec : [8, 6, 6],
+    skil : []
   },
   {
     tag : "al159",
@@ -173,6 +198,16 @@ const UNIT_DATA = [
     type : "interceptor",
     spec : [3, 8, 4],
     skil : ["cft", "irst", "stealth", "wso"]
+  },
+  {// TFX
+    tag : "tf24",
+    serial : "MMU-TF-24",
+    name : "Kral",
+    name_jp : "クラル(トルコ語で王)",
+    explanation : "無人機との連携を前提に開発された試作戦闘機です。",
+    type : "multirole",
+    spec : [5, 5, 4],
+    skil : ["stealth", "ucav"]
   }
 ];
 
@@ -186,5 +221,10 @@ const ENEMY_DATA = [
     tag : "yig-21",
     serial : "YiG-21",
     name_jp : "ストレーラ(ロシア語で矢)"
+  },
+  {
+    tag : "ea314",
+    serial : "E-A314",
+    name_jp : "スーパーパルダウ(ポルトガル語でスーパー雀)"
   }
 ];

@@ -20,8 +20,14 @@ class ShootingScene extends GameScene {
         else if (this.player.speed.y > 0) this.player.deg = 90;
         else if (this.player.speed.x < 0) this.player.deg = 180;
         else if (this.player.speed.y < 0) this.player.deg = 270;
-        this.player.pos.x += this.player.speed.x * Math.abs(Math.cos(this.rad(this.player.deg)));
-        this.player.pos.y -= this.player.speed.y * Math.abs(Math.sin(this.rad(this.player.deg)));
+        let nextPosX = this.player.pos.x + this.player.speed.x * Math.abs(Math.cos(this.rad(this.player.deg)));
+        let nextPosY = this.player.pos.y - this.player.speed.y * Math.abs(Math.sin(this.rad(this.player.deg)));
+        if (nextPosX < 192) nextPosX = 192;
+        if (nextPosX > 768) nextPosX = 768;
+        if (nextPosY < 32) nextPosY = 32;
+        if (nextPosY > 608) nextPosY = 608;
+        this.player.pos.x = nextPosX;
+        this.player.pos.y = nextPosY;
         this.player.image.setX(this.player.pos.x);
         this.player.image.setY(this.player.pos.y);
       }
@@ -112,6 +118,7 @@ class ShootingScene extends GameScene {
         this.player.speed.y -= 0.5;
       }
     };
+    
     if (this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.right.isDown || this.cursors.left.isDown) {
       this.player.move = true;
 
@@ -127,7 +134,16 @@ class ShootingScene extends GameScene {
     else {
       setPlayerMove(this.player.deg, 0, 0);
     }
-    if (this.space.isDown) {
+
+    if (this.key.z.isDown) {
+      
+    }
+
+    if (this.key.x.isDown) {
+      
+    }
+
+    if (this.key.c.isDown) {
       
     }
   }

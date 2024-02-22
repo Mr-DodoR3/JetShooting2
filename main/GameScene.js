@@ -5,6 +5,7 @@ class GameScene extends Phaser.Scene {
     this.nextScene = "-1";
     this.cursors;
     this.space;
+    this.key;
   }
 
   init() {
@@ -16,6 +17,11 @@ class GameScene extends Phaser.Scene {
   preload() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.key = {
+      z: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z),
+      x: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X),
+      c: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
+    };
     
     this.load.image("fade_layer", "assets/images/fade_layer.png");
   }
