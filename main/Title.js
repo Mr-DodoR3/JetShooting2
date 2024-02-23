@@ -49,6 +49,11 @@ class Title extends GameScene {
 
     // takeoff
     this.load.image("cvn-96", "assets/images/npc/cvn-96_2.png");
+
+    // GameScene
+    for (let i = 0; i < WEAPON_DATA.length; i++) {
+      this.load.image(WEAPON_DATA[i].tag, "assets/images/bullet/" + WEAPON_DATA[i].tag + ".png");
+    }
   }
 
   create() {

@@ -76,6 +76,7 @@ const SKIL_DATA = [
   }
 ];
 
+// spec : [Speed, Reload, Power, Energy];
 const WEAPON_DATA = [
   {
     tag : "m601",
@@ -86,6 +87,7 @@ const WEAPON_DATA = [
   }
 ];
 
+// spec : [Speed, Defense, Charge];
 const UNIT_DATA = [
   {
     tag : "fsb18",
@@ -206,7 +208,7 @@ const UNIT_DATA = [
     name_jp : "クラル(トルコ語で王)",
     explanation : "無人機との連携を前提に開発された試作戦闘機です。",
     type : "multirole",
-    spec : [5, 5, 4],
+    spec : [6, 6, 3],
     skil : ["stealth", "ucav"]
   }
 ];
