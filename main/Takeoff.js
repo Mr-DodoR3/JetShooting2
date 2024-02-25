@@ -29,7 +29,7 @@ class TekeoffScene extends GameScene {
   create() {
     super.create();
 
-    this.cvn.image = this.add.image(this.cvn.relativeX, this.cvn.relativeY - 100, "cvn-96");
+    this.cvn.image = this.add.image(this.cvn.relativeX, this.cvn.relativeY - 100, "cvn-96_2");
     this.cvn.image.scaleX = this.cvn.image.scaleX * 0.5;
     this.cvn.image.scaleY = this.cvn.image.scaleY * 0.5;
 

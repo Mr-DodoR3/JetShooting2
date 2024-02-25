@@ -48,12 +48,21 @@ class Title extends GameScene {
     }
 
     // takeoff
-    this.load.image("cvn-96", "assets/images/npc/cvn-96_2.png");
+    this.load.image("cvn-96_2", "assets/images/npc/cvn-96_2.png");
 
     // GameScene
     for (let i = 0; i < WEAPON_DATA.length; i++) {
       this.load.image(WEAPON_DATA[i].tag, "assets/images/bullet/" + WEAPON_DATA[i].tag + ".png");
     }
+    
+    for (let i = 0; i < ENEMY_DATA.length; i++) {
+      this.load.image(ENEMY_DATA[i].tag, "assets/images/npc_unit/" + ENEMY_DATA[i].tag + ".png");
+    }
+    
+    // for (let i = 0; i < 10; i++) {
+    //   this.load.image("exp_" + i, "assets/images/explosion/exp_" + i + ".png");
+    // }
+    this.load.spritesheet("explosion", "assets/images/explosion/explosion.png", { frameWidth: 64, frameHeight: 64 });
   }
 
   create() {

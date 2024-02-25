@@ -65,21 +65,53 @@ class ShootingScene extends GameScene {
       hp_bar: new Phaser.Geom.Rectangle(905, 120, 30, 450)
     };
     
-    this.playerGroup = this.add.group({
+    this.playerGroup = this.physics.add.group({
       classType: PlayerObj,
       maxSize: 1,
       runChildUpdate: true
     });
     this.player = this.playerGroup.get();
     this.player.create(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 + 200, UNIT_DATA[selectAircraft].tag);
-    this.player.scaleX = this.player.scaleX * 0.5;
-    this.player.scaleY = this.player.scaleY * 0.5;
     
-    this.bullets = this.add.group({
+    this.bullets = this.physics.add.group({
       classType: BulletObj,
       runChildUpdate: true
     });
+
+    this.enemys = this.physics.add.group({
+      classType: EnemyObj,
+      runChildUpdate: true
+    });
+    this.enemy = this.enemys.get();
+    this.enemy.create(DISPLAY_WIDTH / 2, 60, "iac1");
+
+    this.explosions = this.physics.add.group({
+      classType: ExplosionObj,
+      runChildUpdate: true
+    });
+    this.anims.create({
+        key: "explosion_start",
+        frames: this.anims.generateFrameNumbers("explosion", { start: 0, end: 10 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.physics.add.overlap(this.player, this.enemys, this.clash, null, this);
+    this.physics.add.overlap(this.bullets, this.enemys, this.hit, null, this);
   };
+
+  clash() {
+    console.log("衝突");
+  }
+
+  hit(bullet, enemy) {
+    bullet.hit();
+    let exp = enemy.damage(1);
+    if (!(exp == -1)) {
+      this.explosion = this.explosions.get();
+      this.explosion.create(exp.x, exp.y);
+    }
+  }
 
   disp_ui() {
     this.graphics.clear();
@@ -158,9 +190,10 @@ class ShootingScene extends GameScene {
       if (this.player.reload == 0) {
         const bullet = this.bullets.get();
         if (bullet) {
-          bullet.fire(this.player.x, this.player.y, "m601");
+          bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, "m601");
         }
         this.player.reload++;
+        this.player.weponVar_m601 = this.player.weponVar_m601 == 0 ? 1 : 0;
       }
     }
 

@@ -15,10 +15,10 @@ const config = {
   canvas: document.getElementById("canvas"),
   scene: [ Title, MissionSelectScene, AircraftSelectScene, TekeoffScene, ShootingScene ],
   physics: {
-    default: "arcade"
-  },
-  arcade: {
-    debug: true
+    default: "arcade",
+    arcade: {
+      debug: true
+    }
   }
 }
 

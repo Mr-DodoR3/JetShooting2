@@ -7,7 +7,13 @@ class BulletObj extends Phaser.GameObjects.Image {
     this.del = false;
   }
 
-  fire (x, y, tag) {
+  colliderSet () {
+    this.body.offset.x = 28;
+    this.body.offset.y = 20;
+    this.body.setSize(8, 24, false);
+  }
+
+  create (x, y, tag) {
     this.setActive(true);
     this.setVisible(true);
 
@@ -17,6 +23,11 @@ class BulletObj extends Phaser.GameObjects.Image {
     //   if (tag == WEAPON_DATA[i].tag) this.type = i;
     // }
     this.setTexture(tag);
+    this.colliderSet();
+  }
+
+  hit() {
+    this.destroy();
   }
 
   update () {

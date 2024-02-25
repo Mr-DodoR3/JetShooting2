@@ -217,16 +217,25 @@ const ENEMY_DATA = [
   {
     tag : "iac1",
     serial : "IA-C1",
-    name_jp : "ネッツ(ヘブライ語で鷹)"
+    name_jp : "ネッツ(ヘブライ語で鷹)",
+    attribute : "air"
   },
   {
     tag : "yig-21",
     serial : "YiG-21",
-    name_jp : "ストレーラ(ロシア語で矢)"
+    name_jp : "ストレーラ(ロシア語で矢)",
+    attribute : "air"
   },
   {
     tag : "ea314",
     serial : "E-A314",
-    name_jp : "スーパーパルダウ(ポルトガル語でスーパー雀)"
+    name_jp : "スーパーパルダウ(ポルトガル語でスーパー雀)",
+    attribute : "air"
+  },
+  {
+    tag : "fs16",
+    serial : "FS-16CG",
+    name_jp : "マスタングⅡ",
+    attribute : "air"
   }
 ];

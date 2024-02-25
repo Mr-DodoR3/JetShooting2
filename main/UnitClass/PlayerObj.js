@@ -6,6 +6,17 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.deg = 0;
     this.speed = { x: 0, y: 0 };
     this.reload = 0;
+    this.tag = "";
+
+    this.weponVar_m601 = 0;
+
+    this.setDepth(50);
+  }
+
+  colliderSet () {
+    this.body.offset.x = 48;
+    this.body.offset.y = 48;
+    this.body.setSize(32, 32, false);
   }
 
   create (x, y, tag) {
@@ -13,6 +24,9 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.setY(y);
     this.tag = tag;
     this.setTexture(tag);
+    this.scaleX = this.scaleX * 0.5;
+    this.scaleY = this.scaleY * 0.5;
+    this.colliderSet();
   }
 
   update () {
@@ -33,7 +47,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.setX(nextPosX);
     this.setY(nextPosY);
     
-    if (this.reload > 10) this.reload = 0;
+    if (this.reload > 4) this.reload = 0;
     else if (this.reload > 0) this.reload++;
   }
 
