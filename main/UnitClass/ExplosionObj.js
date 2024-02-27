@@ -1,11 +1,11 @@
 class ExplosionObj extends Phaser.GameObjects.Image {
-  constructor (scene) {
+  constructor(scene) {
     super(scene, 0, 0, "explosion");
     this.life = 0;
     this.count = 0;
   }
 
-  create (x, y) {
+  create(x, y) {
     this.setActive(true);
     this.setVisible(true);
 
@@ -13,7 +13,7 @@ class ExplosionObj extends Phaser.GameObjects.Image {
     this.setY(y);
   }
 
-  update () {
+  update() {
     this.count++;
     if (this.count > 2) {
       if (this.life < 10) {

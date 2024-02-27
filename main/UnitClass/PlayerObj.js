@@ -13,13 +13,13 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.setDepth(50);
   }
 
-  colliderSet () {
+  colliderSet() {
     this.body.offset.x = 48;
     this.body.offset.y = 48;
     this.body.setSize(32, 32, false);
   }
 
-  create (x, y, tag) {
+  create(x, y, tag) {
     this.setX(x);
     this.setY(y);
     this.tag = tag;
@@ -29,7 +29,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.colliderSet();
   }
 
-  update () {
+  update() {
     if (this.speed.x > 0 && this.speed.y > 0) this.deg = 45;
     else if (this.speed.x < 0 && this.speed.y > 0) this.deg = 135;
     else if (this.speed.x < 0 && this.speed.y < 0) this.deg = 225;
@@ -51,7 +51,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
     else if (this.reload > 0) this.reload++;
   }
 
-  rad (deg) {
+  rad(deg) {
     return deg * (Math.PI / 180.0);
   }
 }

@@ -84,6 +84,13 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : ""
+  },
+  {
+    tag : "e_m601",
+    serial : "M601",
+    name : "",
+    name_jp : "",
+    explanation : ""
   }
 ];
 
@@ -221,7 +228,7 @@ const ENEMY_DATA = [
     attribute : "air"
   },
   {
-    tag : "yig-21",
+    tag : "yig21",
     serial : "YiG-21",
     name_jp : "ストレーラ(ロシア語で矢)",
     attribute : "air"
