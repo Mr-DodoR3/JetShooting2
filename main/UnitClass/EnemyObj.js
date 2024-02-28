@@ -73,6 +73,21 @@ class EnemyObj extends Phaser.GameObjects.Image {
           this.destroy();
         }
         break;
+      case 1:
+        if (this.life_time == 0) {
+          this.setX(200);
+          this.setY(-32);
+          this.deg = 285;
+        }
+        else if (this.y >= -32) {
+          this.setX(this.xForward(2.5));
+          this.setY(this.yForward(2.5));
+          this.deg += 0.5;
+        }
+        else {
+          this.destroy();
+        }
+        break;
     }
   }
 

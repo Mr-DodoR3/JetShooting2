@@ -1,10 +1,15 @@
 class ShootingScene extends GameScene {
   constructor () {
     super("shootingScene");
+    this.enemyDebugMode = false;
 
     this.graphics;
     this.rect;
     
+    this.enemyProgress = 0;
+    this.enemyCount = 0;
+    this.enemyDelta = 0;
+    this.enemySleep = 0;
     // https://labs.phaser.io/edit.html?src=src/pools/multi%20pools.js&v=3.80.0
   }
 
@@ -31,14 +36,6 @@ class ShootingScene extends GameScene {
       hp_bar: new Phaser.Geom.Rectangle(905, 120, 30, 450)
     };
     this.graphics.setDepth(100);
-    // this.rect.left_side.setDepth(100);
-    // this.rect.right_side.setDepth(100);
-    // this.rect.ab_bar_back.setDepth(101);
-    // this.rect.en_bar_back.setDepth(101);
-    // this.rect.hp_bar_back.setDepth(101);
-    // this.rect.ab_bar.setDepth(102);
-    // this.rect.en_bar.setDepth(102);
-    // this.rect.hp_bar.setDepth(102);
     
     this.playerGroup = this.physics.add.group({
       classType: PlayerObj,
@@ -57,8 +54,10 @@ class ShootingScene extends GameScene {
       classType: EnemyObj,
       runChildUpdate: true
     });
-    this.enemy = this.enemys.get();
-    this.enemy.create("iac1", 0);
+    if (this.enemyDebugMode) {
+      this.enemy = this.enemys.get();
+      this.enemy.create("iac1", 0);
+    }
     // this.enemy.create("iac1", DISPLAY_WIDTH / 2, 60);
 
     this.enemyBullets = this.physics.add.group({
@@ -116,9 +115,44 @@ class ShootingScene extends GameScene {
     this.graphics.fillRectShape(this.rect.hp_bar);
   }
 
+  enemyPrefabFirst() {
+    this.enemyProgress = 0;
+    this.enemyCount = MISSION_DATA[0][0].pieces;
+    this.enemyDelta = 0;
+  }
+
+  enemyPrefab() {
+    if (MISSION_DATA[0].length > this.enemyProgress) {
+      if (this.enemyCount >= MISSION_DATA[0][this.enemyProgress].pieces) {
+        this.enemySleep++;
+        if (this.enemySleep > MISSION_DATA[0][this.enemyProgress].sleep) {
+          this.enemyProgress++;
+          this.enemyDelta = 0;
+          this.enemySleep = 0;
+          this.enemyCount = 0;
+        }
+      }
+      else if (this.enemyDelta > MISSION_DATA[0][this.enemyProgress].interval) {
+        const enemy = this.enemys.get();
+        if (enemy) {
+          enemy.create(MISSION_DATA[0][this.enemyProgress].tag, MISSION_DATA[0][this.enemyProgress].action_type);
+        }
+        this.enemyDelta = 0;
+        this.enemyCount++;
+      }
+      else {
+        this.enemyDelta++;
+      }
+    }
+    else {
+      // ボス
+    }
+  }
+
   update() {
     // this.player.action();
     this.disp_ui();
+    if (!this.enemyDebugMode) this.enemyPrefab();
     this.enemys.getChildren().forEach(e => {
       const shot_type = e.shot();
       if (!(shot_type == "none")) {

@@ -1,3 +1,14 @@
+const MISSION_DATA = [
+  [
+    // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔
+    { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
+    { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
+    { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 90, repletion : "" },
+    { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 180, repletion : "" }
+  ]
+  
+]
+
 const SKIL_DATA = [
   {
     tag : "cft",
