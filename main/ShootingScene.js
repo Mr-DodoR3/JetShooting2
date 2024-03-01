@@ -11,6 +11,11 @@ class ShootingScene extends GameScene {
     this.enemyDelta = 0;
     this.enemySleep = 0;
     // https://labs.phaser.io/edit.html?src=src/pools/multi%20pools.js&v=3.80.0
+    
+    this.bg_1;
+    this.bg_2;
+
+    this.ab_bar_alpha = 0.0;
   }
 
   init() {
@@ -23,6 +28,12 @@ class ShootingScene extends GameScene {
 
   create() {
     super.create();
+    this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
+    this.bg_1.scaleX = this.bg_1.scaleX * 2;
+    this.bg_1.scaleY = this.bg_1.scaleY * 2;
+    this.bg_2 = this.add.image(DISPLAY_WIDTH / 2, -DISPLAY_HEIGHT / 2, "background_sae");
+    this.bg_2.scaleX = this.bg_2.scaleX * 2;
+    this.bg_2.scaleY = this.bg_2.scaleY * 2;
 
     this.graphics = this.add.graphics({ fillStyle: { color: 0x333333 }, lineStyle: { width: 2, color: 0x000000 } });
     this.rect = {
@@ -44,6 +55,10 @@ class ShootingScene extends GameScene {
     });
     this.player = this.playerGroup.get();
     this.player.create(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 + 200, UNIT_DATA[selectAircraft].tag);
+    this.ab_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
+    this.ab_1.scaleX = this.ab_1.scaleX * 0.5;
+    this.ab_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
+    this.ab_2.scaleX = this.ab_2.scaleX * 0.5;
     
     this.bullets = this.physics.add.group({
       classType: BulletObj,
@@ -56,9 +71,10 @@ class ShootingScene extends GameScene {
     });
     if (this.enemyDebugMode) {
       this.enemy = this.enemys.get();
-      this.enemy.create("iac1", 0);
+      // this.enemy.create("yig21", 3);
+      this.enemy.create("yig21", 4);
+      // this.enemy.create("iac1", -1);
     }
-    // this.enemy.create("iac1", DISPLAY_WIDTH / 2, 60);
 
     this.enemyBullets = this.physics.add.group({
       classType: BulletObj,
@@ -77,20 +93,41 @@ class ShootingScene extends GameScene {
     });
 
     this.physics.add.overlap(this.player, this.enemys, this.clash, null, this);
+    this.physics.add.overlap(this.player, this.enemyBullets, this.hit_player, null, this);
     this.physics.add.overlap(this.bullets, this.enemys, this.hit, null, this);
   };
 
   clash() {
-    console.log("衝突");
+    
+  }
+
+  hit_player(player, enemyBullet) {
+    enemyBullet.hit();
+    player.hp -= 50;
   }
 
   hit(bullet, enemy) {
     bullet.hit();
-    let returnData = enemy.damage(1);
+    let returnData = enemy.damage(2);
     if (!(returnData == -1)) {
       this.explosion = this.explosions.get();
       this.explosion.create(returnData.x, returnData.y);
     }
+  }
+
+  background_disp() {
+    // if (this.bg_1.y > DISPLAY_HEIGHT * 1.5) {
+    //   this.bg_1.y = -DISPLAY_HEIGHT / 2;
+    // }
+    // else {
+    //   this.bg_1.y += 5;
+    // }
+    // if (this.bg_2.y > DISPLAY_HEIGHT * 1.5) {
+    //   this.bg_2.y = -DISPLAY_HEIGHT / 2;
+    // }
+    // else {
+    //   this.bg_2.y += 5;
+    // }
   }
 
   disp_ui() {
@@ -101,14 +138,26 @@ class ShootingScene extends GameScene {
     this.graphics.fillStyle(0x000000);
     this.graphics.fillRectShape(this.rect.ab_bar_back);
     this.graphics.strokeRectShape(this.rect.ab_bar_back);
+
+    const en_bar_down = Math.abs(450 * (this.player.en / 1000) - 450);
+    this.rect.en_bar.height = 450 - en_bar_down;
+    this.rect.en_bar.y = 120 + en_bar_down;
     this.graphics.fillRectShape(this.rect.en_bar_back);
     this.graphics.strokeRectShape(this.rect.en_bar_back);
+
+    const hp_bar_down = Math.abs(450 * (this.player.hp / 1000) - 450);
+    this.rect.hp_bar.height = 450 - hp_bar_down;
+    this.rect.hp_bar.y = 120 + hp_bar_down;
     this.graphics.fillRectShape(this.rect.hp_bar_back);
     this.graphics.strokeRectShape(this.rect.hp_bar_back);
-    this.graphics.fillStyle(0xff6600);
+    
+    this.ab_bar_alpha -= 0.02;
+    if (this.ab_bar_alpha < 0) this.ab_bar_alpha = 1.0;
+    this.graphics.fillStyle(255, 102 + this.ab_bar_alpha * 153, 0 + this.ab_bar_alpha * 255);
     for (let i = 0; i < this.rect.ab_bar.length; i++) {
       this.graphics.fillRectShape(this.rect.ab_bar[i]);
     }
+
     this.graphics.fillStyle(0xffff00);
     this.graphics.fillRectShape(this.rect.en_bar);
     this.graphics.fillStyle(0x00ff00);
@@ -151,7 +200,14 @@ class ShootingScene extends GameScene {
 
   update() {
     // this.player.action();
+    this.background_disp();
     this.disp_ui();
+
+    this.ab_1.setX(this.player.x - 2);
+    this.ab_1.setY(this.player.y + 45);
+    this.ab_2.setX(this.player.x + 2);
+    this.ab_2.setY(this.player.y + 45);
+
     if (!this.enemyDebugMode) this.enemyPrefab();
     this.enemys.getChildren().forEach(e => {
       const shot_type = e.shot();
@@ -210,8 +266,9 @@ class ShootingScene extends GameScene {
       setPlayerMove(this.player.deg, 0, 0);
     }
 
-    if (this.key.z.isDown) {
+    if (this.key.z.isDown && this.player.en >= 30) {
       if (this.player.reload == 0) {
+        this.player.en -= 30;
         const bullet = this.bullets.get();
         if (bullet) {
           bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, "m601");

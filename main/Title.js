@@ -50,6 +50,10 @@ class Title extends GameScene {
     // takeoff
     this.load.image("cvn-96_2", "assets/images/npc/cvn-96_2.png");
 
+    this.load.image("ab", "assets/images/augmentor.png");
+
+    this.load.image("background_sae", "assets/images/background/" + "sae.png");
+
     // GameScene
     for (let i = 0; i < WEAPON_DATA.length; i++) {
       this.load.image(WEAPON_DATA[i].tag, "assets/images/bullet/" + WEAPON_DATA[i].tag + ".png");

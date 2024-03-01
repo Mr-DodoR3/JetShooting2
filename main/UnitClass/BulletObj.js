@@ -10,9 +10,9 @@ class BulletObj extends Phaser.GameObjects.Image {
   }
 
   colliderSet() {
-    this.body.offset.x = 28;
+    this.body.offset.x = 20;
     this.body.offset.y = 20;
-    this.body.setSize(8, 24, false);
+    this.body.setSize(24, 24, false);
   }
 
   create(x, y, d, tag) {

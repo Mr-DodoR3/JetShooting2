@@ -1,6 +1,8 @@
 class PlayerObj extends Phaser.GameObjects.Image {
   constructor (scene) {
     super(scene, 0, 0, "");
+    this.hp;
+    this.en;
 
     this.move = false;
     this.deg = 0;
@@ -20,6 +22,9 @@ class PlayerObj extends Phaser.GameObjects.Image {
   }
 
   create(x, y, tag) {
+    this.hp = 1000;
+    this.en = 1000;
+
     this.setX(x);
     this.setY(y);
     this.tag = tag;
@@ -49,6 +54,10 @@ class PlayerObj extends Phaser.GameObjects.Image {
     
     if (this.reload > 4) this.reload = 0;
     else if (this.reload > 0) this.reload++;
+
+    if (this.en < 1000) {
+      this.en++;
+    }
   }
 
   rad(deg) {

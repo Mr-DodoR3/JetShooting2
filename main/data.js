@@ -4,7 +4,11 @@ const MISSION_DATA = [
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 90, repletion : "" },
-    { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 180, repletion : "" }
+    { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 180, repletion : "" },
+    { tag : "yig21", pieces : 1, action_type : 3, interval : 0, sleep : 0, repletion : "" },
+    { tag : "yig21", pieces : 1, action_type : 4, interval : 0, sleep : 90, repletion : "" },
+    { tag : "yig21", pieces : 1, action_type : 3, interval : 0, sleep : 0, repletion : "" },
+    { tag : "yig21", pieces : 1, action_type : 4, interval : 0, sleep : 180, repletion : "" }
   ]
   
 ]
@@ -117,7 +121,8 @@ const UNIT_DATA = [
     spec : [5, 5, 5],
     skil : ["cft"],
     weapon : "m601",
-    specail_weapon : ""
+    specail_weapon : "",
+    engine_pos : [2, 45]
   },
   {
     tag : "fi14",

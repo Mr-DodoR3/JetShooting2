@@ -16,9 +16,9 @@ class EnemyObj extends Phaser.GameObjects.Image {
   }
 
   colliderSet() {
-    this.body.offset.x = 48;
-    this.body.offset.y = 48;
-    this.body.setSize(32, 32, false);
+    this.body.offset.x = 40;
+    this.body.offset.y = 40;
+    this.body.setSize(48, 48, false);
   }
 
   createSetup(tag) {
@@ -86,6 +86,66 @@ class EnemyObj extends Phaser.GameObjects.Image {
         }
         else {
           this.destroy();
+        }
+        break;
+      case 2:
+        if (this.life_time == 0) {
+          this.setX(750);
+          this.setY(-32);
+          this.deg = 270;
+        }
+        else if (this.y < 672 && this.x > 128) {
+          this.setX(this.xForward(2.5));
+          this.setY(this.yForward(2.5));
+          this.deg -= 0.2;
+        }
+        else {
+          this.destroy();
+        }
+        break;
+      case 3:
+        if (this.life_time == 0) {
+          this.setX(380);
+          this.setY(-32);
+          this.deg = 270;
+        }
+        else if (this.life_time < 100) {
+          this.setX(this.xForward(2.5));
+          this.setY(this.yForward(2.5));
+        }
+        else if (this.x > 128) {
+          this.setX(this.xForward(2));
+          this.setY(this.yForward(2));
+          this.deg -= 0.5;
+        }
+        else {
+          this.destroy();
+        }
+        break;
+      case 4:
+        if (this.life_time == 0) {
+          this.setX(580);
+          this.setY(-32);
+          this.deg = 270;
+        }
+        else if (this.life_time < 100) {
+          this.setX(this.xForward(2.5));
+          this.setY(this.yForward(2.5));
+        }
+        else if (this.x < 832) {
+          this.setX(this.xForward(2));
+          this.setY(this.yForward(2));
+          this.deg += 0.5;
+        }
+        else {
+          this.destroy();
+        }
+        break;
+      case -1:
+        if (this.life_time == 0) {
+          this.setX(480);
+          this.setY(300);
+          this.deg = 90;
         }
         break;
     }
