@@ -1,8 +1,17 @@
 class PlayerObj extends Phaser.GameObjects.Image {
   constructor (scene) {
     super(scene, 0, 0, "");
+    this.life = true;
     this.hp;
     this.en;
+    this.ab;
+
+    this.maxSpeed;
+    this.defence;
+    this.charge;
+    this.wepon_1;
+    this.wepon_2;
+    this.engine_pos = [0, 0];
 
     this.move = false;
     this.deg = 0;
@@ -11,6 +20,11 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.tag = "";
 
     this.weponVar_m601 = 0;
+    this.augmentor = 0;
+    this.augmentor_overheat = 0;
+    this.charge_counter = 0;
+    this.flare = 3;
+    this.flare_overheat = 0;
 
     this.setDepth(50);
   }
@@ -24,6 +38,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
   create(x, y, tag) {
     this.hp = 1000;
     this.en = 1000;
+    this.ab = 0;
 
     this.setX(x);
     this.setY(y);
@@ -32,9 +47,67 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.scaleX = this.scaleX * 0.5;
     this.scaleY = this.scaleY * 0.5;
     this.colliderSet();
+    this.flare = 3;
+
+    for (let i = 0; i < UNIT_DATA.length; i++) {
+      if (tag == UNIT_DATA[i].tag) {
+        this.maxSpeed = UNIT_DATA[i].spec[0];
+        this.defence = UNIT_DATA[i].spec[1];
+        this.charge = UNIT_DATA[i].spec[2];
+        this.engine_pos[0] = UNIT_DATA[i].engine_pos[0];
+        this.engine_pos[1] = UNIT_DATA[i].engine_pos[1];
+      }
+    }
+  }
+
+  getSpeed() {
+    return 4 + this.maxSpeed / 5;
+  }
+
+  augmentorControl() {
+    if (this.ab < 3000 && this.augmentor == 0) {
+      this.ab += 5;
+    }
+    else if (this.augmentor > 0) {
+      this.augmentor -= 4;
+      this.ab -= 4;
+      if (this.augmentor <= 0) {
+        this.augmentor == 0;
+        this.ab == 0;
+        this.en = 0;
+        this.augmentor_overheat = 300;
+      }
+    }
+    if (this.augmentor_overheat > 0) {
+      this.augmentor_overheat--;
+    }
+  }
+
+  flareControl() {
+    if (this.flare_overheat > 0) {
+      this.flare_overheat--;
+    }
+  }
+
+  hit(power) {
+    const damage = power - (power * 0.02 * this.defence);
+    this.hp -= damage;
+    if (this.hp < 1) {
+      this.hp = 0;
+      this.life = false;
+      this.setActive(false);
+      this.setVisible(false);
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   update() {
+    this.augmentorControl();
+    this.flareControl();
+
     if (this.speed.x > 0 && this.speed.y > 0) this.deg = 45;
     else if (this.speed.x < 0 && this.speed.y > 0) this.deg = 135;
     else if (this.speed.x < 0 && this.speed.y < 0) this.deg = 225;
@@ -55,8 +128,10 @@ class PlayerObj extends Phaser.GameObjects.Image {
     if (this.reload > 4) this.reload = 0;
     else if (this.reload > 0) this.reload++;
 
-    if (this.en < 1000) {
-      this.en++;
+    this.charge_counter = this.charge_counter > 5 ? 0 : this.charge_counter + 1;
+    if (this.en < 1000 && this.augmentor_overheat <= 0 && this.charge_counter == 0) {
+      this.en += 5 + this.charge / 2;
+      if (this.en > 1000) this.en = 1000;
     }
   }
 

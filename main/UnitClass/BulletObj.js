@@ -52,11 +52,11 @@ class BulletObj extends Phaser.GameObjects.Image {
   }
 
   xForward(speed) {
-    return this.x + speed * Math.cos(this.rad(this.deg + 90))
+    return this.x + speed * Math.cos(this.rad(this.deg + 90));
   }
 
   yForward(speed) {
-    return this.y + speed * Math.sin(this.rad(this.deg + 90))
+    return this.y + speed * Math.sin(this.rad(this.deg + 90));
   }
 
   rad(deg) {

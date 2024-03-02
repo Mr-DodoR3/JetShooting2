@@ -7,7 +7,7 @@ class EnemyObj extends Phaser.GameObjects.Image {
     this.del = false;
     this.tag = "";
     this.reload = 0;
-    this.reload_time = 30;
+    this.reload_time = 60;
 
     this.hp = 10;
 

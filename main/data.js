@@ -1,6 +1,6 @@
 const MISSION_DATA = [
   [
-    // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔
+    // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 90, repletion : "" },
@@ -132,7 +132,8 @@ const UNIT_DATA = [
     explanation : "艦隊防空を主眼に置いた重武装の迎撃機です。",
     type : "interceptor",
     spec : [4, 6, 10],
-    skil : ["swingwing", "irst", "wso"]
+    skil : ["swingwing", "irst", "wso"],
+    engine_pos : [5, 45]
   },
   {
     tag : "b15",
@@ -142,7 +143,8 @@ const UNIT_DATA = [
     explanation : "FS-15制空戦闘機を元に開発された生存性の高い爆撃機です。",
     type : "bomber",
     spec : [3, 10, 6],
-    skil : ["cft", "flare", "wso"]
+    skil : ["cft", "flare", "wso"],
+    engine_pos : [3, 43]
   },
   {
     tag : "xfs23",
@@ -152,7 +154,8 @@ const UNIT_DATA = [
     explanation : "ステルス性や超音速巡航性能などの最新機能を備えた高性能戦闘機です。",
     type : "fighter",
     spec : [9, 2, 5],
-    skil : ["supercruise", "vt", "stealth"]
+    skil : ["supercruise", "vt", "stealth"],
+    engine_pos : [4, 42]
   },
   {
     tag : "sy25",
@@ -162,7 +165,8 @@ const UNIT_DATA = [
     explanation : "対地攻撃力が優秀な攻撃機です。",
     type : "attacker",
     spec : [2, 7, 7],
-    skil : ["armor", "maintain", "flare"]
+    skil : ["armor", "maintain", "flare"],
+    engine_pos : [3, 30]
   },
   {
     tag : "sy30sm",
@@ -172,7 +176,8 @@ const UNIT_DATA = [
     explanation : "高水準の運動性能と耐久性能を持つ強力な戦闘機です。",
     type : "fighter",
     spec : [10, 5, 4],
-    skil : ["supercruise", "vt", "irst", "wso"]
+    skil : ["supercruise", "vt", "irst", "wso"],
+    engine_pos : [3, 43]
   },
   {
     tag : "va8",
@@ -182,7 +187,8 @@ const UNIT_DATA = [
     explanation : "珍しい垂直離着陸能力を持つ攻撃機です。",
     type : "attacker",
     spec : [1, 4, 10],
-    skil : ["vtol", "armor", "maintain", "flare", "irst"]
+    skil : ["vtol", "armor", "maintain", "flare", "irst"],
+    engine_pos : [2, 27]
   },
   {
     tag : "md4000",
@@ -192,7 +198,8 @@ const UNIT_DATA = [
     explanation : "特徴的な装備はないですが、総合スペックの高い汎用戦闘機です。",
     type : "multirole",
     spec : [8, 6, 6],
-    skil : []
+    skil : [],
+    engine_pos : [2, 45]
   },
   {
     tag : "al159",
@@ -202,7 +209,8 @@ const UNIT_DATA = [
     explanation : "癖はないですが、攻撃力が低く実戦には向かない練習機です。",
     type : "trainer",
     spec : [3, 3, 3],
-    skil : ["maintain", "coin"]
+    skil : ["maintain", "coin"],
+    engine_pos : [2, 38]
   },
   {
     tag : "ab2",
@@ -212,7 +220,8 @@ const UNIT_DATA = [
     explanation : "対艦攻撃も想定され開発された高い攻撃力を持つ攻撃機です。",
     type : "attacker",
     spec : [7, 2, 9],
-    skil : ["asm", "fbl"]
+    skil : ["asm", "fbl"],
+    engine_pos : [2, 45]
   },
   {
     tag : "jin20",
@@ -222,7 +231,8 @@ const UNIT_DATA = [
     explanation : "ステルスを持ち、継戦能力に特化した大型戦闘機です。",
     type : "interceptor",
     spec : [3, 8, 4],
-    skil : ["cft", "irst", "stealth", "wso"]
+    skil : ["cft", "irst", "stealth", "wso"],
+    engine_pos : [2, 45]
   },
   {// TFX
     tag : "tf24",
@@ -232,7 +242,8 @@ const UNIT_DATA = [
     explanation : "無人機との連携を前提に開発された試作戦闘機です。",
     type : "multirole",
     spec : [6, 6, 3],
-    skil : ["stealth", "ucav"]
+    skil : ["stealth", "ucav"],
+    engine_pos : [2, 41]
   }
 ];
 

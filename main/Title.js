@@ -62,6 +62,8 @@ class Title extends GameScene {
     for (let i = 0; i < ENEMY_DATA.length; i++) {
       this.load.image(ENEMY_DATA[i].tag, "assets/images/npc_unit/" + ENEMY_DATA[i].tag + ".png");
     }
+
+    this.load.image("flare_obj", "assets/images/flare.png");
     
     // for (let i = 0; i < 10; i++) {
     //   this.load.image("exp_" + i, "assets/images/explosion/exp_" + i + ".png");
