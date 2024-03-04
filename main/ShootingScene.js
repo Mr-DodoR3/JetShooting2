@@ -125,7 +125,7 @@ class ShootingScene extends GameScene {
   hit_player(player, enemyBullet) {
     if (this.player.life) {
       enemyBullet.hit();
-      if (player.hit(50)) {
+      if (player.hit(enemyBullet.power)) {
         this.explosion = this.explosions.get();
         this.explosion.create(this.player.x, this.player.y);
       }
@@ -134,7 +134,7 @@ class ShootingScene extends GameScene {
 
   hit(bullet, enemy) {
     bullet.hit();
-    let returnData = enemy.damage(2);
+    let returnData = enemy.damage(bullet.power);
     if (!(returnData == -1)) {
       this.explosion = this.explosions.get();
       this.explosion.create(returnData.x, returnData.y);
@@ -335,12 +335,20 @@ class ShootingScene extends GameScene {
       setPlayerMove(this.player.deg, 0, 0);
     }
 
-    if ((this.key.z.isDown && this.player.en >= 30) || this.player.augmentor > 0) {
+    if ((this.key.z.isDown && this.player.en >= this.player.getWaepon().en) || this.player.augmentor > 0) {
       if (this.player.reload == 0) {
-        this.player.en -= 30;
+        this.player.en -= this.player.getWaepon().en;
         const bullet = this.bullets.get();
         if (bullet) {
-          bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, "m601");
+          const tag = this.player.getWaepon().tag;
+          switch (tag) {
+            case "m601":
+              bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, tag);
+              break;
+            default:
+              bullet.create(this.player.x, this.player.y, 90, this.player.getWaepon().tag);
+              break;
+          }
         }
         this.player.reload++;
         this.player.weponVar_m601 = this.player.weponVar_m601 == 0 ? 1 : 0;

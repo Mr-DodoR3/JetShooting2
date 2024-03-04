@@ -9,7 +9,7 @@ class EnemyObj extends Phaser.GameObjects.Image {
     this.reload = 0;
     this.reload_time = 60;
 
-    this.hp = 10;
+    this.hp = 100;
 
     this.action_type = -1;
     this.life_time = 0;
@@ -34,6 +34,12 @@ class EnemyObj extends Phaser.GameObjects.Image {
   create(tag, action) {
     this.createSetup(tag);
     this.action_type = action;
+
+    for (let i = 0; i < ENEMY_DATA.length; i++) {
+      if (tag == ENEMY_DATA[i].tag) {
+        this.hp = ENEMY_DATA[i].hp;
+      }
+    }
   }
 
   // create(tag, x, y) {

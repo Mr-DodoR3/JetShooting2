@@ -7,6 +7,9 @@ class BulletObj extends Phaser.GameObjects.Image {
     this.del = false;
 
     this.tag = "";
+    this.power = 0;
+
+    this.colliderSize = 24;
   }
 
   colliderSet() {
@@ -24,9 +27,12 @@ class BulletObj extends Phaser.GameObjects.Image {
     this.setY(y);
     this.setRotation(this.rad(d));
     this.deg = d;
-    // for (let i = 0; i < WEAPON_DATA.length; i++) {
-    //   if (tag == WEAPON_DATA[i].tag) this.type = i;
-    // }
+    for (let i = 0; i < WEAPON_DATA.length; i++) {
+      if (tag == WEAPON_DATA[i].tag) {
+        this.type = i;
+        this.power = WEAPON_DATA[i].power;
+      }
+    }
     this.setTexture(tag);
     this.colliderSet();
   }
@@ -39,6 +45,9 @@ class BulletObj extends Phaser.GameObjects.Image {
     switch (this.tag) {
       case "m601":
         this.setY(this.y - 10);
+        break;
+      case "eml12":
+        this.setY(this.y - 15);
         break;
       case "e_m601":
         this.setX(this.xForward(5));

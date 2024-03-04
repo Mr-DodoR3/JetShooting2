@@ -9,16 +9,17 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.maxSpeed;
     this.defence;
     this.charge;
-    this.wepon_1;
-    this.wepon_2;
+    this.waepon_1;
+    this.waepon_2;
     this.engine_pos = [0, 0];
 
     this.move = false;
     this.deg = 0;
     this.speed = { x: 0, y: 0 };
-    this.reload = 0;
     this.tag = "";
 
+    this.reload = 0;
+    this.reload_sp = 0;
     this.weponVar_m601 = 0;
     this.augmentor = 0;
     this.augmentor_overheat = 0;
@@ -56,7 +57,27 @@ class PlayerObj extends Phaser.GameObjects.Image {
         this.charge = UNIT_DATA[i].spec[2];
         this.engine_pos[0] = UNIT_DATA[i].engine_pos[0];
         this.engine_pos[1] = UNIT_DATA[i].engine_pos[1];
+
+        let waepon_1 = UNIT_DATA[i].weapon;
+        let waepon_2 = UNIT_DATA[i].specail_weapon;
+        for (let j = 0; j < WEAPON_DATA.length; j++) {
+          if (waepon_1 == WEAPON_DATA[j].tag) {
+            this.waepon_1 = j;
+          }
+          if (waepon_2 == WEAPON_DATA[j].tag) {
+            this.waepon_2 = j;
+          }
+        }
       }
+    }
+  }
+
+  getWaepon(w = "nomal") {
+    if (w == "nomal") {
+      return WEAPON_DATA[this.waepon_1];
+    }
+    else {
+      return WEAPON_DATA[this.waepon_2];
     }
   }
 
@@ -75,7 +96,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
         this.augmentor == 0;
         this.ab == 0;
         this.en = 0;
-        this.augmentor_overheat = 300;
+        this.augmentor_overheat = 120;
       }
     }
     if (this.augmentor_overheat > 0) {
@@ -125,7 +146,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.setX(nextPosX);
     this.setY(nextPosY);
     
-    if (this.reload > 4) this.reload = 0;
+    if (this.reload > this.getWaepon().reload) this.reload = 0;
     else if (this.reload > 0) this.reload++;
 
     this.charge_counter = this.charge_counter > 5 ? 0 : this.charge_counter + 1;

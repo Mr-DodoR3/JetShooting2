@@ -1,16 +1,24 @@
 const MISSION_DATA = [
+  // stage 1
   [
     // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
-    { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 90, repletion : "" },
+    { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 240, repletion : "" },
     { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 180, repletion : "" },
     { tag : "yig21", pieces : 1, action_type : 3, interval : 0, sleep : 0, repletion : "" },
-    { tag : "yig21", pieces : 1, action_type : 4, interval : 0, sleep : 90, repletion : "" },
+    { tag : "yig21", pieces : 1, action_type : 4, interval : 0, sleep : 240, repletion : "" },
     { tag : "yig21", pieces : 1, action_type : 3, interval : 0, sleep : 0, repletion : "" },
-    { tag : "yig21", pieces : 1, action_type : 4, interval : 0, sleep : 180, repletion : "" }
+    { tag : "yig21", pieces : 1, action_type : 4, interval : 0, sleep : 240, repletion : "" },
+    { tag : "iac1", pieces : 2, action_type : 2, interval : 45, sleep : 180, repletion : "" },
+    { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 180, repletion : "" },
+    { tag : "iac1", pieces : 4, action_type : 2, interval : 60, sleep : 180, repletion : "" }
+  ],
+
+  // stage 2
+  [
+    {}
   ]
-  
 ]
 
 const SKIL_DATA = [
@@ -98,14 +106,28 @@ const WEAPON_DATA = [
     serial : "M601",
     name : "",
     name_jp : "",
-    explanation : ""
+    explanation : "",
+    power : 20,
+    reload : 4,
+    en : 20
+  },
+  {
+    tag : "eml12",
+    serial : "EML-12C",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    power : 50,
+    reload : 10,
+    en : 50
   },
   {
     tag : "e_m601",
     serial : "M601",
     name : "",
     name_jp : "",
-    explanation : ""
+    explanation : "",
+    power : 40
   }
 ];
 
@@ -120,7 +142,7 @@ const UNIT_DATA = [
     type : "multirole",
     spec : [5, 5, 5],
     skil : ["cft"],
-    weapon : "m601",
+    weapon : "m601",//eml12
     specail_weapon : "",
     engine_pos : [2, 45]
   },
@@ -246,19 +268,28 @@ const UNIT_DATA = [
     engine_pos : [2, 41]
   }
 ];
+// 追加候補
+// fighter : MiG-1.44
+// interceptor : CF-105
+// bomber : X-44
+// bomber : Tornado IDS
+// trainer : IAR 99 or multirole : JAS-39
+// trainer : T-50
 
 const ENEMY_DATA = [
   {
     tag : "iac1",
     serial : "IA-C1",
     name_jp : "ネッツ(ヘブライ語で鷹)",
-    attribute : "air"
+    attribute : "air",
+    hp : 100
   },
   {
     tag : "yig21",
     serial : "YiG-21",
     name_jp : "ストレーラ(ロシア語で矢)",
-    attribute : "air"
+    attribute : "air",
+    hp : 60
   },
   {
     tag : "ea314",
@@ -270,6 +301,18 @@ const ENEMY_DATA = [
     tag : "fs16",
     serial : "FS-16CG",
     name_jp : "マスタングⅡ",
+    attribute : "air"
+  },
+  {
+    tag : "yig29",
+    serial : "YiG-29S",
+    name_jp : "",
+    attribute : "air"
+  },
+  {
+    tag : "me300",      // HA 300
+    serial : "Me-300",
+    name_jp : "",
     attribute : "air"
   }
 ];
