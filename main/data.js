@@ -96,6 +96,21 @@ const SKIL_DATA = [
     tag : "ucav",
     name_jp : "チーミング",
     explanation : ""
+  },
+  {
+    tag : "auto",
+    name_jp : "オートパイロット",
+    explanation : "衝突ダメージの減少"
+  },
+  {
+    tag : "reverser",
+    name_jp : "スラストリバーサ",
+    explanation : ""
+  },
+  {
+    tag : "nuclear",
+    name_jp : "ジニー",
+    explanation : ""
   }
 ];
 
@@ -122,6 +137,146 @@ const WEAPON_DATA = [
     en : 50
   },
   {
+    tag : "l47",
+    serial : "L-47",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    power : 15,
+    reload : 6,
+    en : 30
+  },
+  {
+    tag : "m6",
+    serial : "M6",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    power : 100,
+    reload : 4,
+    en : 30
+  },
+  {
+    tag : "gs60",
+    serial : "GS-60-3",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    power : 40,
+    reload : 12,
+    en : 40
+  },
+  {
+    tag : "l50",
+    serial : "L-50",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    power : 20,
+    reload : 2,
+    en : 15
+  },
+  {
+    tag : "asraab",
+    serial : "ASRAAB",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    power : 45,
+    reload : 15,
+    en : 100
+  },
+  {// ここから先未実装
+    tag : "pj234",
+    serial : "PJ234",
+    name : "",
+    name_jp : "",
+    explanation : "クラスター弾",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "type25",
+    serial : "Type-25",
+    name : "",
+    name_jp : "",
+    explanation : "単発式爆発弾",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "atm144",
+    serial : "ATM-144D",
+    name : "",
+    name_jp : "",
+    explanation : "マイクロミサイル(無誘導)",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "kkh76",
+    serial : "KKH-76",
+    name : "",
+    name_jp : "",
+    explanation : "サイン波に合わせて動く弾",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "malc",
+    serial : "MALC",
+    name : "",
+    name_jp : "",
+    explanation : "4連装で扇形にばらまく弾",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "gua99",
+    serial : "GUA-99",
+    name : "",
+    name_jp : "",
+    explanation : "6連装で全て真正面に撃つ弾",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "jdal",
+    serial : "JDAL",
+    name : "",
+    name_jp : "",
+    explanation : "2連装高威力キャノン",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "jdal",
+    serial : "JDAL",
+    name : "",
+    name_jp : "",
+    explanation : "2連装高威力キャノン",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "lrac",
+    serial : "LRAC",
+    name : "",
+    name_jp : "",
+    explanation : "横に広がる(物理)単発弾",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
     tag : "e_m601",
     serial : "M601",
     name : "",
@@ -141,8 +296,8 @@ const UNIT_DATA = [
     explanation : "対空対地共に優れた汎用性の高いマルチロール戦闘機です。",
     type : "multirole",
     spec : [5, 5, 5],
-    skil : ["cft"],
-    weapon : "m601",//eml12
+    skil : ["cft", "auto"],
+    weapon : "l47",//eml12
     specail_weapon : "",
     engine_pos : [2, 45]
   },
@@ -176,7 +331,7 @@ const UNIT_DATA = [
     explanation : "ステルス性や超音速巡航性能などの最新機能を備えた高性能戦闘機です。",
     type : "fighter",
     spec : [9, 2, 5],
-    skil : ["supercruise", "vt", "stealth"],
+    skil : ["supercruise", "vt", "stealth", "auto"],
     engine_pos : [4, 42]
   },
   {
@@ -198,7 +353,7 @@ const UNIT_DATA = [
     explanation : "高水準の運動性能と耐久性能を持つ強力な戦闘機です。",
     type : "fighter",
     spec : [10, 5, 4],
-    skil : ["supercruise", "vt", "irst", "wso"],
+    skil : ["supercruise", "vt", "irst", "wso", "auto"],
     engine_pos : [3, 43]
   },
   {
@@ -220,7 +375,7 @@ const UNIT_DATA = [
     explanation : "特徴的な装備はないですが、総合スペックの高い汎用戦闘機です。",
     type : "multirole",
     spec : [8, 6, 6],
-    skil : [],
+    skil : ["supercruise"],
     engine_pos : [2, 45]
   },
   {

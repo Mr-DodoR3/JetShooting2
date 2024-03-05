@@ -10,6 +10,10 @@ class BulletObj extends Phaser.GameObjects.Image {
     this.power = 0;
 
     this.colliderSize = 24;
+    
+    this.life_time = 0;
+
+    this.var_l47 = 0;
   }
 
   colliderSet() {
@@ -49,6 +53,27 @@ class BulletObj extends Phaser.GameObjects.Image {
       case "eml12":
         this.setY(this.y - 15);
         break;
+      case "l47":
+        if (this.life_time < 3) {
+          this.setX(this.x + (this.var_l47 == 0 ? -5 : 5));
+        }
+        this.setY(this.y - 15);
+        break;
+      case "m6":
+        this.setY(this.y - 10);
+        this.setAlpha(this.power / 100);
+        this.power -= 5;
+        if (this.power < 0) {
+          this.destroy();
+        }
+        break;
+      case "gs60":
+        this.setX(this.xForward(5));
+        this.setY(this.yForward(5));
+      case "l50":
+        this.setY(this.y - 25);
+      case "asraab":
+        this.setY(this.y - 7);
       case "e_m601":
         this.setX(this.xForward(5));
         this.setY(this.yForward(5));
@@ -58,6 +83,8 @@ class BulletObj extends Phaser.GameObjects.Image {
     if (this.x < 128 || this.x > 832 || this.y < -32 || this.y > 672) {
       this.destroy();
     }
+
+    this.life_time++;
   }
 
   xForward(speed) {

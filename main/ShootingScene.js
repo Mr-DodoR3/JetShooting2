@@ -123,6 +123,7 @@ class ShootingScene extends GameScene {
   }
 
   hit_player(player, enemyBullet) {
+    this.player.augmentorPointGet(Math.floor(enemyBullet.power / 4));
     if (this.player.life) {
       enemyBullet.hit();
       if (player.hit(enemyBullet.power)) {
@@ -133,12 +134,17 @@ class ShootingScene extends GameScene {
   }
 
   hit(bullet, enemy) {
+    let ab_get = 0;
+
+    ab_get += Math.floor(bullet.power / 2);
     bullet.hit();
     let returnData = enemy.damage(bullet.power);
     if (!(returnData == -1)) {
+      ab_get += 100;
       this.explosion = this.explosions.get();
       this.explosion.create(returnData.x, returnData.y);
     }
+    this.player.augmentorPointGet(ab_get);
   }
 
   background_disp() {
@@ -338,18 +344,62 @@ class ShootingScene extends GameScene {
     if ((this.key.z.isDown && this.player.en >= this.player.getWaepon().en) || this.player.augmentor > 0) {
       if (this.player.reload == 0) {
         this.player.en -= this.player.getWaepon().en;
-        const bullet = this.bullets.get();
-        if (bullet) {
-          const tag = this.player.getWaepon().tag;
-          switch (tag) {
-            case "m601":
-              bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, tag);
-              break;
-            default:
-              bullet.create(this.player.x, this.player.y, 90, this.player.getWaepon().tag);
-              break;
-          }
+        const tag = this.player.getWaepon().tag;
+        if (tag == "m601") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, tag);
         }
+        else if (tag == "l47") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x - 4, this.player.y, 90, tag);
+          let bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x + 4, this.player.y, 90, tag);
+          bullet_2.var_l47 = 1;
+        }
+        else if (tag == "gs60") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, 45, tag);
+          const bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x, this.player.y, 135, tag);
+          const bullet_3 = this.bullets.get();
+          bullet_3.create(this.player.x, this.player.y, 270, tag);
+        }
+        else if (tag == "asraab") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x - 10, this.player.y, 90, tag);
+          const bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x + 10, this.player.y, 90, tag);
+          const bullet_3 = this.bullets.get();
+          bullet_3.create(this.player.x, this.player.y - 10, 90, tag);
+        }
+        else {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, 90, this.player.getWaepon().tag);
+        }
+        // const bullet = this.bullets.get();
+        // if (bullet) {
+        //   const tag = this.player.getWaepon().tag;
+        //   switch (tag) {
+        //     case "m601":
+        //       bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, tag);
+        //       break;
+        //     case "l47":
+        //       bullet.create(this.player.x - 4, this.player.y, 90, tag);
+        //       let bullet_2 = this.bullets.get();
+        //       bullet_2.create(this.player.x + 4, this.player.y, 90, tag);
+        //       bullet_2.var_l47 = 1;
+        //       break;
+        //     case "gs60":
+        //       bullet.create(this.player.x - 4, this.player.y, 90, tag);
+        //       let bullet_2 = this.bullets.get();
+        //       bullet_2.create(this.player.x + 4, this.player.y, 90, tag);
+        //       bullet_2.var_l47 = 1;
+        //       break;
+        //     default:
+        //       bullet.create(this.player.x, this.player.y, 90, this.player.getWaepon().tag);
+        //       break;
+        //   }
+        // }
         this.player.reload++;
         this.player.weponVar_m601 = this.player.weponVar_m601 == 0 ? 1 : 0;
       }

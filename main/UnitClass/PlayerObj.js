@@ -85,9 +85,18 @@ class PlayerObj extends Phaser.GameObjects.Image {
     return 4 + this.maxSpeed / 5;
   }
 
+  augmentorPointGet(point) {
+    if (this.augmentor == 0) {
+      this.ab += point;
+      if (this.ab > 3000) {
+        this.ab = 3000;
+      }
+    }
+  }
+
   augmentorControl() {
     if (this.ab < 3000 && this.augmentor == 0) {
-      this.ab += 5;
+      // this.ab += 5;
     }
     else if (this.augmentor > 0) {
       this.augmentor -= 4;
