@@ -131,7 +131,7 @@ const WEAPON_DATA = [
     serial : "EML-12C",
     name : "",
     name_jp : "",
-    explanation : "",
+    explanation : "レールガン",
     power : 50,
     reload : 10,
     en : 50
@@ -141,7 +141,7 @@ const WEAPON_DATA = [
     serial : "L-47",
     name : "",
     name_jp : "",
-    explanation : "",
+    explanation : "やや横に広がるレーザー",
     power : 15,
     reload : 6,
     en : 30
@@ -151,7 +151,7 @@ const WEAPON_DATA = [
     serial : "M6",
     name : "",
     name_jp : "",
-    explanation : "",
+    explanation : "火炎放射",
     power : 100,
     reload : 4,
     en : 30
@@ -161,9 +161,9 @@ const WEAPON_DATA = [
     serial : "GS-60-3",
     name : "",
     name_jp : "",
-    explanation : "",
+    explanation : "斜めと後ろに撃つやつ",
     power : 40,
-    reload : 12,
+    reload : 10,
     en : 40
   },
   {
@@ -171,7 +171,7 @@ const WEAPON_DATA = [
     serial : "L-50",
     name : "",
     name_jp : "",
-    explanation : "",
+    explanation : "高速弾",
     power : 20,
     reload : 2,
     en : 15
@@ -181,30 +181,30 @@ const WEAPON_DATA = [
     serial : "ASRAAB",
     name : "",
     name_jp : "",
-    explanation : "",
+    explanation : "3連装ショット",
     power : 45,
     reload : 15,
-    en : 100
+    en : 95
   },
-  {// ここから先未実装
+  {
     tag : "pj234",
     serial : "PJ234",
     name : "",
     name_jp : "",
-    explanation : "クラスター弾",
+    explanation : "広範囲にばらまくクラスター弾",
     power : 0,
-    reload : 1,
-    en : 30
+    reload : 2,
+    en : 40
   },
   {
     tag : "type25",
     serial : "Type-25",
     name : "",
     name_jp : "",
-    explanation : "単発式爆発弾",
-    power : 0,
-    reload : 1,
-    en : 30
+    explanation : "爆発系ミサイル",
+    power : 30,
+    reload : 12,
+    en : 50
   },
   {
     tag : "atm144",
@@ -212,19 +212,19 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : "マイクロミサイル(無誘導)",
-    power : 0,
-    reload : 1,
-    en : 30
+    power : 50,
+    reload : 5,
+    en : 20
   },
   {
     tag : "kkh76",
-    serial : "KKH-76",
+    serial : "KKh-76",
     name : "",
     name_jp : "",
     explanation : "サイン波に合わせて動く弾",
-    power : 0,
-    reload : 1,
-    en : 30
+    power : 30,
+    reload : 4,
+    en : 15
   },
   {
     tag : "malc",
@@ -232,9 +232,9 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : "4連装で扇形にばらまく弾",
-    power : 0,
-    reload : 1,
-    en : 30
+    power : 25,
+    reload : 5,
+    en : 35
   },
   {
     tag : "gua99",
@@ -242,9 +242,9 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : "6連装で全て真正面に撃つ弾",
-    power : 0,
-    reload : 1,
-    en : 30
+    power : 10,
+    reload : 8,
+    en : 35
   },
   {
     tag : "jdal",
@@ -252,26 +252,36 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : "2連装高威力キャノン",
-    power : 0,
-    reload : 1,
-    en : 30
+    power : 65,
+    reload : 16,
+    en : 130
   },
-  {
-    tag : "jdal",
-    serial : "JDAL",
-    name : "",
-    name_jp : "",
-    explanation : "2連装高威力キャノン",
-    power : 0,
-    reload : 1,
-    en : 30
-  },
-  {
+  {// ここから先未実装
     tag : "lrac",
     serial : "LRAC",
     name : "",
     name_jp : "",
     explanation : "横に広がる(物理)単発弾",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "hel",
+    serial : "HLE Block2",
+    name : "",
+    name_jp : "",
+    explanation : "高速レーザー",
+    power : 0,
+    reload : 1,
+    en : 30
+  },
+  {
+    tag : "atntl",
+    serial : "ATNTL",
+    name : "",
+    name_jp : "",
+    explanation : "貫通弾",
     power : 0,
     reload : 1,
     en : 30
@@ -297,7 +307,7 @@ const UNIT_DATA = [
     type : "multirole",
     spec : [5, 5, 5],
     skil : ["cft", "auto"],
-    weapon : "l47",//eml12
+    weapon : "eml12",
     specail_weapon : "",
     engine_pos : [2, 45]
   },

@@ -20,12 +20,14 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
     this.reload = 0;
     this.reload_sp = 0;
-    this.weponVar_m601 = 0;
     this.augmentor = 0;
     this.augmentor_overheat = 0;
     this.charge_counter = 0;
     this.flare = 3;
     this.flare_overheat = 0;
+    
+    this.weponVar_m601 = 0;
+    this.weponVar_atm144 = 0;
 
     this.setDepth(50);
   }

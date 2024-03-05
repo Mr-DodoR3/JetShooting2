@@ -134,17 +134,19 @@ class ShootingScene extends GameScene {
   }
 
   hit(bullet, enemy) {
-    let ab_get = 0;
-
-    ab_get += Math.floor(bullet.power / 2);
-    bullet.hit();
-    let returnData = enemy.damage(bullet.power);
-    if (!(returnData == -1)) {
-      ab_get += 100;
-      this.explosion = this.explosions.get();
-      this.explosion.create(returnData.x, returnData.y);
+    if (bullet.collision_active) {
+      let ab_get = 0;
+  
+      ab_get += Math.floor(bullet.power / 2);
+      bullet.hit();
+      let returnData = enemy.damage(bullet.power);
+      if (!(returnData == -1)) {
+        ab_get += 100;
+        this.explosion = this.explosions.get();
+        this.explosion.create(returnData.x, returnData.y);
+      }
+      this.player.augmentorPointGet(ab_get);
     }
-    this.player.augmentorPointGet(ab_get);
   }
 
   background_disp() {
@@ -372,6 +374,33 @@ class ShootingScene extends GameScene {
           const bullet_3 = this.bullets.get();
           bullet_3.create(this.player.x, this.player.y - 10, 90, tag);
         }
+        else if (tag == "pj234") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, Math.floor(Math.random() * 136) + 45, tag);
+        }
+        else if (tag == "atm144") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, (this.player.weponVar_atm144 == 0 ? 180 : 0), tag);
+          bullet.var_atm144 = this.player.weponVar_atm144;
+        }
+        else if (tag == "malc") {
+          for (let i = 0; i < 4; i++) {
+            const bullet = this.bullets.get();
+            bullet.create(this.player.x, this.player.y, 45 + i * 30, tag);
+          }
+        }
+        else if (tag == "gua99") {
+          for (let i = 0; i < 6; i++) {
+            const bullet = this.bullets.get();
+            bullet.create(this.player.x + i * 10 - 25, this.player.y, 90, tag);
+          }
+        }
+        else if (tag == "jdal") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x - 20, this.player.y, 90, tag);
+          const bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x + 20, this.player.y, 90, tag);
+        }
         else {
           const bullet = this.bullets.get();
           bullet.create(this.player.x, this.player.y, 90, this.player.getWaepon().tag);
@@ -402,6 +431,7 @@ class ShootingScene extends GameScene {
         // }
         this.player.reload++;
         this.player.weponVar_m601 = this.player.weponVar_m601 == 0 ? 1 : 0;
+        this.player.weponVar_atm144 = this.player.weponVar_atm144 == 0 ? 1 : 0;
       }
     }
 
