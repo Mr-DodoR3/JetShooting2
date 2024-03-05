@@ -308,7 +308,7 @@ const UNIT_DATA = [
     spec : [5, 5, 5],
     skil : ["cft", "auto"],
     weapon : "eml12",
-    specail_weapon : "",
+    specail_weapon : "l47",
     engine_pos : [2, 45]
   },
   {
@@ -320,6 +320,8 @@ const UNIT_DATA = [
     type : "interceptor",
     spec : [4, 6, 10],
     skil : ["swingwing", "irst", "wso"],
+    weapon : "malc",
+    specail_weapon : "jdal",
     engine_pos : [5, 45]
   },
   {
@@ -331,6 +333,8 @@ const UNIT_DATA = [
     type : "bomber",
     spec : [3, 10, 6],
     skil : ["cft", "flare", "wso"],
+    weapon : "m6",
+    specail_weapon : "pj234",
     engine_pos : [3, 43]
   },
   {
@@ -342,6 +346,8 @@ const UNIT_DATA = [
     type : "fighter",
     spec : [9, 2, 5],
     skil : ["supercruise", "vt", "stealth", "auto"],
+    weapon : "l50",
+    specail_weapon : "l47",
     engine_pos : [4, 42]
   },
   {
@@ -353,6 +359,8 @@ const UNIT_DATA = [
     type : "attacker",
     spec : [2, 7, 7],
     skil : ["armor", "maintain", "flare"],
+    weapon : "m601",
+    specail_weapon : "asraab",
     engine_pos : [3, 30]
   },
   {
@@ -364,6 +372,8 @@ const UNIT_DATA = [
     type : "fighter",
     spec : [10, 5, 4],
     skil : ["supercruise", "vt", "irst", "wso", "auto"],
+    weapon : "eml12",
+    specail_weapon : "kkh76",
     engine_pos : [3, 43]
   },
   {
@@ -375,6 +385,8 @@ const UNIT_DATA = [
     type : "attacker",
     spec : [1, 4, 10],
     skil : ["vtol", "armor", "maintain", "flare", "irst"],
+    weapon : "kkh76",
+    specail_weapon : "jdal",
     engine_pos : [2, 27]
   },
   {
@@ -386,6 +398,8 @@ const UNIT_DATA = [
     type : "multirole",
     spec : [8, 6, 6],
     skil : ["supercruise"],
+    weapon : "gua99",
+    specail_weapon : "malc",
     engine_pos : [2, 45]
   },
   {
@@ -397,6 +411,8 @@ const UNIT_DATA = [
     type : "trainer",
     spec : [3, 3, 3],
     skil : ["maintain", "coin"],
+    weapon : "m601",
+    specail_weapon : "gs60",
     engine_pos : [2, 38]
   },
   {
@@ -408,6 +424,8 @@ const UNIT_DATA = [
     type : "attacker",
     spec : [7, 2, 9],
     skil : ["asm", "fbl"],
+    weapon : "gua99",
+    specail_weapon : "type25",
     engine_pos : [2, 45]
   },
   {
@@ -419,6 +437,8 @@ const UNIT_DATA = [
     type : "interceptor",
     spec : [3, 8, 4],
     skil : ["cft", "irst", "stealth", "wso"],
+    weapon : "m6",
+    specail_weapon : "atm144",
     engine_pos : [2, 45]
   },
   {// TFX
@@ -430,6 +450,8 @@ const UNIT_DATA = [
     type : "multirole",
     spec : [6, 6, 3],
     skil : ["stealth", "ucav"],
+    weapon : "malc",
+    specail_weapon : "asraab",
     engine_pos : [2, 41]
   }
 ];

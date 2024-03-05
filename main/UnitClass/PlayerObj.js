@@ -19,7 +19,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.tag = "";
 
     this.reload = 0;
-    this.reload_sp = 0;
+    this.reload_2 = 0;
     this.augmentor = 0;
     this.augmentor_overheat = 0;
     this.charge_counter = 0;
@@ -98,7 +98,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
   augmentorControl() {
     if (this.ab < 3000 && this.augmentor == 0) {
-      // this.ab += 5;
+      this.ab += 15;
     }
     else if (this.augmentor > 0) {
       this.augmentor -= 4;
@@ -159,6 +159,8 @@ class PlayerObj extends Phaser.GameObjects.Image {
     
     if (this.reload > this.getWaepon().reload) this.reload = 0;
     else if (this.reload > 0) this.reload++;
+    if (this.reload_2 > this.getWaepon("sp").reload) this.reload_2 = 0;
+    else if (this.reload_2 > 0) this.reload_2++;
 
     this.charge_counter = this.charge_counter > 5 ? 0 : this.charge_counter + 1;
     if (this.en < 1000 && this.augmentor_overheat <= 0 && this.charge_counter == 0) {
