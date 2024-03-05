@@ -82,7 +82,7 @@ class BulletObj extends Phaser.GameObjects.Image {
   update() {
     switch (this.tag) {
       case "m601":
-        this.setY(this.y - 10);
+        this.setY(this.y - 12);
         break;
       case "eml12":
         this.setY(this.y - 15);
@@ -102,8 +102,8 @@ class BulletObj extends Phaser.GameObjects.Image {
         }
         break;
       case "gs60":
-        this.setX(this.xForward(5));
-        this.setY(this.yForward(5));
+        this.setX(this.xForward(10));
+        this.setY(this.yForward(10));
         break;
       case "l50":
         this.setY(this.y - 25);
@@ -150,7 +150,7 @@ class BulletObj extends Phaser.GameObjects.Image {
         this.setY(this.y - 12);
         break;
       case "jdal":
-        this.setY(this.y - 7);
+        this.setY(this.y - 10);
         break;
       case "e_m601":
         this.setX(this.xForward(5));
