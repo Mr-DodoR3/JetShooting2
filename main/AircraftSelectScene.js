@@ -13,6 +13,9 @@ class AircraftSelectScene extends GameScene {
     for (let i = 0; i < this.specBar.length; i++) {
       this.specBar[i] = new Array(10);
     }
+
+    this.page = 0;
+    this.unit_select_ui = new Array(UNIT_DATA.length);
   }
 
   init() {
@@ -41,7 +44,10 @@ class AircraftSelectScene extends GameScene {
     this.selecter = this.add.image(96+128, 154+(this.selectAircraft * 32), "select_ui_selecter");
     // this.add.image(96+128, 184+82, "aircraft_select_ui");
     for (let i = 0; i < UNIT_DATA.length; i++) {
-      this.add.image(96+128, 154 + i * 32, "unitSelect_" + UNIT_DATA[i].tag);
+      this.unit_select_ui[i] = this.add.image(96+128, 154 + i * 32, "unitSelect_" + UNIT_DATA[i].tag);
+      if (i > 12) { 
+        this.unit_select_ui[i].setVisible(false);
+      }
     }
     this.aircraft = this.add.image(800, 286, "fsb18");
     this.unittype = this.add.image(539, 151, "unittype_multirole");
@@ -66,7 +72,7 @@ class AircraftSelectScene extends GameScene {
   }
 
   update() {
-    this.selecter.setPosition(224, 154 + (this.selectAircraft * 32));
+    // this.selecter.setPosition(224, 154 + ((this.selectAircraft - this.page) * 32));
     // this.writeText();
     // this.aircraft.setTexture(UNIT_DATA[this.selectAircraft].tag);
     // this.unittype.setTexture("unittype_" + UNIT_DATA[this.selectAircraft].type);
@@ -86,6 +92,17 @@ class AircraftSelectScene extends GameScene {
         }
       }
     }
+    
+    for (let i = 0; i < UNIT_DATA.length; i++) {
+      this.unit_select_ui[i].setPosition(96+128, 154 + (i - this.page) * 32);
+      if (i - this.page < 0 || i - this.page > 12) {
+        this.unit_select_ui[i].setVisible(false);
+      }
+      else {
+        this.unit_select_ui[i].setVisible(true);
+      }
+    }
+    this.selecter.setPosition(224, 154 + ((this.selectAircraft - this.page) * 32));
   }
   
   writeText() {
@@ -104,31 +121,34 @@ class AircraftSelectScene extends GameScene {
   contller() {
     if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
       this.selectAircraft--;
-      if (this.selectAircraft < 0) this.selectAircraft = UNIT_DATA.length - 1;
+      if (this.selectAircraft < 0) {
+        if (UNIT_DATA.length < 14) {
+          this.selectAircraft = UNIT_DATA.length - 1;
+        }
+        else {
+          this.page = UNIT_DATA.length - 13;
+          this.selectAircraft = UNIT_DATA.length - 1;
+        }
+      }
+      else if (this.selectAircraft - this.page == 0 && this.selectAircraft + (this.page - 1) > 0) {
+        this.page--;
+      }
       this.updateData();
     }
     if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
       this.selectAircraft++;
-      if (this.selectAircraft > UNIT_DATA.length - 1) this.selectAircraft = 0;
+      if (this.selectAircraft > UNIT_DATA.length - 1) {
+        this.page = 0;
+        this.selectAircraft = 0;
+      }
+      else if (this.selectAircraft - this.page == 12 && this.selectAircraft + (this.page + 1) <= UNIT_DATA.length) {
+        this.page++;
+      }
       this.updateData();
     }
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       this.nextScene = this.selectAircraft;
       selectAircraft = this.selectAircraft;
-      // switch (this.selectAircraft) {
-      //   case 0:
-      //     break;
-      //   case 1:
-      //     break;
-      //   case 2:
-      //     break;
-      //   case 3:
-      //     break;
-      //   case 4:
-      //     break;
-      //   default:
-      //     break;
-      // }
     }
   }
 

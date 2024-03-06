@@ -115,7 +115,7 @@ class ShootingScene extends GameScene {
         this.explosion.create(returnData.x, returnData.y);
       }
 
-      if (player.hit(250)) {
+      if (player.hit(300)) {
         this.explosion = this.explosions.get();
         this.explosion.create(this.player.x, this.player.y);
       }
