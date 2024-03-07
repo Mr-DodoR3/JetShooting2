@@ -106,8 +106,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
       if (this.augmentor <= 0) {
         this.augmentor == 0;
         this.ab == 0;
-        this.en = 0;
-        this.augmentor_overheat = 120;
+        this.augmentor_overheat = 300;
       }
     }
     if (this.augmentor_overheat > 0) {
@@ -162,10 +161,12 @@ class PlayerObj extends Phaser.GameObjects.Image {
     if (this.reload_2 > this.getWaepon("sp").reload) this.reload_2 = 0;
     else if (this.reload_2 > 0) this.reload_2++;
 
-    this.charge_counter = this.charge_counter > 5 ? 0 : this.charge_counter + 1;
-    if (this.en < 1000 && this.augmentor_overheat <= 0 && this.charge_counter == 0) {
-      this.en += 5 + this.charge / 2;
-      if (this.en > 1000) this.en = 1000;
+    if (this.augmentor == 0) {
+      this.charge_counter = this.charge_counter > 5 ? 0 : this.charge_counter + 1;
+      if (this.en < 1000 && this.augmentor_overheat <= 0 && this.charge_counter == 0) {
+        this.en += 5 + this.charge / 2;
+        if (this.en > 1000) this.en = 1000;
+      }
     }
   }
 

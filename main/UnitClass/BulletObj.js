@@ -15,9 +15,12 @@ class BulletObj extends Phaser.GameObjects.Image {
 
     this.var_l47 = 0;
     this.var_pj234 = 0;
+    this.var_type25 = 0;
     this.var_atm144 = 0;
     this.var_atm144_2 = 0;
     this.var_kkh76 = 0;
+    this.var_r53 = 0;
+    this.var_r53_2 = 0;
 
     this.collision_active = true;
   }
@@ -119,7 +122,20 @@ class BulletObj extends Phaser.GameObjects.Image {
         }
         break;
       case "type25":
-        this.setY(this.y - 6);
+        if (this.life_time < 30) {
+          if (this.var_type25 == 1 || this.var_type25 == 2) {
+            this.setX(this.x + (this.var_type25 == 1 ? -1 : 1));
+            this.setY(this.y - 3);
+          }
+          else {
+            this.setX(this.x + (this.var_type25 == 0 ? -3 : 3));
+            this.setY(this.y - 2);
+          }
+        }
+        else {
+          this.setX(this.x + (this.var_type25 == 0 ? -0.2 : (this.var_type25 == 1 ? -0.1 : (this.var_type25 == 2 ? 0.1 : 0.2))));
+          this.setY(this.y - 6);
+        }
         break;
       case "atm144":
         this.setRotation(this.rad(this.deg));
@@ -151,6 +167,24 @@ class BulletObj extends Phaser.GameObjects.Image {
         break;
       case "jdal":
         this.setY(this.y - 10);
+        break;
+      case "hel":
+        this.setY(this.y - 30);
+        break;
+      case "r53":
+        if (this.life_time > 6) {
+          this.setX(this.x + this.var_r53);
+          this.setAlpha(this.power / 10);
+          this.var_r53_2++;
+          if (this.var_r53_2 % 4 == 0) {
+            this.power--;
+            if (this.power < 0) {
+              this.destroy();
+            }
+            this.var_r53_2 = 0;
+          }
+        }
+        this.setY(this.y - 9);
         break;
       case "e_m601":
         this.setX(this.xForward(5));

@@ -202,9 +202,9 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : "爆発系ミサイル",
-    power : 50,
-    reload : 12,
-    en : 50
+    power : 25,
+    reload : 14,
+    en : 60
   },
   {
     tag : "atm144",
@@ -256,34 +256,24 @@ const WEAPON_DATA = [
     reload : 16,
     en : 130
   },
-  {// ここから先未実装
-    tag : "lrac",
-    serial : "LRAC",
-    name : "",
-    name_jp : "",
-    explanation : "横に広がる(物理)単発弾",
-    power : 0,
-    reload : 1,
-    en : 30
-  },
   {
     tag : "hel",
     serial : "HLE Block2",
     name : "",
     name_jp : "",
     explanation : "高速レーザー",
-    power : 0,
+    power : 10,
     reload : 1,
-    en : 30
+    en : 10
   },
   {
-    tag : "atntl",
-    serial : "ATNTL",
+    tag : "r53",
+    serial : "R.53",
     name : "",
     name_jp : "",
-    explanation : "貫通弾",
-    power : 0,
-    reload : 1,
+    explanation : "ショットガン",
+    power : 10,
+    reload : 8,
     en : 30
   },
   {
@@ -320,7 +310,7 @@ const UNIT_DATA = [
     type : "interceptor",
     spec : [4, 6, 10],
     skil : ["swingwing", "irst", "wso"],
-    weapon : "malc",
+    weapon : "type25",
     specail_weapon : "jdal",
     engine_pos : [5, 45]
   },
@@ -373,7 +363,7 @@ const UNIT_DATA = [
     spec : [10, 5, 4],
     skil : ["supercruise", "vt", "irst", "wso", "auto"],
     weapon : "eml12",
-    specail_weapon : "kkh76",
+    specail_weapon : "r53",
     engine_pos : [3, 43]
   },
   {
@@ -453,53 +443,14 @@ const UNIT_DATA = [
     weapon : "malc",
     specail_weapon : "asraab",
     engine_pos : [2, 41]
-  },
-  {// テスト用
-    tag : "al159",
-    serial : "TEST",
-    name : "Kral",
-    name_jp : "クラル(トルコ語で王)",
-    explanation : "無人機との連携を前提に開発された試作戦闘機です。",
-    type : "multirole",
-    spec : [6, 6, 3],
-    skil : ["stealth", "ucav"],
-    weapon : "malc",
-    specail_weapon : "asraab",
-    engine_pos : [2, 41]
-  },
-  {// テスト用
-    tag : "tf24",
-    serial : "TEST",
-    name : "Kral",
-    name_jp : "クラル(トルコ語で王)",
-    explanation : "無人機との連携を前提に開発された試作戦闘機です。",
-    type : "multirole",
-    spec : [6, 6, 3],
-    skil : ["stealth", "ucav"],
-    weapon : "malc",
-    specail_weapon : "asraab",
-    engine_pos : [2, 41]
-  },
-  {// テスト用
-    tag : "b15",
-    serial : "TEST",
-    name : "Kral",
-    name_jp : "クラル(トルコ語で王)",
-    explanation : "無人機との連携を前提に開発された試作戦闘機です。",
-    type : "multirole",
-    spec : [6, 6, 3],
-    skil : ["stealth", "ucav"],
-    weapon : "malc",
-    specail_weapon : "asraab",
-    engine_pos : [2, 41]
   }
 ];
 // 追加候補
 // fighter : MiG-1.44
-// interceptor : CF-105
-// bomber : X-44
+//// interceptor : CF-105
+//// bomber : X-44
 // bomber : Tornado IDS
-// trainer : IAR 99 or multirole : JAS-39
+//// trainer : IAR 99
 // trainer : T-50
 
 const ENEMY_DATA = [

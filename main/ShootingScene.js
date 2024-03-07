@@ -60,7 +60,7 @@ class ShootingScene extends GameScene {
     this.ab_1.scaleX = this.ab_1.scaleX * 0.5;
     this.ab_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
     this.ab_2.scaleX = this.ab_2.scaleX * 0.5;
-    if (selectAircraft == 8) {
+    if (this.player.tag == "al159") {
       this.ab_1.setDepth(51);
       this.ab_2.setDepth(51);
     }
@@ -212,19 +212,24 @@ class ShootingScene extends GameScene {
       }
     }
 
-    if (this.player.augmentor <= 0) {
-      const en_bar_down = Math.abs(450 * (this.player.en / 1000) - 450);
-      this.rect.en_bar.height = 450 - en_bar_down;
-      this.rect.en_bar.y = 120 + en_bar_down;
+    const en_bar_down = Math.abs(450 * (this.player.en / 1000) - 450);
+    this.rect.en_bar.height = 450 - en_bar_down;
+    this.rect.en_bar.y = 120 + en_bar_down;
+    if (this.player.augmentor_overheat > 0) {
+      if (Math.floor(this.player.augmentor_overheat / 10) % 2 == 0) {
+        this.graphics.fillStyle(0xcccc00);
+      }
+      else {
+        this.graphics.fillStyle(0x000000);
+      }
+    }
+    else if (this.player.augmentor <= 0) {
       this.graphics.fillStyle(0xffff00);
-      this.graphics.fillRectShape(this.rect.en_bar);
     }
     else {
-      this.rect.en_bar.height = 450;
-      this.rect.en_bar.y = 120;
       this.graphics.fillStyle(0xffffcc);
-      this.graphics.fillRectShape(this.rect.en_bar);
     }
+    this.graphics.fillRectShape(this.rect.en_bar);
 
     const hp_bar_down = Math.abs(450 * (this.player.hp / 1000) - 450);
     this.rect.hp_bar.height = 450 - hp_bar_down;
@@ -295,6 +300,13 @@ class ShootingScene extends GameScene {
         }
       }
     });
+
+    if (this.player.getWaepon("nomal").tag == "hel" || this.player.getWaepon("sp").tag == "hel")
+    this.bullets.getChildren().forEach(e => {
+      if (e.tag == "hel") {
+        e.x = this.player.x;
+      }
+    });
     super.update();
   }
 
@@ -344,7 +356,9 @@ class ShootingScene extends GameScene {
     }
 
     let shot = (w="nomal") => {
-      this.player.en -= this.player.getWaepon(w).en;
+      if (this.player.augmentor <= 0) {
+        this.player.en -= this.player.getWaepon(w).en;
+      }
       const tag = this.player.getWaepon(w).tag;
       if (tag == "m601") {
         const bullet = this.bullets.get();
@@ -378,6 +392,13 @@ class ShootingScene extends GameScene {
         const bullet = this.bullets.get();
         bullet.create(this.player.x, this.player.y, Math.floor(Math.random() * 136) + 45, tag);
       }
+      else if (tag == "type25") {
+        for (let i = 0; i < 4; i++) {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, 90, tag);
+          bullet.var_type25 = i;
+        }
+      }
       else if (tag == "atm144") {
         const bullet = this.bullets.get();
         bullet.create(this.player.x, this.player.y, (this.player.weponVar_atm144 == 0 ? 180 : 0), tag);
@@ -402,13 +423,20 @@ class ShootingScene extends GameScene {
         const bullet_2 = this.bullets.get();
         bullet_2.create(this.player.x + 15, this.player.y, 90, tag);
       }
+      else if (tag == "r53") {
+        for (let i = 0; i < 11; i++) {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, 90, tag);
+          bullet.var_r53 = i - 5;
+        }
+      }
       else {
         const bullet = this.bullets.get();
         bullet.create(this.player.x, this.player.y, 90, this.player.getWaepon(w).tag);
       }
     }
 
-    if ((this.key.z.isDown && this.player.en >= this.player.getWaepon().en) || this.player.augmentor > 0) {
+    if (((this.key.z.isDown && this.player.en >= this.player.getWaepon().en) || this.player.augmentor > 0) && this.player.augmentor_overheat == 0) {
       if (this.player.reload == 0) {
         shot();
         this.player.reload++;
@@ -425,6 +453,7 @@ class ShootingScene extends GameScene {
     if (this.key.x.isDown) {
       if (this.player.ab >= 1000 && this.player.augmentor == 0) {
         this.player.augmentor = 1000;
+        this.player.augmentor_overheat = 0;
       }
     }
 
