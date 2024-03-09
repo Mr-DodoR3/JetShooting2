@@ -136,12 +136,13 @@ class AircraftSelectScene extends GameScene {
       this.updateData();
     }
     if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+      console.log(UNIT_DATA.length)
       this.selectAircraft++;
       if (this.selectAircraft > UNIT_DATA.length - 1) {
         this.page = 0;
         this.selectAircraft = 0;
       }
-      else if (this.selectAircraft - this.page == 12 && this.selectAircraft + (this.page + 1) <= UNIT_DATA.length) {
+      else if (this.selectAircraft - this.page == 12 && this.selectAircraft + 1 < UNIT_DATA.length) {
         this.page++;
       }
       this.updateData();

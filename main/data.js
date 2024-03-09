@@ -106,11 +106,6 @@ const SKIL_DATA = [
     tag : "reverser",
     name_jp : "スラストリバーサ",
     explanation : ""
-  },
-  {
-    tag : "nuclear",
-    name_jp : "ジニー",
-    explanation : ""
   }
 ];
 
@@ -134,7 +129,7 @@ const WEAPON_DATA = [
     explanation : "レールガン",
     power : 50,
     reload : 10,
-    en : 50
+    en : 40
   },
   {
     tag : "l47",
@@ -163,8 +158,8 @@ const WEAPON_DATA = [
     name_jp : "",
     explanation : "斜めと後ろに撃つやつ",
     power : 40,
-    reload : 10,
-    en : 40
+    reload : 6,
+    en : 35
   },
   {
     tag : "l50",
@@ -277,6 +272,36 @@ const WEAPON_DATA = [
     en : 30
   },
   {
+    tag : "ciasa",
+    serial : "CIAS-A",
+    name : "",
+    name_jp : "",
+    explanation : "広範囲にばらまく",
+    power : 30,
+    reload : 2,
+    en : 15
+  },
+  {
+    tag : "rb88",
+    serial : "RB88",
+    name : "",
+    name_jp : "",
+    explanation : "単発で特徴がないやつ",
+    power : 10,
+    reload : 4,
+    en : 15
+  },
+  {
+    tag : "tcc2",
+    serial : "TCC-2",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    power : 35,
+    reload : 6,
+    en : 30
+  },
+  {
     tag : "e_m601",
     serial : "M601",
     name : "",
@@ -298,6 +323,7 @@ const UNIT_DATA = [
     spec : [5, 5, 5],
     skil : ["cft", "auto"],
     weapon : "eml12",
+    // weapon : "tcc2",
     specail_weapon : "l47",
     engine_pos : [2, 45]
   },
@@ -329,16 +355,29 @@ const UNIT_DATA = [
   },
   {
     tag : "xfs23",
-    serial : "XFS-23A",
+    serial : "FS-23A",
     name : "Rapier",
     name_jp : "レイピア",
     explanation : "ステルス性や超音速巡航性能などの最新機能を備えた高性能戦闘機です。",
     type : "fighter",
     spec : [9, 2, 5],
-    skil : ["supercruise", "vt", "stealth", "auto"],
+    skil : ["supercruise", "vt", "stealth"],
     weapon : "l50",
     specail_weapon : "l47",
     engine_pos : [4, 42]
+  },
+  {
+    tag : "xb44",
+    serial : "XB-44A",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    type : "bomber",
+    spec : [0, 0, 0],
+    skil : ["supercruise", "vt", "irst","stealth", "fbl", "auto"],
+    weapon : "",
+    specail_weapon : "",
+    engine_pos : [0, 0]
   },
   {
     tag : "sy25",
@@ -367,6 +406,19 @@ const UNIT_DATA = [
     engine_pos : [3, 43]
   },
   {
+    tag : "yig144",
+    serial : "YIG-144S",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    type : "fighter",
+    spec : [0, 0, 0],
+    skil : ["cft", "supercruise", "vt", "irst", "auto"],
+    weapon : "",
+    specail_weapon : "",
+    engine_pos : [0, 0]
+  },
+  {
     tag : "va8",
     serial : "VA-8GR",
     name : "SuperKestrel",
@@ -378,6 +430,19 @@ const UNIT_DATA = [
     weapon : "kkh76",
     specail_weapon : "jdal",
     engine_pos : [2, 27]
+  },
+  {
+    tag : "isd",
+    serial : "ISD-4GR",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    type : "bomber",
+    spec : [0, 0, 0],
+    skil : ["swingwing", "flare", "wso", "reverser"],
+    weapon : "",
+    specail_weapon : "",
+    engine_pos : [0, 0]
   },
   {
     tag : "md4000",
@@ -406,6 +471,19 @@ const UNIT_DATA = [
     engine_pos : [2, 38]
   },
   {
+    tag : "saas39",
+    serial : "SAAS-39NG",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    type : "interceptor",
+    spec : [0, 0, 0],
+    skil : ["supercruise", "maintain", "auto", "reverser"],
+    weapon : "",
+    specail_weapon : "",
+    engine_pos : [0, 0]
+  },
+  {
     tag : "ab2",
     serial : "AB2M1",
     name : "Ryoufuu",
@@ -431,6 +509,19 @@ const UNIT_DATA = [
     specail_weapon : "atm144",
     engine_pos : [2, 45]
   },
+  {
+    tag : "kat50",
+    serial : "KAT-50A",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    type : "trainer",
+    spec : [0, 0, 0],
+    skil : [],
+    weapon : "",
+    specail_weapon : "",
+    engine_pos : [0, 0]
+  },
   {// TFX
     tag : "tf24",
     serial : "MMU-TF-24",
@@ -443,15 +534,37 @@ const UNIT_DATA = [
     weapon : "malc",
     specail_weapon : "asraab",
     engine_pos : [2, 41]
+  },
+  {// SAIA 90
+    tag : "sai90",
+    serial : "SAI-90",
+    name : "",
+    name_jp : "",
+    explanation : "",
+    type : "trainer",
+    spec : [0, 0, 0],
+    skil : ["stealth"],
+    weapon : "",
+    specail_weapon : "",
+    engine_pos : [0, 0]
   }
 ];
 // 追加候補
 // fighter : MiG-1.44
-//// interceptor : CF-105
-//// bomber : X-44
+// interceptor : JAS 39
+// bomber : X-44
 // bomber : Tornado IDS
-//// trainer : IAR 99
 // trainer : T-50
+// trainer : SAIA 90
+
+// アメリカ 4+1
+// ロシア 2+1
+// 西欧 2+1
+// 東欧 1+0
+// 北欧 0+1
+// 東アジア 2+1
+// 中東 1+0
+// 南米 0+1
 
 const ENEMY_DATA = [
   {

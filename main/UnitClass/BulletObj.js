@@ -26,7 +26,12 @@ class BulletObj extends Phaser.GameObjects.Image {
   }
 
   colliderSet(size=24) {
-    if (size == 64) {
+    if (this.tag == "tcc2") {
+      this.body.offset.x = 0;
+      this.body.offset.y = 20;
+      this.body.setSize(64, 24, false);
+    }
+    else if (size == 64) {
       this.body.offset.x = 0;
       this.body.offset.y = 0;
       this.body.setSize(64, 64, false);
@@ -185,6 +190,17 @@ class BulletObj extends Phaser.GameObjects.Image {
           }
         }
         this.setY(this.y - 9);
+        break;
+      case "ciasa":
+        this.setRotation(this.rad(this.deg));
+        this.setX(this.xForward(10));
+        this.setY(this.yForward(10));
+        break;
+      case "rb88":
+        this.setY(this.y - 10);
+        break;
+      case "tcc2":
+        this.setY(this.y - 12);
         break;
       case "e_m601":
         this.setX(this.xForward(5));

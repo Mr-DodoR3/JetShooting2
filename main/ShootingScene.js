@@ -139,7 +139,39 @@ class ShootingScene extends GameScene {
   
       ab_get += Math.floor(bullet.power / 2);
       bullet.hit();
-      let returnData = enemy.damage(bullet.power);
+
+      let damage = bullet.power;
+      let damage_coefficient = 1.0;
+
+      if (this.player.type == "multirole" && (enemy.type == "air" || enemy.type == "grd")) {
+        damage_coefficient += 0.1;
+        if (this.player.skil.wso) damage_coefficient += 0.1;
+      }
+      else if (this.player.type == "fighter" && enemy.type == "air") {
+        damage_coefficient += 0.2;
+        if (this.player.skil.wso) damage_coefficient += 0.1;
+      }
+      else if (this.player.type == "fighter" && enemy.type == "attacker") {
+        damage_coefficient += 0.2;
+        if (this.player.skil.wso) damage_coefficient += 0.1;
+      }
+      else if (this.player.type == "interceptor" && this.player.augmentor > 0) {
+        damage_coefficient += 0.2;
+        if (this.player.skil.wso) damage_coefficient += 0.1;
+      }
+      else if (this.player.type == "bomber" && enemy.boss) {
+        damage_coefficient += 0.2;
+        if (this.player.skil.wso) damage_coefficient += 0.1;
+      }
+
+      if (this.player.skil.asm && enemy.type == "sae") {
+        damage_coefficient += 0.4;
+      }
+
+      damage = Math.floor(damage * damage_coefficient);
+
+      console.log(damage);
+      let returnData = enemy.damage(damage);
       if (!(returnData == -1)) {
         ab_get += 100;
         this.explosion = this.explosions.get();
@@ -430,9 +462,28 @@ class ShootingScene extends GameScene {
           bullet.var_r53 = i - 5;
         }
       }
+      else if (tag == "ciasa") {
+        const bullet = this.bullets.get();
+        bullet.create(this.player.x, this.player.y, this.player.weponVar_ciasa, tag);
+        if (this.player.weponVar_ciasa_2 == 0) {
+          this.player.weponVar_ciasa -= 15;
+        }
+        else {
+          this.player.weponVar_ciasa += 15;
+        }
+
+        if (this.player.weponVar_ciasa >= 150) {
+          this.player.weponVar_ciasa = 150;
+          this.player.weponVar_ciasa_2 = 0;
+        }
+        else if (this.player.weponVar_ciasa <= 30) {
+          this.player.weponVar_ciasa = 30;
+          this.player.weponVar_ciasa_2 = 1;
+        }
+      }
       else {
         const bullet = this.bullets.get();
-        bullet.create(this.player.x, this.player.y, 90, this.player.getWaepon(w).tag);
+        bullet.create(this.player.x, this.player.y, 90, tag);
       }
     }
 
@@ -443,12 +494,12 @@ class ShootingScene extends GameScene {
       }
     }
 
-    if (this.player.augmentor > 0) {
-      if (this.player.reload_2 == 0) {
-        shot("sp");
-        this.player.reload_2++;
-      }
-    }
+    // if (this.player.augmentor > 0) {
+    //   if (this.player.reload_2 == 0) {
+    //     shot("sp");
+    //     this.player.reload_2++;
+    //   }
+    // }
 
     if (this.key.x.isDown) {
       if (this.player.ab >= 1000 && this.player.augmentor == 0) {

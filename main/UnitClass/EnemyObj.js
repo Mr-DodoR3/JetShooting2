@@ -13,6 +13,10 @@ class EnemyObj extends Phaser.GameObjects.Image {
 
     this.action_type = -1;
     this.life_time = 0;
+
+    this.type = "";
+
+    this.setDepth(40);
   }
 
   colliderSet() {
@@ -38,6 +42,7 @@ class EnemyObj extends Phaser.GameObjects.Image {
     for (let i = 0; i < ENEMY_DATA.length; i++) {
       if (tag == ENEMY_DATA[i].tag) {
         this.hp = ENEMY_DATA[i].hp;
+        this.type = ENEMY_DATA[i].attribute;
       }
     }
   }
