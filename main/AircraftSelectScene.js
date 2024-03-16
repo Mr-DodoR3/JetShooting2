@@ -10,6 +10,8 @@ class AircraftSelectScene extends GameScene {
     this.text_unitName; 
     this.text_specName;
     this.specBar = new Array(4);
+
+    this.long_push = 0;
     for (let i = 0; i < this.specBar.length; i++) {
       this.specBar[i] = new Array(10);
     }

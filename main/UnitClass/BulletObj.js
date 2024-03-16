@@ -74,6 +74,9 @@ class BulletObj extends Phaser.GameObjects.Image {
     if (this.tag == "type25")  {
       this.changeExp(10, "exp_blue");
     }
+    else if (this.tag == "atm144") {
+      this.changeExp(10, "exp_red");
+    }
     else if (!(this.tag == "exp_red" || this.tag == "exp_blue")) {
       this.destroy();
     }

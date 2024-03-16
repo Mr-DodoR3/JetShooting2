@@ -1,7 +1,7 @@
 class ShootingScene extends GameScene {
   constructor () {
     super("shootingScene");
-    this.enemyDebugMode = false;
+    this.enemyDebugMode = true;
 
     this.graphics;
     this.rect;
@@ -56,6 +56,7 @@ class ShootingScene extends GameScene {
     });
     this.player = this.playerGroup.get();
     this.player.create(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 + 200, UNIT_DATA[selectAircraft].tag);
+
     this.ab_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
     this.ab_1.scaleX = this.ab_1.scaleX * 0.5;
     this.ab_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
@@ -74,11 +75,12 @@ class ShootingScene extends GameScene {
       classType: EnemyObj,
       runChildUpdate: true
     });
+    // this.enemy = this.enemys.get();
+    // this.enemy.create("e");
     if (this.enemyDebugMode) {
       this.enemy = this.enemys.get();
-      // this.enemy.create("yig21", 3);
       this.enemy.create("yig21", 4);
-      // this.enemy.create("iac1", -1);
+      
     }
 
     this.enemyBullets = this.physics.add.group({
@@ -108,14 +110,14 @@ class ShootingScene extends GameScene {
   };
 
   clash(player, enemy) {
-    if (this.player.life) {
+    if (this.player.life && enemy.type == "air") {
       let returnData = enemy.damage(999);
       if (!(returnData == -1)) {
         this.explosion = this.explosions.get();
         this.explosion.create(returnData.x, returnData.y);
       }
 
-      if (player.hit(300)) {
+      if (player.hit(player.skil.auto ? 200 : 300)) {
         this.explosion = this.explosions.get();
         this.explosion.create(this.player.x, this.player.y);
       }
@@ -305,6 +307,7 @@ class ShootingScene extends GameScene {
   }
 
   update() {
+    // console.log(this.enemys.getChildren().length);
     // this.player.action();
     this.background_disp();
     this.disp_ui();
@@ -494,12 +497,12 @@ class ShootingScene extends GameScene {
       }
     }
 
-    // if (this.player.augmentor > 0) {
-    //   if (this.player.reload_2 == 0) {
-    //     shot("sp");
-    //     this.player.reload_2++;
-    //   }
-    // }
+    if (this.player.augmentor > 0) {
+      if (this.player.reload_2 == 0) {
+        shot("sp");
+        this.player.reload_2++;
+      }
+    }
 
     if (this.key.x.isDown) {
       if (this.player.ab >= 1000 && this.player.augmentor == 0) {

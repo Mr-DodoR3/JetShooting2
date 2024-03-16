@@ -97,8 +97,8 @@ class Title extends GameScene {
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       switch (this.mode) {
         case 0:
-          this.nextScene = "missionSelectScene";
-          // this.nextScene = "shootingScene";
+          // this.nextScene = "missionSelectScene";
+          this.nextScene = "shootingScene";
           break;
         case 1:
           break;

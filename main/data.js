@@ -373,10 +373,10 @@ const UNIT_DATA = [
     name_jp : "",
     explanation : "",
     type : "bomber",
-    spec : [0, 0, 0],
+    spec : [4, 7, 10],
     skil : ["supercruise", "vt", "irst","stealth", "fbl", "auto"],
-    weapon : "",
-    specail_weapon : "",
+    weapon : "hel",
+    specail_weapon : "atm144",
     engine_pos : [0, 0]
   },
   {
@@ -412,10 +412,10 @@ const UNIT_DATA = [
     name_jp : "",
     explanation : "",
     type : "fighter",
-    spec : [0, 0, 0],
+    spec : [6, 6, 6],
     skil : ["cft", "supercruise", "vt", "irst", "auto"],
-    weapon : "",
-    specail_weapon : "",
+    weapon : "malc",
+    specail_weapon : "l50",
     engine_pos : [0, 0]
   },
   {
@@ -438,10 +438,10 @@ const UNIT_DATA = [
     name_jp : "",
     explanation : "",
     type : "bomber",
-    spec : [0, 0, 0],
+    spec : [2, 6, 8],
     skil : ["swingwing", "flare", "wso", "reverser"],
-    weapon : "",
-    specail_weapon : "",
+    weapon : "tcc2",
+    specail_weapon : "pj234",
     engine_pos : [0, 0]
   },
   {
@@ -451,7 +451,7 @@ const UNIT_DATA = [
     name_jp : "アズュール(フランス語で紺碧)",
     explanation : "特徴的な装備はないですが、総合スペックの高い汎用戦闘機です。",
     type : "multirole",
-    spec : [8, 6, 6],
+    spec : [6, 3, 6],
     skil : ["supercruise"],
     weapon : "gua99",
     specail_weapon : "malc",
@@ -464,7 +464,7 @@ const UNIT_DATA = [
     name_jp : "ルナ(チェコ語で月)",
     explanation : "癖はないですが、攻撃力が低く実戦には向かない練習機です。",
     type : "trainer",
-    spec : [3, 3, 3],
+    spec : [2, 2, 2],
     skil : ["maintain", "coin"],
     weapon : "m601",
     specail_weapon : "gs60",
@@ -477,10 +477,10 @@ const UNIT_DATA = [
     name_jp : "",
     explanation : "",
     type : "interceptor",
-    spec : [0, 0, 0],
+    spec : [7, 4, 2],
     skil : ["supercruise", "maintain", "auto", "reverser"],
-    weapon : "",
-    specail_weapon : "",
+    weapon : "l50",
+    specail_weapon : "asraab",
     engine_pos : [0, 0]
   },
   {
@@ -490,7 +490,7 @@ const UNIT_DATA = [
     name_jp : "涼風",
     explanation : "対艦攻撃も想定され開発された高い攻撃力を持つ攻撃機です。",
     type : "attacker",
-    spec : [7, 2, 9],
+    spec : [7, 2, 7],
     skil : ["asm", "fbl"],
     weapon : "gua99",
     specail_weapon : "type25",
@@ -516,10 +516,10 @@ const UNIT_DATA = [
     name_jp : "",
     explanation : "",
     type : "trainer",
-    spec : [0, 0, 0],
+    spec : [4, 1, 4],
     skil : [],
-    weapon : "",
-    specail_weapon : "",
+    weapon : "l47",
+    specail_weapon : "gs60",
     engine_pos : [0, 0]
   },
   {// TFX
@@ -542,10 +542,10 @@ const UNIT_DATA = [
     name_jp : "",
     explanation : "",
     type : "trainer",
-    spec : [0, 0, 0],
+    spec : [5, 4, 1],
     skil : ["stealth"],
-    weapon : "",
-    specail_weapon : "",
+    weapon : "tcc2",
+    specail_weapon : "ciasa",
     engine_pos : [0, 0]
   }
 ];
@@ -604,5 +604,15 @@ const ENEMY_DATA = [
     serial : "Me-300",
     name_jp : "",
     attribute : "air"
+  }
+];
+
+const BOSS_DATA = [
+  {// Halifax
+    tag : "turbulence",
+    serial : "Turbulence C.VII",
+    name_jp : "",
+    attribute : "air",
+    hp : 100
   }
 ];
