@@ -58,7 +58,13 @@ class BulletObj extends Phaser.GameObjects.Image {
         this.power = WEAPON_DATA[i].power;
       }
     }
-    this.setTexture(tag);
+
+    let img_tag = tag;
+    if (img_tag.substr(0, 2) == "e_") {
+      img_tag = img_tag.substr(2, img_tag.length);
+    }
+
+    this.setTexture(img_tag);
     this.colliderSet();
 
     if (this.tag == "pj234") {

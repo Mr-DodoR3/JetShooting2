@@ -56,7 +56,10 @@ class Title extends GameScene {
 
     // GameScene
     for (let i = 0; i < WEAPON_DATA.length; i++) {
-      this.load.image(WEAPON_DATA[i].tag, "assets/images/bullet/" + WEAPON_DATA[i].tag + ".png");
+      const weapon_tag = WEAPON_DATA[i].tag;
+      if (!(weapon_tag.substr(0, 2) == "e_")) {
+        this.load.image(WEAPON_DATA[i].tag, "assets/images/bullet/" + WEAPON_DATA[i].tag + ".png");
+      }
     }
     
     for (let i = 0; i < ENEMY_DATA.length; i++) {

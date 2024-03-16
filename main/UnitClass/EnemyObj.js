@@ -3,6 +3,10 @@ class EnemyObj extends Phaser.GameObjects.Container {
     constructor(scene) {
       super(scene);
       this.scene = scene;
+      this.parts = this.scene.physics.add.group({
+        classType: EnemyPartsObj,
+        runChildUpdate: true
+      });
       this.unit_image = null;
 
       this.deg = 0;
@@ -19,27 +23,29 @@ class EnemyObj extends Phaser.GameObjects.Container {
   
       this.type = "";
   
-      this.parts = [];
-  
       this.setDepth(40);
     }
   
     colliderSet() {
-      this.body.offset.x = 40;
-      this.body.offset.y = 40;
+      this.body.offset.x = -24;
+      this.body.offset.y = -24;
       this.body.setSize(48, 48, false);
     }
   
     createSetup(tag) {
       this.setActive(true);
       this.setVisible(true);
-  
-      const image = this.scene.add.image(0, 0, tag);
-      this.unit_image = this.add(image);
+
+      this.createImage(tag);
 
       this.scaleX = this.scaleX * 0.5;
       this.scaleY = this.scaleY * 0.5;
       this.colliderSet();
+    }
+
+    createImage(tag) {
+      const image = this.scene.add.image(0, 0, tag);
+      this.unit_image = this.add(image);
     }
   
     create(tag, action) {
@@ -50,6 +56,11 @@ class EnemyObj extends Phaser.GameObjects.Container {
         if (tag == ENEMY_DATA[i].tag) {
           this.hp = ENEMY_DATA[i].hp;
           this.type = ENEMY_DATA[i].attribute;
+          for (let j = 0; j < ENEMY_DATA[i].parts.length; j++) {
+            const part = this.parts.get();
+            part.create(ENEMY_DATA[i].parts[j]);
+            this.add(part);
+          }
         }
       }
     }
@@ -159,6 +170,7 @@ class EnemyObj extends Phaser.GameObjects.Container {
             this.setY(300);
             this.deg = 90;
           }
+          // this.deg += 5;
           break;
       }
     }

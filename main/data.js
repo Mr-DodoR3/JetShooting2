@@ -585,7 +585,8 @@ const ENEMY_DATA = [
     tag : "ea314",
     serial : "E-A314",
     name_jp : "スーパーパルダウ(ポルトガル語でスーパー雀)",
-    attribute : "air"
+    attribute : "air",
+    parts : [ "ea314_propeller" ]
   },
   {
     tag : "fs16",

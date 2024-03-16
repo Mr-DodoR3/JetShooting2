@@ -79,7 +79,8 @@ class ShootingScene extends GameScene {
     // this.enemy.create("e");
     if (this.enemyDebugMode) {
       this.enemy = this.enemys.get();
-      this.enemy.create("yig21", 4);
+      // this.enemy.create("yig21", 4);
+      this.enemy.create("ea314", -1);
       
     }
 
