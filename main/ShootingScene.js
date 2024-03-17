@@ -329,6 +329,8 @@ class ShootingScene extends GameScene {
 
     if (!this.enemyDebugMode) this.enemyPrefab();
     this.enemys.getChildren().forEach(e => {
+      e.playerPos = this.player.getPositionData();
+
       e.shot().forEach(shot_type => {
         const bullet = this.enemyBullets.get();
         if (bullet) {

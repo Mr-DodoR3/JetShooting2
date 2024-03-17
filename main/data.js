@@ -625,6 +625,6 @@ const ENEMY_DATA = [
     name_jp : "",
     importance : "boss",
     attribute : "air",
-    parts : [ "turbulence_propeller", "turbulence_gun", "turbulence_gun" ]
+    parts : [ "turbulence_propeller", "turbulence_gun",  ]
   }
 ];

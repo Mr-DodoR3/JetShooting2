@@ -5,7 +5,10 @@ var DISPLAY_HEIGHT = 640;
 
 var selectMission = 0;
 var selectAircraft = 0;
-var playerData;
+var playerData = {
+  x: 0,
+  y: 0
+};
 
 const config = {
   type: Phaser.CANVAS,

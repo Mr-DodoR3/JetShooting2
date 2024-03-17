@@ -231,6 +231,10 @@ class PlayerObj extends Phaser.GameObjects.Image {
     }
   }
 
+  getPositionData() {
+    return { x: this.x, y: this.y }
+  }
+
   rad(deg) {
     return deg * (Math.PI / 180.0);
   }

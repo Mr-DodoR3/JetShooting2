@@ -24,6 +24,8 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.type = "";
       this.boss = false;
   
+      this.playerPos = { x: 0, y: 0 };
+
       this.setDepth(40);
     }
   
@@ -226,6 +228,11 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.action();
       this.setRotation(this.rad(this.deg));
       this.life_time++;
+      
+      this.parts.getChildren().forEach(e => {
+        e.parentPos = { x: this.x, y: this.y };
+        e.playerPos = this.playerPos;
+      });
     }
   
     xForward(speed) {
