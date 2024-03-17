@@ -83,18 +83,20 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
   }
 
   shot() {
+    let shot_data = [];
     switch(this.tag) {
       case "turbulence_gun":
         if (this.reload_time < this.reload) {
           this.reload = 0;
-          return {tag: "e_m601", x: this.x, y: this.y, deg: this.deg};
+          shot_data.push({tag: "e_m601", x: this.x + this.yForward(-5), y: this.y + this.xForward(5), deg: this.deg});
+          shot_data.push({tag: "e_m601", x: this.x + this.yForward(5), y: this.y + this.xForward(-5), deg: this.deg});
         }
         else {
           this.reload++;
         }
         break;
     }
-    return "none";
+    return shot_data;
   }
 
   rotate_target(tgtX, tgtY) {
@@ -136,6 +138,14 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
         this.setRotation(this.rad(this.deg));
         break;
     }
+  }
+  
+  xForward(speed) {
+    return speed * Math.cos(this.rad(this.deg + 90))
+  }
+
+  yForward(speed) {
+    return speed * Math.sin(this.rad(this.deg + 90))
   }
 
   rad(deg) {

@@ -215,11 +215,11 @@ class EnemyObj extends Phaser.GameObjects.Container {
       // }
       this.parts.getChildren().forEach(e => {
         const add_shot = e.shot();
-        if (!(add_shot == "none")) {
-          add_shot.x += this.x;
-          add_shot.y += this.y;
-          shot_data.push(add_shot);
-        }
+        add_shot.forEach(f => {
+          f.x += this.x;
+          f.y += this.y;
+          shot_data.push(f);
+        });
       });
       return shot_data;
     }
