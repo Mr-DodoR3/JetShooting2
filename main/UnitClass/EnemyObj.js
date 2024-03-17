@@ -22,25 +22,38 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.life_time = 0;
   
       this.type = "";
+      this.boss = false;
   
       this.setDepth(40);
     }
   
-    colliderSet() {
-      this.body.offset.x = -24;
-      this.body.offset.y = -24;
-      this.body.setSize(48, 48, false);
+    colliderSet(tag) {
+      if (tag == "turbulence") {
+        this.body.offset.x = -128;
+        this.body.offset.y = -24;
+        this.body.setSize(256, 48, false);
+      }
+      else {
+        this.body.offset.x = -24;
+        this.body.offset.y = -24;
+        this.body.setSize(48, 48, false);
+      }
     }
   
     createSetup(tag) {
       this.setActive(true);
       this.setVisible(true);
 
-      this.createImage(tag);
-
-      this.scaleX = this.scaleX * 0.5;
-      this.scaleY = this.scaleY * 0.5;
-      this.colliderSet();
+      if (this.boss) {
+        this.scaleX = this.scaleX * 1.0;
+        this.scaleY = this.scaleY * 1.0;
+        console.log("Ok")
+      }
+      else {
+        this.scaleX = this.scaleX * 0.5;
+        this.scaleY = this.scaleY * 0.5;
+      }
+      this.colliderSet(tag);
     }
 
     createImage(tag) {
@@ -49,20 +62,34 @@ class EnemyObj extends Phaser.GameObjects.Container {
     }
   
     create(tag, action) {
-      this.createSetup(tag);
       this.action_type = action;
   
+      this.createImage(tag);
       for (let i = 0; i < ENEMY_DATA.length; i++) {
         if (tag == ENEMY_DATA[i].tag) {
           this.hp = ENEMY_DATA[i].hp;
           this.type = ENEMY_DATA[i].attribute;
+          let continued_num = 0;
+          let continued_name = "";
           for (let j = 0; j < ENEMY_DATA[i].parts.length; j++) {
+            if (continued_name == ENEMY_DATA[i].parts[j]) {
+              continued_num++;
+            }
+            else {
+              continued_name = ENEMY_DATA[i].parts[j];
+              continued_num = 0;
+            }
             const part = this.parts.get();
-            part.create(ENEMY_DATA[i].parts[j]);
+            part.create(ENEMY_DATA[i].parts[j], continued_num);
             this.add(part);
+          }
+          if (ENEMY_DATA[i].importance == "boss") {
+            this.boss = true;
           }
         }
       }
+      
+      this.createSetup(tag);
     }
   
     damage(d) {
@@ -176,14 +203,23 @@ class EnemyObj extends Phaser.GameObjects.Container {
     }
   
     shot() {
-      if (this.reload_time < this.reload) {
-        this.reload = 0;
-        return "e_m601";
-      }
-      else {
-        this.reload++;
-        return "none";
-      }
+      let shot_data = [];
+      // if (this.reload_time < this.reload) {
+      //   this.reload = 0;
+      //   shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
+      // }
+      // else {
+      //   this.reload++;
+      // }
+      this.parts.getChildren().forEach(e => {
+        const add_shot = e.shot();
+        if (!(add_shot == "none")) {
+          add_shot.x += this.x;
+          add_shot.y += this.y;
+          shot_data.push(add_shot);
+        }
+      });
+      return shot_data;
     }
   
     update() {

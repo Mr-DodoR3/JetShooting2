@@ -571,49 +571,60 @@ const ENEMY_DATA = [
     tag : "iac1",
     serial : "IA-C1",
     name_jp : "ネッツ(ヘブライ語で鷹)",
+    importance : "nomal",
     attribute : "air",
-    hp : 100
+    hp : 100,
+    parts : [ ]
   },
   {
     tag : "yig21",
     serial : "YiG-21",
     name_jp : "ストレーラ(ロシア語で矢)",
+    importance : "nomal",
     attribute : "air",
-    hp : 60
+    hp : 60,
+    parts : [ ]
   },
   {
     tag : "ea314",
     serial : "E-A314",
     name_jp : "スーパーパルダウ(ポルトガル語でスーパー雀)",
+    importance : "nomal",
     attribute : "air",
+    hp : 150,
     parts : [ "ea314_propeller" ]
   },
   {
     tag : "fs16",
     serial : "FS-16CG",
     name_jp : "マスタングⅡ",
-    attribute : "air"
+    importance : "nomal",
+    attribute : "air",
+    parts : [ ]
   },
   {
     tag : "yig29",
     serial : "YiG-29S",
     name_jp : "",
-    attribute : "air"
+    importance : "nomal",
+    attribute : "air",
+    parts : [ ]
   },
   {
     tag : "me300",      // HA 300
     serial : "Me-300",
     name_jp : "",
-    attribute : "air"
-  }
-];
+    importance : "nomal",
+    attribute : "air",
+    parts : [ ]
+  },
 
-const BOSS_DATA = [
-  {// Halifax
-    tag : "turbulence",
+  {
+    tag : "turbulence",      // Halifax
     serial : "Turbulence C.VII",
     name_jp : "",
+    importance : "boss",
     attribute : "air",
-    hp : 100
+    parts : [ "turbulence_propeller", "turbulence_gun", "turbulence_gun" ]
   }
 ];

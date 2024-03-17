@@ -65,6 +65,11 @@ class Title extends GameScene {
     for (let i = 0; i < ENEMY_DATA.length; i++) {
       this.load.image(ENEMY_DATA[i].tag, "assets/images/npc_unit/" + ENEMY_DATA[i].tag + ".png");
     }
+    this.load.image("ea314_propeller_l", "assets/images/parts/ea314_propeller_l.png");
+    this.load.image("ea314_propeller_r", "assets/images/parts/ea314_propeller_r.png");
+    this.load.image("turbulence_propeller_r", "assets/images/parts/turbulence_propeller_r.png");
+    this.load.image("turbulence_propeller_l", "assets/images/parts/turbulence_propeller_l.png");
+    this.load.image("turbulence_gun", "assets/images/parts/turbulence_gun.png");
 
     this.load.image("flare_obj", "assets/images/flare.png");
     

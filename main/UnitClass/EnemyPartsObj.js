@@ -14,42 +14,49 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
 
     this.type = "";
 
-    this.setDepth(41);
-
     this.reciprocating = 0;
   }
 
   colliderSet() {
+    if (this.destruction) {
+
+    }
+    else {
+      this.body.destroy();
+    }
     // this.body.offset.x = 40;
     // this.body.offset.y = 40;
     // this.body.setSize(48, 48, false);
   }
 
-  createSetup(tag) {
+  createSetup(tag, num) {
     this.setActive(true);
     this.setVisible(true);
 
     switch(tag) {
       case "ea314_propeller":
-        // this.setX(480);
-        // this.setY(0);
-        // this.setTexture(tag + "_l");
-        this.setTexture("fsb18")
+      case "turbulence_propeller":
+        this.setTexture(tag + "_l");
+        break;
+      case "turbulence_gun":
+        this.setTexture(tag);
+        this.deg = 270;
+        if (num == 0) {
+          this.setX(0);
+          this.setY(0);
+        }
+        else {
+          this.setX(0);
+          this.setY(90);
+        }
         break;
     }
   }
 
-  create(tag, action) {
+  create(tag, num=0) {
     this.tag = tag;
-    this.createSetup(tag);
-    // this.action_type = action;
-
-    // for (let i = 0; i < ENEMY_DATA.length; i++) {
-    //   if (tag == ENEMY_DATA[i].tag) {
-    //     this.hp = ENEMY_DATA[i].hp;
-    //     this.type = ENEMY_DATA[i].attribute;
-    //   }
-    // }
+    this.createSetup(tag, num);
+    this.colliderSet();
   }
 
   damage(d) {
@@ -71,29 +78,37 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
   }
 
   shot() {
-    // if (this.reload_time < this.reload) {
-    //   this.reload = 0;
-    //   return "e_m601";
-    // }
-    // else {
-    //   this.reload++;
-    //   return "none";
-    // }
+    switch(this.tag) {
+      case "turbulence_gun":
+        if (this.reload_time < this.reload) {
+          this.reload = 0;
+          return {tag: "e_m601", x: this.x, y: this.y, deg: this.deg};
+        }
+        else {
+          this.reload++;
+        }
+        break;
+    }
+    return "none";
   }
 
   update() {
-    // switch(this.tag) {
-    //   case "ea314_propeller":
-    //     this.reciprocating++;
-    //     if (this.reciprocating > 20) {
-    //       this.reciprocating = 0;
-    //       this.setTexture(tag + "_l");
-    //     }
-    //     else if (this.reciprocating == 10) {
-    //       this.setTexture(tag + "_r");
-    //     }
-    //     break;
-    // }
+    switch(this.tag) {
+      case "ea314_propeller":
+      case "turbulence_propeller":
+        this.reciprocating++;
+        if (this.reciprocating > 6) {
+          this.reciprocating = 0;
+          this.setTexture(this.tag + "_l");
+        }
+        else if (this.reciprocating == 3) {
+          this.setTexture(this.tag + "_r");
+        }
+        break;
+      case "turbulence_gun":
+        this.setRotation(this.rad(this.deg));
+        break;
+    }
   }
 
   rad(deg) {

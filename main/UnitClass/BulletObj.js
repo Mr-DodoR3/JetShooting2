@@ -23,6 +23,8 @@ class BulletObj extends Phaser.GameObjects.Image {
     this.var_r53_2 = 0;
 
     this.collision_active = true;
+  
+    this.setDepth(50);
   }
 
   colliderSet(size=24) {
@@ -58,7 +60,7 @@ class BulletObj extends Phaser.GameObjects.Image {
         this.power = WEAPON_DATA[i].power;
       }
     }
-
+    
     let img_tag = tag;
     if (img_tag.substr(0, 2) == "e_") {
       img_tag = img_tag.substr(2, img_tag.length);

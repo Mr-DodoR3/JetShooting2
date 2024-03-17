@@ -80,7 +80,8 @@ class ShootingScene extends GameScene {
     if (this.enemyDebugMode) {
       this.enemy = this.enemys.get();
       // this.enemy.create("yig21", 4);
-      this.enemy.create("ea314", -1);
+      this.enemy.create("turbulence", -1);
+      // this.enemy.create("ea314", -1);
       
     }
 
@@ -111,7 +112,7 @@ class ShootingScene extends GameScene {
   };
 
   clash(player, enemy) {
-    if (this.player.life && enemy.type == "air") {
+    if (this.player.life && enemy.type == "air" && !enemy.boss) {
       let returnData = enemy.damage(999);
       if (!(returnData == -1)) {
         this.explosion = this.explosions.get();
@@ -328,13 +329,12 @@ class ShootingScene extends GameScene {
 
     if (!this.enemyDebugMode) this.enemyPrefab();
     this.enemys.getChildren().forEach(e => {
-      const shot_type = e.shot();
-      if (!(shot_type == "none")) {
+      e.shot().forEach(shot_type => {
         const bullet = this.enemyBullets.get();
         if (bullet) {
-          bullet.create(e.x, e.y, e.deg, "e_m601");
+          bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag);
         }
-      }
+      });
     });
 
     if (this.player.getWaepon("nomal").tag == "hel" || this.player.getWaepon("sp").tag == "hel")
