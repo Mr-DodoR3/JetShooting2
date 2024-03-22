@@ -1,7 +1,60 @@
 class ShootingScene extends GameScene {
+  boss_text = new class {
+    constructor() {
+      this.disp = false;
+      this.life_time = 0;
+      this.img = null;
+      this.now_size = { w: null, h: null };
+      this.default_size = { w: null, h: null };
+    }
+
+    setup(scene) {
+      this.img = scene.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "boss_text");
+      this.img.scaleX /= 2;
+      this.img.scaleY /= 2;
+      this.default_size.w = this.img.width;
+      this.default_size.h = this.img.height;
+      this.img.setDepth(100);
+    }
+
+    start() {
+      this.disp = true;
+      this.now_size.w = 0.5;
+      this.now_size.h = 0.5;
+    }
+
+    update() {
+      if (this.disp) {
+        this.img.setVisible(true);
+        if (this.life_time < 30) {
+          this.now_size.w += 0.05;
+          this.now_size.h += 0.05;
+        }
+        else if (this.life_time < 70) {
+          this.now_size.w -= 0.05;
+          this.now_size.h -= 0.05;
+        }
+        else {
+          this.disp = false;
+        }
+        if ((this.life_time % 6) < 3) {
+          this.img.setAlpha(0);
+        }
+        else {
+          this.img.setAlpha(1);
+        }
+        this.img.setDisplaySize(this.now_size.w * this.default_size.w, this.now_size.h * this.default_size.h);
+        this.life_time++;
+      }
+      else {
+        this.img.setVisible(false);
+      }
+    }
+  }();
+
   constructor () {
     super("shootingScene");
-    this.enemyDebugMode = true;
+    this.enemyDebugMode = false;
 
     this.graphics;
     this.rect;
@@ -28,6 +81,9 @@ class ShootingScene extends GameScene {
 
   create() {
     super.create();
+
+    this.boss_text.setup(this);
+
     this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
     this.bg_1.scaleX = this.bg_1.scaleX * 2;
     this.bg_1.scaleY = this.bg_1.scaleY * 2;
@@ -285,10 +341,18 @@ class ShootingScene extends GameScene {
       if (this.enemyCount >= MISSION_DATA[0][this.enemyProgress].pieces) {
         this.enemySleep++;
         if (this.enemySleep > MISSION_DATA[0][this.enemyProgress].sleep) {
-          this.enemyProgress++;
-          this.enemyDelta = 0;
-          this.enemySleep = 0;
-          this.enemyCount = 0;
+          if (MISSION_DATA[0].length > this.enemyProgress + 1) {
+            this.enemyProgress++;
+            this.enemyDelta = 0;
+            this.enemySleep = 0;
+            this.enemyCount = 0;
+            if (MISSION_DATA[0][this.enemyProgress].repletion == "boss") {
+              this.boss_text.start();
+            }
+          }
+          else {
+
+          }
         }
       }
       else if (this.enemyDelta > MISSION_DATA[0][this.enemyProgress].interval) {
@@ -302,9 +366,6 @@ class ShootingScene extends GameScene {
       else {
         this.enemyDelta++;
       }
-    }
-    else {
-      // ボス
     }
   }
 
@@ -345,6 +406,9 @@ class ShootingScene extends GameScene {
         e.x = this.player.x;
       }
     });
+
+    this.boss_text.update();
+    
     super.update();
   }
 

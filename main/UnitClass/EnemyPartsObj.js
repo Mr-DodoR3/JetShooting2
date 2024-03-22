@@ -8,6 +8,10 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
     this.tag = "";
     this.reload = 0;
     this.reload_time = 60;
+    this.burst_reload = 0;
+    this.burst_reload_time = -1;
+    this.burst = 0;
+    this.burst_now = 0;
 
     this.hp = 100;
     this.destruction = false;
@@ -42,8 +46,13 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
       case "turbulence_propeller":
         this.setTexture(tag + "_l");
         break;
+
       case "turbulence_gun":
         this.setTexture(tag);
+
+        this.burst_reload_time = 3;
+        this.burst = 3;
+        
         this.rotation_speed = 3;
         this.deg = 270;
         if (num == 0) {
@@ -87,9 +96,19 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
     switch(this.tag) {
       case "turbulence_gun":
         if (this.reload_time < this.reload) {
-          this.reload = 0;
-          shot_data.push({tag: "e_m601", x: this.x + this.yForward(-5), y: this.y + this.xForward(5), deg: this.deg});
-          shot_data.push({tag: "e_m601", x: this.x + this.yForward(5), y: this.y + this.xForward(-5), deg: this.deg});
+          if (this.burst_reload_time < this.burst_reload) {
+            this.burst_reload = 0;
+            this.burst_now++;
+            shot_data.push({tag: "e_m601", x: this.x + this.yForward(-5), y: this.y + this.xForward(5), deg: this.deg});
+            shot_data.push({tag: "e_m601", x: this.x + this.yForward(5), y: this.y + this.xForward(-5), deg: this.deg});
+            if (this.burst <= this.burst_now) {
+              this.burst_now = 0;
+              this.reload = 0;
+            }
+          }
+          else {
+            this.burst_reload++;
+          }
         }
         else {
           this.reload++;

@@ -16,7 +16,7 @@ class ExplosionObj extends Phaser.GameObjects.Image {
   update() {
     this.count++;
     if (this.count > 2) {
-      if (this.life < 10) {
+      if (this.life < 9) {
         this.life++;
         this.setTexture("explosion", this.life);
         this.count = 0;

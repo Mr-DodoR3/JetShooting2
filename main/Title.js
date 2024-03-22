@@ -72,6 +72,8 @@ class Title extends GameScene {
     this.load.image("turbulence_gun", "assets/images/parts/turbulence_gun.png");
 
     this.load.image("flare_obj", "assets/images/flare.png");
+
+    this.load.image("boss_text", "assets/images/boss_text.png");
     
     // for (let i = 0; i < 10; i++) {
     //   this.load.image("exp_" + i, "assets/images/explosion/exp_" + i + ".png");

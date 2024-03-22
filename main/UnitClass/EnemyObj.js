@@ -15,6 +15,10 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.tag = "";
       this.reload = 0;
       this.reload_time = 60;
+      this.burst_reload = 0;
+      this.burst_reload_time = -1;
+      this.burst = 0;
+      this.burst_now = 0;
   
       this.hp = 100;
   
@@ -49,7 +53,6 @@ class EnemyObj extends Phaser.GameObjects.Container {
       if (this.boss) {
         this.scaleX = this.scaleX * 1.0;
         this.scaleY = this.scaleY * 1.0;
-        console.log("Ok")
       }
       else {
         this.scaleX = this.scaleX * 0.5;
@@ -193,6 +196,26 @@ class EnemyObj extends Phaser.GameObjects.Container {
             this.destroy();
           }
           break;
+        case 1000:
+          if (this.life_time == 0) {
+            this.setX(600);
+            this.setY(-128);
+            this.deg = 90;
+          }
+          else if (this.y < 240) {
+            this.setY(this.yForward(-1));
+          }
+          break;
+        case 1001:
+          if (this.life_time == 0) {
+            this.setX(360);
+            this.setY(-100);
+            this.deg = 90;
+          }
+          else if (this.y < 180) {
+            this.setY(this.yForward(-1));
+          }
+          break;
         case -1:
           if (this.life_time == 0) {
             this.setX(480);
@@ -206,13 +229,13 @@ class EnemyObj extends Phaser.GameObjects.Container {
   
     shot() {
       let shot_data = [];
-      // if (this.reload_time < this.reload) {
-      //   this.reload = 0;
-      //   shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
-      // }
-      // else {
-      //   this.reload++;
-      // }
+      if (this.reload_time < this.reload) {
+        this.reload = 0;
+        shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
+      }
+      else {
+        this.reload++;
+      }
       this.parts.getChildren().forEach(e => {
         const add_shot = e.shot();
         add_shot.forEach(f => {
