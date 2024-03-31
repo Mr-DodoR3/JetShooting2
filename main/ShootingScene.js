@@ -152,7 +152,16 @@ class ShootingScene extends GameScene {
         this.add.image(30, 400, "key_x").setDepth(101),
         this.add.image(30, 440, "key_c").setDepth(101),
         this.add.image(30, 480, "key_p").setDepth(101)
-      ]
+      ],
+      mfd: {
+        mfd: this.add.image(80, 200, "mfd").setDepth(101)
+      },
+      vol: {
+        bgm_back: this.add.image(850, 600, "vol_back").setDepth(101),
+        bgm_switch: this.add.image(850, 600, "vol_switch").setDepth(101),
+        se_back: this.add.image(910, 600, "vol_back").setDepth(101),
+        se_switch: this.add.image(910, 600, "vol_switch").setDepth(101)
+      }
     };
     this.ui_image.key.forEach(e => {
       e.setDepth(101);

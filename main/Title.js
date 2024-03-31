@@ -73,6 +73,12 @@ class Title extends GameScene {
     this.load.image("turbulence_gun", "assets/images/parts/turbulence_gun.png");
 
     this.load.image("flare_obj", "assets/images/flare.png");
+
+    this.load.image("mfd", "assets/images/mfd/mfd.png");
+    this.load.image("mfd_mask", "assets/images/mfd/mfd_mask.png");
+
+    this.load.image("vol_back", "assets/images/vol_back.png");
+    this.load.image("vol_switch", "assets/images/vol_switch.png");
     
     this.load.image("key_c0", "assets/images/key/key_c0.png");
     this.load.image("key_c1", "assets/images/key/key_c1.png");
