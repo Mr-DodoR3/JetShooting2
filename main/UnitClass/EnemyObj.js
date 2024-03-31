@@ -9,6 +9,8 @@ class EnemyObj extends Phaser.GameObjects.Container {
       });
       this.unit_image = null;
 
+      this.score = 0;
+
       this.deg = 0;
       this.type = 0;
       this.del = false;
@@ -72,6 +74,8 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.createImage(tag);
       for (let i = 0; i < ENEMY_DATA.length; i++) {
         if (tag == ENEMY_DATA[i].tag) {
+          this.score = ENEMY_DATA[i].score;
+          this.tag = tag;
           this.hp = ENEMY_DATA[i].hp;
           this.type = ENEMY_DATA[i].attribute;
           let continued_num = 0;
@@ -102,9 +106,10 @@ class EnemyObj extends Phaser.GameObjects.Container {
       if (this.hp < 1) {
         this.destroy();
         let returnData = {
-          score: 0,
+          score: this.score,
           x: this.x,
-          y: this.y
+          y: this.y,
+          type: this.boss ? "boss" : "nomal"
         };
         return returnData;
       }
@@ -202,7 +207,7 @@ class EnemyObj extends Phaser.GameObjects.Container {
             this.setY(-128);
             this.deg = 90;
           }
-          else if (this.y < 240) {
+          else if (this.life_time < 369) {
             this.setY(this.yForward(-1));
           }
           break;
@@ -212,7 +217,7 @@ class EnemyObj extends Phaser.GameObjects.Container {
             this.setY(-100);
             this.deg = 90;
           }
-          else if (this.y < 180) {
+          else if (this.life_time < 281) {
             this.setY(this.yForward(-1));
           }
           break;
@@ -230,12 +235,20 @@ class EnemyObj extends Phaser.GameObjects.Container {
     shot() {
       let shot_data = [];
       if (this.reload_time < this.reload) {
+        switch(this.tag) {
+          case "iac1":
+            shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
+            break;
+          case "yig21":
+            shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
+            break;
+        }
         this.reload = 0;
-        shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
       }
       else {
         this.reload++;
       }
+
       this.parts.getChildren().forEach(e => {
         const add_shot = e.shot();
         add_shot.forEach(f => {

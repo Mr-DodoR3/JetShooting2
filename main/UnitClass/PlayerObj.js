@@ -5,12 +5,15 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.hp;
     this.en;
     this.ab;
+    this.serial;
 
     this.maxSpeed;
     this.defence;
     this.charge;
     this.waepon_1;
+    this.waepon_1_name;
     this.waepon_2;
+    this.waepon_2_name;
     this.engine_pos = [0, 0];
 
     this.move = false;
@@ -86,6 +89,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
     for (let i = 0; i < UNIT_DATA.length; i++) {
       if (tag == UNIT_DATA[i].tag) {
+        this.serial = UNIT_DATA[i].serial;
         this.maxSpeed = UNIT_DATA[i].spec[0];
         this.defence = UNIT_DATA[i].spec[1];
         this.charge = UNIT_DATA[i].spec[2];
@@ -98,9 +102,11 @@ class PlayerObj extends Phaser.GameObjects.Image {
         let waepon_2 = UNIT_DATA[i].specail_weapon;
         for (let j = 0; j < WEAPON_DATA.length; j++) {
           if (waepon_1 == WEAPON_DATA[j].tag) {
+            this.waepon_1_name = WEAPON_DATA[j].serial;
             this.waepon_1 = j;
           }
           if (waepon_2 == WEAPON_DATA[j].tag) {
+            this.waepon_2_name = WEAPON_DATA[j].serial;
             this.waepon_2 = j;
           }
         }
@@ -162,8 +168,8 @@ class PlayerObj extends Phaser.GameObjects.Image {
       // this.ab += 15;
     }
     else if (this.augmentor > 0) {
-      this.augmentor -= 4;
-      this.ab -= 4;
+      this.augmentor -= 5;
+      this.ab -= 5;
       if (this.augmentor <= 0) {
         this.augmentor == 0;
         this.ab == 0;
@@ -176,7 +182,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
   }
 
   flareControl() {
-    if (this.flare_overheat > 0) {
+    if (this.flare_overheat > 0 && this.flare > 0) {
       this.flare_overheat--;
     }
   }

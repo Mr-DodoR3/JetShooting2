@@ -59,16 +59,19 @@ class ShootingScene extends GameScene {
     this.graphics;
     this.rect;
     
-    this.enemyProgress = 0;
-    this.enemyCount = 0;
-    this.enemyDelta = 0;
-    this.enemySleep = 0;
+    // this.enemyProgress = 1;
+    // this.enemyCount = 0;
+    // this.enemyDelta = 0;
+    // this.enemySleep = 0;
     // https://labs.phaser.io/edit.html?src=src/pools/multi%20pools.js&v=3.80.0
     
     this.bg_1;
     this.bg_2;
 
+    this.fl_bar_alpha = 0.0;
     this.ab_bar_alpha = 0.0;
+    // this.boss_trigger = 0;
+    // this.boss_count = MISSION_DATA[0][0].boss_count;
   }
 
   init() {
@@ -81,6 +84,16 @@ class ShootingScene extends GameScene {
 
   create() {
     super.create();
+
+    this.score = 0;
+    
+    this.enemyProgress = 1;
+    this.enemyCount = 0;
+    this.enemyDelta = 0;
+    this.enemySleep = 0;
+
+    this.boss_trigger = 0;
+    this.boss_count = MISSION_DATA[0][0].boss_count;
 
     this.boss_text.setup(this);
 
@@ -95,6 +108,9 @@ class ShootingScene extends GameScene {
     this.rect = {
       left_side: new Phaser.Geom.Rectangle(0, 0, 160, DISPLAY_HEIGHT),
       right_side: new Phaser.Geom.Rectangle(800, 0, 160, DISPLAY_HEIGHT),
+      flare_bar_back: new Phaser.Geom.Rectangle(20, 520, 6, 80),
+      flare_bar: new Phaser.Geom.Rectangle(20, 520, 6, 80),
+      flare_bar_white: new Phaser.Geom.Rectangle(20, 520, 6, 80),
       ab_bar_back: new Phaser.Geom.Rectangle(825, 120, 30, 450),
       en_bar_back: new Phaser.Geom.Rectangle(865, 120, 30, 450),
       hp_bar_back: new Phaser.Geom.Rectangle(905, 120, 30, 450),
@@ -104,7 +120,46 @@ class ShootingScene extends GameScene {
       hp_bar: new Phaser.Geom.Rectangle(905, 120, 30, 450)
     };
     this.graphics.setDepth(100);
-    
+    this.ui_text = {
+      score: this.add.text(10, 20, 'SCORE\n0000000000', { font: '24px monospace', fill: '#ffffff' }).setDepth(101),
+      nomal_weapon: this.add.text(10, 80, "WEAPON 1:", { font: '15px monospace', fill: '#ffffff' }).setDepth(101),
+      special_weapon: this.add.text(10, 100, "WEAPON 2:", { font: '15px monospace', fill: '#ffffff' }).setDepth(101),
+      flare: this.add.text(45, 520, 'FLARE', { font: '24px monospace', fill: '#ffffff' }).setDepth(101),
+      flare_counter: this.add.text(80, 580, '0', { font: '36px monospace', fill: '#ffffff' }).setDepth(101).setOrigin(0.5),
+      key: [
+        this.add.text(102, 308, '移動', { font: '24px monospace', fill: '#ffffff' }).setDepth(101),
+        this.add.text(54, 348, '通常攻撃', { font: '24px monospace', fill: '#ffffff' }).setDepth(101),
+        this.add.text(54, 388, '時限強化', { font: '24px monospace', fill: '#ffffff' }).setDepth(101),
+        this.add.text(54, 428, '緊急回避', { font: '24px monospace', fill: '#ffffff' }).setDepth(101),
+        this.add.text(54, 468, '一時停止', { font: '24px monospace', fill: '#ffffff' }).setDepth(101)
+      ],
+      bar: [
+        this.add.text(840, 100, 'AB', { font: '24px monospace', fill: '#ffffff' }).setDepth(101).setOrigin(0.5),
+        this.add.text(880, 100, 'EN', { font: '24px monospace', fill: '#ffffff' }).setDepth(101).setOrigin(0.5),
+        this.add.text(920, 100, 'HP', { font: '24px monospace', fill: '#ffffff' }).setDepth(101).setOrigin(0.5)
+      ],
+      unit_name: this.add.text(880, 40, "", { font: '24px monospace', fill: '#ffffff' }).setDepth(101).setOrigin(0.5),
+      type_name: this.add.text(880, 64, "test", { font: '18px monospace', fill: '#ffffff' }).setDepth(101).setOrigin(0.5)
+    };
+    this.ui_image = {
+      flare: this.add.image(120, 532, "disp_flare").setDepth(101),
+      key: [
+        this.add.image(56, 294, "key_c0").setDepth(101),
+        this.add.image(30, 320, "key_c1").setDepth(101),
+        this.add.image(56, 320, "key_c2").setDepth(101),
+        this.add.image(82, 320, "key_c3").setDepth(101),
+        this.add.image(30, 360, "key_z").setDepth(101),
+        this.add.image(30, 400, "key_x").setDepth(101),
+        this.add.image(30, 440, "key_c").setDepth(101),
+        this.add.image(30, 480, "key_p").setDepth(101)
+      ]
+    };
+    this.ui_image.key.forEach(e => {
+      e.setDepth(101);
+      e.scaleX = e.scaleX * 0.8;
+      e.scaleY = e.scaleY * 0.8;
+    });
+
     this.playerGroup = this.physics.add.group({
       classType: PlayerObj,
       maxSize: 1,
@@ -112,6 +167,10 @@ class ShootingScene extends GameScene {
     });
     this.player = this.playerGroup.get();
     this.player.create(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 + 200, UNIT_DATA[selectAircraft].tag);
+    this.ui_text.nomal_weapon.setText("WEAPON1:" + this.player.waepon_1_name);
+    this.ui_text.special_weapon.setText("WEAPON2:" + this.player.waepon_2_name);
+    this.ui_text.unit_name.setText(this.player.serial);
+    this.ui_text.type_name.setText(this.player.type.toUpperCase());
 
     this.ab_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
     this.ab_1.scaleX = this.ab_1.scaleX * 0.5;
@@ -183,7 +242,7 @@ class ShootingScene extends GameScene {
   }
 
   hit_player(player, enemyBullet) {
-    this.player.augmentorPointGet(Math.floor(enemyBullet.power / 4));
+    this.player.augmentorPointGet(Math.floor(enemyBullet.power / 5));
     if (this.player.life) {
       enemyBullet.hit();
       if (player.hit(enemyBullet.power)) {
@@ -197,7 +256,8 @@ class ShootingScene extends GameScene {
     if (bullet.collision_active) {
       let ab_get = 0;
   
-      ab_get += Math.floor(bullet.power / 2);
+      const damage_point = Math.floor(bullet.power / 20)
+      ab_get += damage_point > 0 ? damage_point : 1;
       bullet.hit();
 
       let damage = bullet.power;
@@ -233,9 +293,16 @@ class ShootingScene extends GameScene {
       console.log(damage);
       let returnData = enemy.damage(damage);
       if (!(returnData == -1)) {
-        ab_get += 100;
+        ab_get += 20;
+        this.score += returnData.score;
         this.explosion = this.explosions.get();
         this.explosion.create(returnData.x, returnData.y);
+        if (returnData.type == "boss") {
+          this.boss_trigger++;
+          if (this.boss_trigger >= this.boss_count) {
+            console.log("GAME CLEAR")
+          }
+        }
       }
       this.player.augmentorPointGet(ab_get);
     }
@@ -265,13 +332,30 @@ class ShootingScene extends GameScene {
     this.graphics.fillRectShape(this.rect.ab_bar_back);
     this.graphics.strokeRectShape(this.rect.ab_bar_back);
 
+    this.ui_text.score.setText("SCORE\n" + ("0000000000" + this.score).slice(-10));
+    this.ui_text.flare_counter.setText(this.player.flare)
+
+    this.graphics.fillRectShape(this.rect.flare_bar_back);
+    this.graphics.strokeRectShape(this.rect.flare_bar_back);
+
     this.graphics.fillRectShape(this.rect.en_bar_back);
     this.graphics.strokeRectShape(this.rect.en_bar_back);
 
     this.graphics.fillRectShape(this.rect.hp_bar_back);
     this.graphics.strokeRectShape(this.rect.hp_bar_back);
     
-    this.graphics.fillStyle(0xFF6600);
+    this.graphics.fillStyle(this.player.flare_overheat == 0 ? 0xFF6600 : 0xBF7340);
+    const fl_bar_down = Math.abs(80 - 80 * (this.player.flare_overheat / 300));
+    this.rect.flare_bar.height = fl_bar_down;
+    this.rect.flare_bar.y = 520 + (80 - fl_bar_down);
+    this.graphics.fillRectShape(this.rect.flare_bar);
+    this.graphics.fillStyle(0xFFFFFF, this.fl_bar_alpha);
+    if (this.fl_bar_alpha < 0) this.fl_bar_alpha = 1;
+    else this.fl_bar_alpha -= 0.01;
+    if (this.player.flare_overheat == 0) this.graphics.fillRectShape(this.rect.flare_bar_white);
+
+    // this.graphics.fillStyle(0xFF6600);
+    this.graphics.fillStyle(0x00FFFF);
     for (let i = 0; i < this.rect.ab_bar.length; i++) {
       let ab_bar_down;
       if (i == 2) ab_bar_down = this.player.ab > 1000 ? 0 : Math.abs(150 * ((this.player.ab) / 1000) - 150);

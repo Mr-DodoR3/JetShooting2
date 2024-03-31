@@ -61,6 +61,7 @@ class Title extends GameScene {
         this.load.image(WEAPON_DATA[i].tag, "assets/images/bullet/" + WEAPON_DATA[i].tag + ".png");
       }
     }
+    this.load.image("disp_flare", "assets/images/disp_flare.png");
     
     for (let i = 0; i < ENEMY_DATA.length; i++) {
       this.load.image(ENEMY_DATA[i].tag, "assets/images/npc_unit/" + ENEMY_DATA[i].tag + ".png");
@@ -72,6 +73,15 @@ class Title extends GameScene {
     this.load.image("turbulence_gun", "assets/images/parts/turbulence_gun.png");
 
     this.load.image("flare_obj", "assets/images/flare.png");
+    
+    this.load.image("key_c0", "assets/images/key/key_c0.png");
+    this.load.image("key_c1", "assets/images/key/key_c1.png");
+    this.load.image("key_c2", "assets/images/key/key_c2.png");
+    this.load.image("key_c3", "assets/images/key/key_c3.png");
+    this.load.image("key_z", "assets/images/key/key_z.png");
+    this.load.image("key_x", "assets/images/key/key_x.png");
+    this.load.image("key_c", "assets/images/key/key_c.png");
+    this.load.image("key_p", "assets/images/key/key_p.png");
 
     this.load.image("boss_text", "assets/images/boss_text.png");
     

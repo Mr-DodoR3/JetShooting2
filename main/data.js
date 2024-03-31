@@ -2,6 +2,7 @@ const MISSION_DATA = [
   // stage 1
   [
     // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
+    { boss_count : 2, map : "sae" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 240, repletion : "" },
@@ -13,7 +14,7 @@ const MISSION_DATA = [
     { tag : "iac1", pieces : 2, action_type : 2, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 4, action_type : 2, interval : 60, sleep : 180, repletion : "" },
-    { tag : "turbulence", pieces : 1, action_type : 1000, interval : 0, sleep : 120, repletion : "boss" },
+    { tag : "turbulence", pieces : 1, action_type : 1000, interval : 0, sleep : 180, repletion : "boss" },
     { tag : "turbulence", pieces : 1, action_type : 1001, interval : 0, sleep : 0, repletion : "" }
   ],
 
@@ -576,6 +577,7 @@ const ENEMY_DATA = [
     importance : "nomal",
     attribute : "air",
     hp : 100,
+    score : 100,
     parts : [ ]
   },
   {
@@ -585,6 +587,7 @@ const ENEMY_DATA = [
     importance : "nomal",
     attribute : "air",
     hp : 60,
+    score : 100,
     parts : [ ]
   },
   {
@@ -594,6 +597,7 @@ const ENEMY_DATA = [
     importance : "nomal",
     attribute : "air",
     hp : 150,
+    score : 100,
     parts : [ "ea314_propeller" ]
   },
   {
@@ -628,6 +632,7 @@ const ENEMY_DATA = [
     importance : "boss",
     attribute : "air",
     hp : 1200,
+    score : 2000,
     parts : [ "turbulence_propeller", "turbulence_gun", "turbulence_gun" ]
   }
 ];

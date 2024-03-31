@@ -53,7 +53,7 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
         this.burst_reload_time = 3;
         this.burst = 3;
         
-        this.rotation_speed = 3;
+        this.rotation_speed = 1;
         this.deg = 270;
         if (num == 0) {
           this.setX(0);
