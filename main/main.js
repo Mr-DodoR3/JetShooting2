@@ -11,7 +11,8 @@ var playerData = {
 };
 
 const config = {
-  type: Phaser.CANVAS,
+  // type: Phaser.CANVAS,
+  type: Phaser.WEBGL,
   perent: "gameCanvas",
   width: DISPLAY_WIDTH,
   height: DISPLAY_HEIGHT,

@@ -109,6 +109,16 @@ const SKIL_DATA = [
     tag : "reverser",
     name_jp : "スラストリバーサ",
     explanation : ""
+  },
+  {
+    tag : "aesa",
+    name_jp : "AESAレーダー",
+    explanation : ""
+  },
+  {
+    tag : "l_band",
+    name_jp : "Lバンドレーダー",
+    explanation : ""
   }
 ];
 

@@ -169,6 +169,8 @@ class ShootingScene extends GameScene {
       e.scaleY = e.scaleY * 0.8;
     });
 
+    this.radar = new Radar(this);
+
     this.playerGroup = this.physics.add.group({
       classType: PlayerObj,
       maxSize: 1,
@@ -499,6 +501,21 @@ class ShootingScene extends GameScene {
         e.x = this.player.x;
       }
     });
+
+    if (this.radar) {
+      if (this.radar.scan()) {
+        let send_data = [];
+        send_data.push({ type: "player", x: this.player.x - 160, y: this.player.y, d: 90 });
+        this.enemys.getChildren().forEach(e => {
+          const enemy_type = e.type == "air" ? "air" : (e.type == "ground" ? "grd" : "sae");
+          send_data.push({ type: enemy_type, x: e.x - 160, y: e.y, d: e.deg });
+          if (e.boss) {
+            send_data.push({ type: "tgt", x: e.x - 160, y: e.y, d: 90 });
+          }
+        });
+        this.radar.setData(send_data);
+      }
+    }
 
     this.boss_text.update();
     

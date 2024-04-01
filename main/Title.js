@@ -76,6 +76,11 @@ class Title extends GameScene {
 
     this.load.image("mfd", "assets/images/mfd/mfd.png");
     this.load.image("mfd_mask", "assets/images/mfd/mfd_mask.png");
+    this.load.image("player_symbol", "assets/images/mfd/radar_player.png");
+    this.load.image("air_symbol", "assets/images/mfd/radar_air.png");
+    this.load.image("grd_symbol", "assets/images/mfd/radar_grd.png");
+    this.load.image("sae_symbol", "assets/images/mfd/radar_sae.png");
+    this.load.image("tgt_symbol", "assets/images/mfd/radar_tgt.png");
 
     this.load.image("vol_back", "assets/images/vol_back.png");
     this.load.image("vol_switch", "assets/images/vol_switch.png");
