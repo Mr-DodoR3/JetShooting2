@@ -168,6 +168,9 @@ class ShootingScene extends GameScene {
       e.scaleX = e.scaleX * 0.8;
       e.scaleY = e.scaleY * 0.8;
     });
+    const rad = d => { return -d * (Math.PI / 180.0) + 90 * (Math.PI / 180.0) }
+    this.ui_image.vol.bgm_switch.setRotation(rad(225 - (bgm_vol / 100 * 270)));
+    this.ui_image.vol.se_switch.setRotation(rad(225 - (se_vol / 100 * 270)));
 
     this.radar = new Radar(this);
 

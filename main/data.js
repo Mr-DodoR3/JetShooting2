@@ -115,11 +115,11 @@ const SKIL_DATA = [
     name_jp : "AESAレーダー",
     explanation : ""
   },
-  {
-    tag : "l_band",
-    name_jp : "Lバンドレーダー",
-    explanation : ""
-  }
+  // {
+  //   tag : "l_band",
+  //   name_jp : "Lバンドレーダー",
+  //   explanation : ""
+  // }
 ];
 
 // spec : [Speed, Reload, Power, Energy];
@@ -210,7 +210,7 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : "爆発系ミサイル",
-    power : 25,
+    power : 10,
     reload : 14,
     en : 60
   },
@@ -251,8 +251,8 @@ const WEAPON_DATA = [
     name_jp : "",
     explanation : "6連装で全て真正面に撃つ弾",
     power : 10,
-    reload : 8,
-    en : 35
+    reload : 10,
+    en : 40
   },
   {
     tag : "jdal",
@@ -374,7 +374,7 @@ const UNIT_DATA = [
     explanation : "ステルス性や超音速巡航性能などの最新機能を備えた高性能戦闘機です。",
     type : "fighter",
     spec : [9, 2, 5],
-    skil : ["supercruise", "vt", "stealth"],
+    skil : ["supercruise", "vt", "stealth", "aesa"],
     weapon : "l50",
     specail_weapon : "l47",
     engine_pos : [4, 42]
@@ -382,12 +382,12 @@ const UNIT_DATA = [
   {
     tag : "xb44",
     serial : "XB-44A",
-    name : "",
-    name_jp : "",
+    name : "Meteorite",
+    name_jp : "ミーティアライト(隕石)",
     explanation : "高いステルス性と搭載量を備えた新型戦闘爆撃機です。",
     type : "bomber",
     spec : [4, 7, 10],
-    skil : ["supercruise", "vt", "irst","stealth", "fbl", "auto"],
+    skil : ["supercruise", "vt", "irst","stealth", "fbl", "auto", "aesa"],
     weapon : "hel",
     specail_weapon : "atm144",
     engine_pos : [0, 0]
@@ -421,12 +421,12 @@ const UNIT_DATA = [
   {
     tag : "yig144",
     serial : "YIG-144S",
-    name : "",
-    name_jp : "",
+    name : "Avrora",
+    name_jp : "アヴローラ(ロシア語でオーロラ)",
     explanation : "全体的に高水準な制空戦闘機です。",
     type : "fighter",
     spec : [6, 6, 6],
-    skil : ["cft", "supercruise", "vt", "irst", "auto"],
+    skil : ["cft", "supercruise", "vt", "irst", "auto", "aesa"],
     weapon : "malc",
     specail_weapon : "l50",
     engine_pos : [0, 0]
@@ -447,8 +447,8 @@ const UNIT_DATA = [
   {
     tag : "isd",
     serial : "ISD-4GR",
-    name : "",
-    name_jp : "",
+    name : "SpruhRegen",
+    name_jp : "シュプリューレーゲン(ドイツ語で霧雨)",
     explanation : "可変翼を備えた重武装爆撃機です。",
     type : "bomber",
     spec : [2, 6, 8],
@@ -486,8 +486,8 @@ const UNIT_DATA = [
   {
     tag : "saas39",
     serial : "SAAS-39NG",
-    name : "",
-    name_jp : "",
+    name : "Frihet",
+    name_jp : "フリヘット(スウェーデン語で自由)",
     explanation : "高い運動性能と信頼性がウリの軽量級戦闘機です。",
     type : "interceptor",
     spec : [7, 2, 2],
@@ -504,7 +504,7 @@ const UNIT_DATA = [
     explanation : "対艦攻撃も想定され開発された高い攻撃力を持つ攻撃機です。",
     type : "attacker",
     spec : [7, 2, 6],
-    skil : ["asm", "fbl"],
+    skil : ["asm", "fbl", "aesa"],
     weapon : "gua99",
     specail_weapon : "type25",
     engine_pos : [2, 45]
@@ -517,7 +517,7 @@ const UNIT_DATA = [
     explanation : "ステルスを持ち、継戦能力に特化した大型戦闘機です。",
     type : "interceptor",
     spec : [3, 8, 4],
-    skil : ["cft", "irst", "stealth", "wso"],
+    skil : ["cft", "irst", "stealth", "wso", "aesa"],
     weapon : "m6",
     specail_weapon : "atm144",
     engine_pos : [2, 45]
@@ -525,8 +525,8 @@ const UNIT_DATA = [
   {
     tag : "kat50",
     serial : "KAT-50A",
-    name : "",
-    name_jp : "",
+    name : "Saja",
+    name_jp : "サジャ(獅子,韓国語でライオン)",
     explanation : "優秀な火力を持ち、実践でも活躍できる練習機です。",
     type : "trainer",
     spec : [4, 1, 4],
@@ -551,8 +551,8 @@ const UNIT_DATA = [
   {// SAIA 90
     tag : "sai90",
     serial : "SAI-90",
-    name : "",
-    name_jp : "",
+    name : "Escudo",
+    name_jp : "エスクード(スペイン語で盾)",
     explanation : "ステルス性を備えた軽戦闘機です。",
     type : "trainer",
     spec : [5, 4, 1],

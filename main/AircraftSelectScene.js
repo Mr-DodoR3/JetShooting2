@@ -6,6 +6,7 @@ class AircraftSelectScene extends GameScene {
     this.unittype;
     this.selectAircraft;
     this.skilIcon = new Array(SKIL_DATA.length);
+    this.weaponIcon = new Array(2);
     
     this.text_unitName; 
     this.text_specName;
@@ -57,6 +58,8 @@ class AircraftSelectScene extends GameScene {
     for (let i = 0; i < SKIL_DATA.length; i++) {
       this.skilIcon[i] = this.add.image(458 + (i > 11 ? i - 12 : i) * 36, 380 + (i > 11 ? 36 : 0), SKIL_DATA[i].tag);
     }
+    this.weaponIcon[0] = this.add.image(548, 486, "weapon_" + UNIT_DATA[this.selectAircraft].weapon);
+    this.weaponIcon[1] = this.add.image(762, 486, "weapon_" + UNIT_DATA[this.selectAircraft].specail_weapon);
 
     this.text_unitName = this.add.text(440, 172, '', { font: '36px monospace', fill: '#00ff00' });
     this.text_specName = this.add.text(440, 224, '', { font: '24px monospace', fill: '#00ff00' });
@@ -85,6 +88,8 @@ class AircraftSelectScene extends GameScene {
     this.writeText();
     this.aircraft.setTexture(UNIT_DATA[this.selectAircraft].tag);
     this.unittype.setTexture("unittype_" + UNIT_DATA[this.selectAircraft].type);
+    this.weaponIcon[0].setTexture("weapon_" + UNIT_DATA[this.selectAircraft].weapon);
+    this.weaponIcon[1].setTexture("weapon_" + UNIT_DATA[this.selectAircraft].specail_weapon);
     for (let i = 0; i < this.skilIcon.length; i++) {
       this.skilIcon[i].setAlpha(0.6);
       for (let j = 0; j < UNIT_DATA[this.selectAircraft].skil.length; j++) {

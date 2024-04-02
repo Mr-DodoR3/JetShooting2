@@ -59,6 +59,7 @@ class Title extends GameScene {
       const weapon_tag = WEAPON_DATA[i].tag;
       if (!(weapon_tag.substr(0, 2) == "e_")) {
         this.load.image(WEAPON_DATA[i].tag, "assets/images/bullet/" + WEAPON_DATA[i].tag + ".png");
+        this.load.image("weapon_" + WEAPON_DATA[i].tag, "assets/images/weapon/weapon_" + WEAPON_DATA[i].tag + ".png");
       }
     }
     this.load.image("disp_flare", "assets/images/disp_flare.png");
@@ -128,8 +129,8 @@ class Title extends GameScene {
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       switch (this.mode) {
         case 0:
-          // this.nextScene = "missionSelectScene";
-          this.nextScene = "shootingScene";
+          this.nextScene = "missionSelectScene";
+          // this.nextScene = "shootingScene";
           break;
         case 1:
           break;

@@ -53,12 +53,13 @@ class PlayerObj extends Phaser.GameObjects.Image {
       ucav: false,
       auto: false,
       reverser: false,
-      nuclear: false
+      aesa: false,
+      l_band: false
     };
 
     this.boss = false;
 
-    this.setDepth(50);
+    this.setDepth(60);
   }
 
   colliderSet() {
@@ -129,6 +130,8 @@ class PlayerObj extends Phaser.GameObjects.Image {
           if (UNIT_DATA[i].skil[j] == "ucav") this.skil.ucav = true;
           if (UNIT_DATA[i].skil[j] == "auto") this.skil.auto = true;
           if (UNIT_DATA[i].skil[j] == "reverser") this.skil.reverser = true;
+          if (UNIT_DATA[i].skil[j] == "aesa") this.skil.aesa = true;
+          if (UNIT_DATA[i].skil[j] == "l_band") this.skil.l_band = true;
           if (UNIT_DATA[i].skil[j] == "nuclear") this.skil.nuclear = true;
         }
       }
