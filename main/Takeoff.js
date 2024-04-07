@@ -4,6 +4,8 @@ class TekeoffScene extends GameScene {
 
     this.eventTimer = 0;
     this.eventNum = 0;
+    
+    this.bg_1;
 
     this.cvn = {
       image : null,
@@ -28,6 +30,10 @@ class TekeoffScene extends GameScene {
 
   create() {
     super.create();
+
+    this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
+    this.bg_1.scaleX = this.bg_1.scaleX * 2;
+    this.bg_1.scaleY = this.bg_1.scaleY * 2;
 
     this.cvn.image = this.add.image(this.cvn.relativeX, this.cvn.relativeY - 100, "cvn-96_2");
     this.cvn.image.scaleX = this.cvn.image.scaleX * 0.5;

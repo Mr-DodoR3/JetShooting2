@@ -28,7 +28,7 @@ const SKIL_DATA = [
   {
     tag : "cft",
     name_jp : "コンフォーマル・フューエル・タンク",
-    explanation : ""
+    explanation : "最大エネルギーチャージ量とエネルギー回復速度を30%向上させます。"
   },
   {
     tag : "supercruise",
@@ -68,22 +68,22 @@ const SKIL_DATA = [
   {
     tag : "flare",
     name_jp : "追加フレアディスペンサ",
-    explanation : ""
+    explanation : "フレアの残弾を1つ増やします。"
   },
   {
     tag : "irst",
     name_jp : "IRST",
-    explanation : ""
+    explanation : "ステルス目標を探知できます。"
   },
   {
     tag : "stealth",
     name_jp : "ステルス",
-    explanation : ""
+    explanation : "自機の当たり判定を減少させます。"
   },
   {
     tag : "wso",
     name_jp : "兵装システム士官",
-    explanation : ""
+    explanation : "種別による攻撃力補正を10%向上させます。"
   },
   {
     tag : "fbl",
@@ -93,17 +93,17 @@ const SKIL_DATA = [
   {
     tag : "coin",
     name_jp : "COIN機",
-    explanation : ""
+    explanation : "スコア獲得量を10%増やします。"
   },
   {
     tag : "ucav",
     name_jp : "チーミング",
-    explanation : ""
+    explanation : "無人機が随伴します。"
   },
   {
     tag : "auto",
     name_jp : "オートパイロット",
-    explanation : "衝突ダメージの減少"
+    explanation : "衝突ダメージを減少させます。"
   },
   {
     tag : "reverser",
@@ -113,7 +113,7 @@ const SKIL_DATA = [
   {
     tag : "aesa",
     name_jp : "AESAレーダー",
-    explanation : ""
+    explanation : "レーダースキャン間隔を短くします。また、ECCM能力が向上します。"
   },
   // {
   //   tag : "l_band",

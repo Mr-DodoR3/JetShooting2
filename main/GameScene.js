@@ -34,7 +34,7 @@ class GameScene extends Phaser.Scene {
     if (DEBUG_MODE) {
       this.input.on("pointerdown", function(pointer) {
         console.log(pointer.x + "," + pointer.y)
-      }, this)
+      }, this);
     }
   }
 

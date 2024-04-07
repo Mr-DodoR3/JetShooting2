@@ -27,7 +27,7 @@ class Radar {
     }
   };
 
-  constructor (scene, radar_type="doppler", l_band=false) {
+  constructor (scene, radar_type="doppler", irst=false) {
     this.scene = scene;
 
     this.symbols = this.scene.add.group({

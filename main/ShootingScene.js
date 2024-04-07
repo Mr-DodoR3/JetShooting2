@@ -285,7 +285,7 @@ class ShootingScene extends GameScene {
         damage_coefficient += 0.2;
         if (this.player.skil.wso) damage_coefficient += 0.1;
       }
-      else if (this.player.type == "fighter" && enemy.type == "attacker") {
+      else if (this.player.type == "attacker" && enemy.type == "grd") {
         damage_coefficient += 0.2;
         if (this.player.skil.wso) damage_coefficient += 0.1;
       }
