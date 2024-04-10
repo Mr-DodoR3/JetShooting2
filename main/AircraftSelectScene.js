@@ -182,7 +182,7 @@ class AircraftSelectScene extends GameScene {
       }
     }
 
-    if (txt == "null") {
+    if (txt == "null" && !(this.selectEx == "none")) {
       this.selectEx = "none";
       this.textBox.setText(UNIT_DATA[this.selectAircraft].explanation);
     }

@@ -19,6 +19,11 @@ class Title extends GameScene {
     this.load.image("title_ui", "assets/images/title_ui.png");
     this.load.image("fade_layer", "assets/images/fade_layer.png");
     
+    this.load.image("option", "assets/images/option/option.png");
+    this.load.image("option_noselect", "assets/images/option/option_noselect.png");
+    this.load.image("option_select", "assets/images/option/option_select.png");
+    this.load.image("close_ui", "assets/images/option/close.png");
+
     // MissionSelect
     this.load.image("mission_select_background", "assets/images/mission_select.png");
     this.load.image("select_ui", "assets/images/mission_select_ui.png");
@@ -116,6 +121,11 @@ class Title extends GameScene {
     this.selecter.setPosition(224, 438 + (this.mode * 32));
     super.update();
   }
+  
+  back_thisScene() {
+    this.window = "none";
+    this.selecter.scaleX = 1;
+  }
 
   contller() {
     if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
@@ -137,6 +147,7 @@ class Title extends GameScene {
         case 2:
           break;
         case 3:
+          this.nextScene = "option";
           break;
         case 4:
           break;
@@ -147,16 +158,30 @@ class Title extends GameScene {
   }
 
   sceneChange(next) {
-    if (this.nextSceneDelta < 1.0) {
-      this.selecter.scaleX = this.selecter.scaleX * 0.8;
-      this.fade.alpha = this.nextSceneDelta;
-      this.nextSceneDelta += 0.05;
+    if (next == "option") {
+      if (this.nextSceneDelta < 1.0) {
+        this.selecter.scaleX = this.selecter.scaleX * 0.8;
+        this.nextSceneDelta += 0.05;
+      }
+      else {
+        this.selecter.scaleX = 0;
+        this.nextSceneDelta = 0;
+        this.nextScene = -1;
+        this.option.open();
+        this.window = "option";
+      }
     }
     else {
-      this.selecter.scaleX = 0;
-      this.fade.alpha = 1;
-      console.log(next)
-      this.scene.start(next);
+      if (this.nextSceneDelta < 1.0) {
+        this.selecter.scaleX = this.selecter.scaleX * 0.8;
+        this.fade.alpha = this.nextSceneDelta;
+        this.nextSceneDelta += 0.05;
+      }
+      else {
+        this.selecter.scaleX = 0;
+        this.fade.alpha = 1;
+        this.scene.start(next);
+      }
     }
   }
 }

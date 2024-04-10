@@ -3,8 +3,8 @@ const DEBUG_MODE = true;
 var DISPLAY_WIDTH = 960;
 var DISPLAY_HEIGHT = 640;
 
-var bgm_vol = 100;
-var se_vol = 100;
+var bgm_vol = 10;
+var se_vol = 10;
 
 var selectMission = 0;
 var selectAircraft = 0;
@@ -12,6 +12,8 @@ var playerData = {
   x: 0,
   y: 0
 };
+
+var gamePause = false;
 
 const config = {
   // type: Phaser.CANVAS,

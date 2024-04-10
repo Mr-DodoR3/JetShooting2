@@ -6,11 +6,13 @@ class GameScene extends Phaser.Scene {
     this.cursors;
     this.space;
     this.key;
+
+    this.option;
+    this.window = "null";
   }
 
   init() {
     this.nextScene = "-1";
-    this.nextSceneDelta = 1;
     this.nextSceneDelta = 1;
   }
 
@@ -36,6 +38,8 @@ class GameScene extends Phaser.Scene {
         console.log(pointer.x + "," + pointer.y)
       }, this);
     }
+
+    this.option = new Option(this);
   }
 
   update() {
@@ -43,10 +47,50 @@ class GameScene extends Phaser.Scene {
       this.loadScene();
     }
     else if (this.nextScene == "-1") {
-      this.contller();
+      if (this.window == "option") {
+        this.option_contller();
+        const data = this.option.update();
+        if (data == "close") {
+          this.back_thisScene();
+        }
+      }
+      else {
+        this.contller();
+      }
     }
     else {
       this.sceneChange(this.nextScene);
+    }
+  }
+
+  back_thisScene() {
+    this.window = "none";
+  }
+
+  option_contller() {
+    if (this.option.status == "disp") {
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
+        this.option.selectOption--;
+        if (this.option.selectOption < 0) this.option.selectOption = 2;
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.left)) {
+        if (this.option.selectOption == 0 && bgm_vol > 0) bgm_vol--;
+        if (this.option.selectOption == 1 && se_vol > 0) se_vol--;
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+        this.option.selectOption++;
+        if (this.option.selectOption > 2) this.option.selectOption = 0;
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.right)) {
+        if (this.option.selectOption == 0 && bgm_vol < 10) bgm_vol++;
+        if (this.option.selectOption == 1 && se_vol < 10) se_vol++;
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.space)) {
+        if (this.option.selectOption == 2) {
+          this.option.status = "close";
+        }
+      }
+      this.option.renew();
     }
   }
 
