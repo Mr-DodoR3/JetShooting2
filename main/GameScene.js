@@ -60,6 +60,7 @@ class GameScene extends Phaser.Scene {
     }
     else {
       this.sceneChange(this.nextScene);
+      if (this.window == "option") this.option.update();
     }
   }
 

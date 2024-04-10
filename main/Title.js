@@ -148,6 +148,8 @@ class Title extends GameScene {
           break;
         case 3:
           this.nextScene = "option";
+          this.window = "option";
+          this.option.open();
           break;
         case 4:
           break;
@@ -167,8 +169,8 @@ class Title extends GameScene {
         this.selecter.scaleX = 0;
         this.nextSceneDelta = 0;
         this.nextScene = -1;
-        this.option.open();
-        this.window = "option";
+        // this.option.open();
+        // this.window = "option";
       }
     }
     else {

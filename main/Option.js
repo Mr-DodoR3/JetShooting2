@@ -12,11 +12,15 @@ class Option {
   }
 
   setup(scene) {
+    this.maskBox = scene.add.rectangle(480, 320, 720, 0, 0x00004f).setVisible(false);
+    this.mask = this.maskBox.createGeometryMask();
+
+
     this.group = scene.add.group();
 
     this.selectOption = 0;
 
-    this.graphics = scene.add.graphics({ fillStyle: { color: 0x00004f }, lineStyle: { width: 2, color: 0xffffff } });
+    this.graphics = scene.add.graphics({ fillStyle: { color: 0x00004f }, lineStyle: { width: 0, color: 0xffffff } });
     this.box = new Phaser.Geom.Rectangle(120, 140, 720, 360);
     this.graphics.clear();
     this.graphics.fillStyle(0x00004f);
@@ -31,6 +35,13 @@ class Option {
     this.button = scene.add.image(480, 440, "close_ui");
     
     this.scene = scene;
+
+    this.graphics.setMask(this.mask);
+    this.back.setMask(this.mask);
+    this.vol_select[0].setMask(this.mask);
+    this.vol_select[1].setMask(this.mask);
+    this.close_select.setMask(this.mask);
+    this.button.setMask(this.mask);
 
     this.group.add(this.graphics);
     this.group.add(this.back);
@@ -47,8 +58,10 @@ class Option {
     this.selectOption = 0;
     this.close_select.scaleX = 1;
     this.nextSceneDelta = 0;
-    this.status = "disp";
+    this.status = "open";
     this.group.setVisible(true);
+
+    this.renew();
   }
 
   close() {
@@ -56,15 +69,28 @@ class Option {
   }
 
   update() {
-    if (this.status == "close") {
+    if (this.status == "open") {
       if (this.nextSceneDelta < 1.0) {
+        this.maskBox.y -= 9;
+        this.maskBox.height += 18;
+        // console.log(this.box.height)
+        this.nextSceneDelta += 0.05;
+      }
+      else {
+        this.status = "disp";
+        this.nextSceneDelta = 0;
+      }
+    }
+    else if (this.status == "close") {
+      if (this.nextSceneDelta < 1.0) {
+        this.maskBox.y += 9;
+        this.maskBox.height -= 18;
         this.close_select.scaleX = this.close_select.scaleX * 0.8;
-        // this.fade.alpha = this.nextSceneDelta;
         this.nextSceneDelta += 0.05;
       }
       else {
         this.close_select.scaleX = 0;
-        // this.fade.alpha = 1;
+        this.selectOption = 0;
         this.close();
         return "close";
       }
