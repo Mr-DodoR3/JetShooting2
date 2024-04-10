@@ -50,6 +50,7 @@ class Option {
     this.group.add(this.close_select);
     this.group.add(this.button);
     this.group.setVisible(false);
+    this.group.setDepth(500);
 
     this.renew();
   }

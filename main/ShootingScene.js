@@ -1,11 +1,55 @@
 class ShootingScene extends GameScene {
   pouse_menu = new class {
     constructor() {
+      this.rad = deg => {
+        return deg * (Math.PI / 180.0);
+      };
 
+      this.select = 0;
+      this.alpha = 90;
+    }
+
+    setup(scene) {
+      this.group = scene.add.group();
+      this.graphics = scene.add.graphics({ fillStyle: { color: 0x910006 }, lineStyle: { width: 0, color: 0x000000 } });
+      this.selecter = new Phaser.Geom.Ellipse(480, 300, 600, 28);
+      this.title_txt = scene.add.text(480, 220, '=  =  =  P  O  U  S  E  =  =  =', { font: '32px monospace', fill: '#ffffff' }).setOrigin(0.5);
+      this.back_txt = scene.add.text(480, 300, 'B  A  C  K    T  O    G  A  M  E', { font: '28px monospace', fill: '#ffffff' }).setOrigin(0.5);
+      this.option_txt = scene.add.text(480, 360, 'O  P  T  I  O  N', { font: '28px monospace', fill: '#ffffff' }).setOrigin(0.5);
+      this.exit_txt = scene.add.text(480, 420, 'E  X  I  T', { font: '28px monospace', fill: '#ffffff' }).setOrigin(0.5);
+      this.title_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
+      this.back_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
+      this.option_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
+      this.exit_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
+
+      this.group.add(this.graphics);
+      this.group.add(this.title_txt);
+      this.group.add(this.back_txt);
+      this.group.add(this.option_txt);
+      this.group.add(this.exit_txt);
+
+      this.group.setDepth(499).setVisible(false);
+    }
+
+    up() {
+      this.group.setVisible(true);
+    }
+
+    close() {
+      this.group.setVisible(false);
+      this.select = 0;
+      this.selecter.y = 300;
+      this.disp();
     }
     
     disp() {
+      this.alpha += 2;
+      if (this.alpha >= 180) this.alpha = 0;
 
+      this.graphics.clear();
+      this.graphics.setAlpha(Math.sin(this.rad(this.alpha)));
+      this.graphics.fillEllipseShape(this.selecter);
+      this.selecter.y = 300 + this.select * 60;
     }
   }();
 
@@ -105,6 +149,7 @@ class ShootingScene extends GameScene {
     this.boss_trigger = 0;
     this.boss_count = MISSION_DATA[0][0].boss_count;
 
+    this.pouse_menu.setup(this);
     this.boss_text.setup(this);
 
     this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
@@ -251,85 +296,119 @@ class ShootingScene extends GameScene {
   };
 
   clash(player, enemy) {
-    if (this.player.life && enemy.type == "air" && !enemy.boss) {
-      let returnData = enemy.damage(999);
-      if (!(returnData == -1)) {
-        this.explosion = this.explosions.get();
-        this.explosion.create(returnData.x, returnData.y);
+    if (this.window == "null") {
+      
+      if (this.player.life && enemy.type == "air" && !enemy.boss) {
+        let returnData = enemy.damage(999);
+        if (!(returnData == -1)) {
+          this.explosion = this.explosions.get();
+          this.explosion.create(returnData.x, returnData.y);
+        }
+
+        if (player.hit(player.skil.auto ? 200 : 300)) {
+          this.explosion = this.explosions.get();
+          this.explosion.create(this.player.x, this.player.y);
+        }
       }
 
-      if (player.hit(player.skil.auto ? 200 : 300)) {
-        this.explosion = this.explosions.get();
-        this.explosion.create(this.player.x, this.player.y);
-      }
     }
   }
 
   hit_player(player, enemyBullet) {
-    this.player.augmentorPointGet(Math.floor(enemyBullet.power / 5));
-    if (this.player.life) {
-      enemyBullet.hit();
-      if (player.hit(enemyBullet.power)) {
-        this.explosion = this.explosions.get();
-        this.explosion.create(this.player.x, this.player.y);
+    if (this.window == "null") {
+
+      this.player.augmentorPointGet(Math.floor(enemyBullet.power / 5));
+      if (this.player.life) {
+        enemyBullet.hit();
+        if (player.hit(enemyBullet.power)) {
+          this.explosion = this.explosions.get();
+          this.explosion.create(this.player.x, this.player.y);
+        }
       }
+
     }
   }
 
   hit(bullet, enemy) {
-    if (bullet.collision_active) {
-      let ab_get = 0;
+    if (this.window == "null") {
+
+      if (bullet.collision_active) {
+        let ab_get = 0;
+    
+        const damage_point = Math.floor(bullet.power / 20)
+        ab_get += damage_point > 0 ? damage_point : 1;
+        bullet.hit();
   
-      const damage_point = Math.floor(bullet.power / 20)
-      ab_get += damage_point > 0 ? damage_point : 1;
-      bullet.hit();
-
-      let damage = bullet.power;
-      let damage_coefficient = 1.0;
-
-      if (this.player.type == "multirole" && (enemy.type == "air" || enemy.type == "grd")) {
-        damage_coefficient += 0.1;
-        if (this.player.skil.wso) damage_coefficient += 0.1;
-      }
-      else if (this.player.type == "fighter" && enemy.type == "air") {
-        damage_coefficient += 0.2;
-        if (this.player.skil.wso) damage_coefficient += 0.1;
-      }
-      else if (this.player.type == "attacker" && enemy.type == "grd") {
-        damage_coefficient += 0.2;
-        if (this.player.skil.wso) damage_coefficient += 0.1;
-      }
-      else if (this.player.type == "interceptor" && this.player.augmentor > 0) {
-        damage_coefficient += 0.2;
-        if (this.player.skil.wso) damage_coefficient += 0.1;
-      }
-      else if (this.player.type == "bomber" && enemy.boss) {
-        damage_coefficient += 0.2;
-        if (this.player.skil.wso) damage_coefficient += 0.1;
-      }
-
-      if (this.player.skil.asm && enemy.type == "sae") {
-        damage_coefficient += 0.4;
-      }
-
-      damage = Math.floor(damage * damage_coefficient);
-
-      console.log(damage);
-      let returnData = enemy.damage(damage);
-      if (!(returnData == -1)) {
-        ab_get += 20;
-        this.score += returnData.score;
-        this.explosion = this.explosions.get();
-        this.explosion.create(returnData.x, returnData.y);
-        if (returnData.type == "boss") {
-          this.boss_trigger++;
-          if (this.boss_trigger >= this.boss_count) {
-            console.log("GAME CLEAR")
+        let damage = bullet.power;
+        let damage_coefficient = 1.0;
+  
+        if (this.player.type == "multirole" && (enemy.type == "air" || enemy.type == "grd")) {
+          damage_coefficient += 0.1;
+          if (this.player.skil.wso) damage_coefficient += 0.1;
+        }
+        else if (this.player.type == "fighter" && enemy.type == "air") {
+          damage_coefficient += 0.2;
+          if (this.player.skil.wso) damage_coefficient += 0.1;
+        }
+        else if (this.player.type == "attacker" && enemy.type == "grd") {
+          damage_coefficient += 0.2;
+          if (this.player.skil.wso) damage_coefficient += 0.1;
+        }
+        else if (this.player.type == "interceptor" && this.player.augmentor > 0) {
+          damage_coefficient += 0.2;
+          if (this.player.skil.wso) damage_coefficient += 0.1;
+        }
+        else if (this.player.type == "bomber" && enemy.boss) {
+          damage_coefficient += 0.2;
+          if (this.player.skil.wso) damage_coefficient += 0.1;
+        }
+  
+        if (this.player.skil.asm && enemy.type == "sae") {
+          damage_coefficient += 0.4;
+        }
+  
+        damage = Math.floor(damage * damage_coefficient);
+  
+        console.log(damage);
+        let returnData = enemy.damage(damage);
+        if (!(returnData == -1)) {
+          ab_get += 20;
+          this.score += returnData.score;
+          this.explosion = this.explosions.get();
+          this.explosion.create(returnData.x, returnData.y);
+          if (returnData.type == "boss") {
+            this.boss_trigger++;
+            if (this.boss_trigger >= this.boss_count) {
+              console.log("GAME CLEAR")
+            }
           }
         }
+        this.player.augmentorPointGet(ab_get);
       }
-      this.player.augmentorPointGet(ab_get);
+
     }
+  }
+
+  pouse() {
+    this.window = "pouse";
+    this.pouse_menu.up();
+    this.playerGroup.runChildUpdate = false;
+    this.bullets.runChildUpdate = false;
+    this.enemys.runChildUpdate = false;
+    this.enemyBullets.runChildUpdate = false;
+    this.flares.runChildUpdate = false;
+    this.explosions.runChildUpdate = false;
+  }
+
+  pouse_cancel() {
+    this.window = "null";
+    this.pouse_menu.close();
+    this.playerGroup.runChildUpdate = true;
+    this.bullets.runChildUpdate = true;
+    this.enemys.runChildUpdate = true;
+    this.enemyBullets.runChildUpdate = true;
+    this.flares.runChildUpdate = true;
+    this.explosions.runChildUpdate = true;
   }
 
   background_disp() {
@@ -478,244 +557,283 @@ class ShootingScene extends GameScene {
   }
 
   update() {
-    // console.log(this.enemys.getChildren().length);
-    // this.player.action();
-    this.background_disp();
-    this.disp_ui();
-
-    if (this.player.augmentor > 0) {
-      this.ab_1.setVisible(true);
-      this.ab_1.setX(this.player.x - this.player.engine_pos[0]);
-      this.ab_1.setY(this.player.y + this.player.engine_pos[1]);
-      this.ab_2.setVisible(true);
-      this.ab_2.setX(this.player.x + this.player.engine_pos[0]);
-      this.ab_2.setY(this.player.y + this.player.engine_pos[1]);
-    }
-    else {
-      this.ab_1.setVisible(false);
-      this.ab_2.setVisible(false);
-    }
-
-    if (!this.enemyDebugMode) this.enemyPrefab();
-    this.enemys.getChildren().forEach(e => {
-      e.playerPos = this.player.getPositionData();
-
-      e.shot().forEach(shot_type => {
-        const bullet = this.enemyBullets.get();
-        if (bullet) {
-          bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag);
-        }
-      });
-    });
-
-    if (this.player.getWaepon("nomal").tag == "hel" || this.player.getWaepon("sp").tag == "hel")
-    this.bullets.getChildren().forEach(e => {
-      if (e.tag == "hel") {
-        e.x = this.player.x;
+    if (this.window == "null") {
+      
+      this.background_disp();
+      this.disp_ui();
+  
+      if (this.player.augmentor > 0) {
+        this.ab_1.setVisible(true);
+        this.ab_1.setX(this.player.x - this.player.engine_pos[0]);
+        this.ab_1.setY(this.player.y + this.player.engine_pos[1]);
+        this.ab_2.setVisible(true);
+        this.ab_2.setX(this.player.x + this.player.engine_pos[0]);
+        this.ab_2.setY(this.player.y + this.player.engine_pos[1]);
       }
-    });
-
-    if (this.radar) {
-      if (this.radar.scan()) {
-        let send_data = [];
-        send_data.push({ type: "player", x: this.player.x - 160, y: this.player.y, d: 90 });
-        this.enemys.getChildren().forEach(e => {
-          const enemy_type = e.type == "air" ? "air" : (e.type == "ground" ? "grd" : "sae");
-          send_data.push({ type: enemy_type, x: e.x - 160, y: e.y, d: e.deg });
-          if (e.boss) {
-            send_data.push({ type: "tgt", x: e.x - 160, y: e.y, d: 90 });
+      else {
+        this.ab_1.setVisible(false);
+        this.ab_2.setVisible(false);
+      }
+  
+      if (!this.enemyDebugMode) this.enemyPrefab();
+      this.enemys.getChildren().forEach(e => {
+        e.playerPos = this.player.getPositionData();
+  
+        e.shot().forEach(shot_type => {
+          const bullet = this.enemyBullets.get();
+          if (bullet) {
+            bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag);
           }
         });
-        this.radar.setData(send_data);
+      });
+  
+      if (this.player.getWaepon("nomal").tag == "hel" || this.player.getWaepon("sp").tag == "hel")
+      this.bullets.getChildren().forEach(e => {
+        if (e.tag == "hel") {
+          e.x = this.player.x;
+        }
+      });
+  
+      if (this.radar) {
+        if (this.radar.scan()) {
+          let send_data = [];
+          send_data.push({ type: "player", x: this.player.x - 160, y: this.player.y, d: 90 });
+          this.enemys.getChildren().forEach(e => {
+            const enemy_type = e.type == "air" ? "air" : (e.type == "ground" ? "grd" : "sae");
+            send_data.push({ type: enemy_type, x: e.x - 160, y: e.y, d: e.deg });
+            if (e.boss) {
+              send_data.push({ type: "tgt", x: e.x - 160, y: e.y, d: 90 });
+            }
+          });
+          this.radar.setData(send_data);
+        }
       }
+  
+      this.boss_text.update();
     }
-
-    this.boss_text.update();
+    else if (this.window == "pouse") {
+      this.pouse_menu.disp();
+    }
     
     super.update();
   }
 
+  back_thisScene() {
+    this.window = "pouse";
+  }
+
   contller() {
-    this.player.move = false;
-        
-    let setPlayerMove = (angle, x, y) => {
-      if (x == 0) {
-        if (this.player.speed.x > 0.2) this.player.speed.x -= 0.5;
-        else if (this.player.speed.x < -0.2) this.player.speed.x += 0.5;
-        else this.player.speed.x = 0;
-      }
-      else if (x == 1 && this.player.speed.x < this.player.getSpeed()) {
-        this.player.speed.x += 0.5;
-      }
-      else if (x == -1 && this.player.speed.x > -this.player.getSpeed()) {
-        this.player.speed.x -= 0.5;
-      }
-
-      if (y == 0) {
-        if (this.player.speed.y > 0.2) this.player.speed.y -= 0.5;
-        else if (this.player.speed.y < -0.2) this.player.speed.y += 0.5;
-        else this.player.speed.y = 0;
-      }
-      else if (y == 1 && this.player.speed.y < this.player.getSpeed()) {
-        this.player.speed.y += 0.5;
-      }
-      else if (y == -1 && this.player.speed.y > -this.player.getSpeed()) {
-        this.player.speed.y -= 0.5;
-      }
-    };
-    
-    if (this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.right.isDown || this.cursors.left.isDown) {
-      this.player.move = true;
-
-      if (this.cursors.right.isDown && this.cursors.up.isDown) setPlayerMove(45, 1, 1);
-      else if (this.cursors.left.isDown && this.cursors.up.isDown) setPlayerMove(135, -1, 1);
-      else if (this.cursors.left.isDown && this.cursors.down.isDown) setPlayerMove(225, -1, -1);
-      else if (this.cursors.right.isDown && this.cursors.down.isDown) setPlayerMove(315, 1, -1);
-      else if (this.cursors.right.isDown) setPlayerMove(0, 1, 0);
-      else if (this.cursors.up.isDown) setPlayerMove(90, 0, 1);
-      else if (this.cursors.left.isDown) setPlayerMove(180, -1, 0);
-      else if (this.cursors.down.isDown) setPlayerMove(270, 0, -1);
-    }
-    else {
-      setPlayerMove(this.player.deg, 0, 0);
-    }
-
-    let shot = (w="nomal") => {
-      if (this.player.augmentor <= 0) {
-        this.player.en -= this.player.getWaepon(w).en;
-      }
-      const tag = this.player.getWaepon(w).tag;
-      if (tag == "m601") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, tag);
-        this.player.weponVar_m601 = this.player.weponVar_m601 == 0 ? 1 : 0;
-      }
-      else if (tag == "l47") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x - 4, this.player.y, 90, tag);
-        let bullet_2 = this.bullets.get();
-        bullet_2.create(this.player.x + 4, this.player.y, 90, tag);
-        bullet_2.var_l47 = 1;
-      }
-      else if (tag == "gs60") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x, this.player.y, 45, tag);
-        const bullet_2 = this.bullets.get();
-        bullet_2.create(this.player.x, this.player.y, 135, tag);
-        const bullet_3 = this.bullets.get();
-        bullet_3.create(this.player.x, this.player.y, 270, tag);
-      }
-      else if (tag == "asraab") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x - 10, this.player.y, 90, tag);
-        const bullet_2 = this.bullets.get();
-        bullet_2.create(this.player.x + 10, this.player.y, 90, tag);
-        const bullet_3 = this.bullets.get();
-        bullet_3.create(this.player.x, this.player.y - 10, 90, tag);
-      }
-      else if (tag == "pj234") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x, this.player.y, Math.floor(Math.random() * 136) + 45, tag);
-      }
-      else if (tag == "type25") {
-        for (let i = 0; i < 4; i++) {
-          const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, 90, tag);
-          bullet.var_type25 = i;
+    if (this.window == "null") {
+      this.player.move = false;
+          
+      let setPlayerMove = (angle, x, y) => {
+        if (x == 0) {
+          if (this.player.speed.x > 0.2) this.player.speed.x -= 0.5;
+          else if (this.player.speed.x < -0.2) this.player.speed.x += 0.5;
+          else this.player.speed.x = 0;
         }
-      }
-      else if (tag == "atm144") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x, this.player.y, (this.player.weponVar_atm144 == 0 ? 180 : 0), tag);
-        bullet.var_atm144 = this.player.weponVar_atm144;
-        this.player.weponVar_atm144 = this.player.weponVar_atm144 == 0 ? 1 : 0;
-      }
-      else if (tag == "malc") {
-        for (let i = 0; i < 4; i++) {
-          const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, 45 + i * 30, tag);
+        else if (x == 1 && this.player.speed.x < this.player.getSpeed()) {
+          this.player.speed.x += 0.5;
         }
-      }
-      else if (tag == "gua99") {
-        for (let i = 0; i < 6; i++) {
-          const bullet = this.bullets.get();
-          bullet.create(this.player.x + i * 10 - 25, this.player.y, 90, tag);
+        else if (x == -1 && this.player.speed.x > -this.player.getSpeed()) {
+          this.player.speed.x -= 0.5;
         }
-      }
-      else if (tag == "jdal") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x - 15, this.player.y, 90, tag);
-        const bullet_2 = this.bullets.get();
-        bullet_2.create(this.player.x + 15, this.player.y, 90, tag);
-      }
-      else if (tag == "r53") {
-        for (let i = 0; i < 11; i++) {
-          const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, 90, tag);
-          bullet.var_r53 = i - 5;
+  
+        if (y == 0) {
+          if (this.player.speed.y > 0.2) this.player.speed.y -= 0.5;
+          else if (this.player.speed.y < -0.2) this.player.speed.y += 0.5;
+          else this.player.speed.y = 0;
         }
-      }
-      else if (tag == "ciasa") {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x, this.player.y, this.player.weponVar_ciasa, tag);
-        if (this.player.weponVar_ciasa_2 == 0) {
-          this.player.weponVar_ciasa -= 15;
+        else if (y == 1 && this.player.speed.y < this.player.getSpeed()) {
+          this.player.speed.y += 0.5;
         }
-        else {
-          this.player.weponVar_ciasa += 15;
+        else if (y == -1 && this.player.speed.y > -this.player.getSpeed()) {
+          this.player.speed.y -= 0.5;
         }
-
-        if (this.player.weponVar_ciasa >= 150) {
-          this.player.weponVar_ciasa = 150;
-          this.player.weponVar_ciasa_2 = 0;
-        }
-        else if (this.player.weponVar_ciasa <= 30) {
-          this.player.weponVar_ciasa = 30;
-          this.player.weponVar_ciasa_2 = 1;
-        }
+      };
+      
+      if (this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.right.isDown || this.cursors.left.isDown) {
+        this.player.move = true;
+  
+        if (this.cursors.right.isDown && this.cursors.up.isDown) setPlayerMove(45, 1, 1);
+        else if (this.cursors.left.isDown && this.cursors.up.isDown) setPlayerMove(135, -1, 1);
+        else if (this.cursors.left.isDown && this.cursors.down.isDown) setPlayerMove(225, -1, -1);
+        else if (this.cursors.right.isDown && this.cursors.down.isDown) setPlayerMove(315, 1, -1);
+        else if (this.cursors.right.isDown) setPlayerMove(0, 1, 0);
+        else if (this.cursors.up.isDown) setPlayerMove(90, 0, 1);
+        else if (this.cursors.left.isDown) setPlayerMove(180, -1, 0);
+        else if (this.cursors.down.isDown) setPlayerMove(270, 0, -1);
       }
       else {
-        const bullet = this.bullets.get();
-        bullet.create(this.player.x, this.player.y, 90, tag);
+        setPlayerMove(this.player.deg, 0, 0);
       }
-    }
-
-    if (((this.key.z.isDown && this.player.en >= this.player.getWaepon().en) || this.player.augmentor > 0) && this.player.augmentor_overheat == 0) {
-      if (this.player.reload == 0) {
-        shot();
-        this.player.reload++;
-      }
-    }
-
-    if (this.player.augmentor > 0) {
-      if (this.player.reload_2 == 0) {
-        shot("sp");
-        this.player.reload_2++;
-      }
-    }
-
-    if (this.key.x.isDown) {
-      if (this.player.ab >= 1000 && this.player.augmentor == 0) {
-        this.player.augmentor = 1000;
-        this.player.augmentor_overheat = 0;
-      }
-    }
-
-    if (this.key.c.isDown && this.player.flare > 0 && this.player.flare_overheat <= 0) {
-      for (let i = 0; i < 12; i++) {
-        const flare = this.flares.get();
-        const rad = deg => {
-          return -deg * (Math.PI / 180.0) + 90 * (Math.PI / 180.0);
-        };
-        if (flare) {
-          const deg = 30 * i;
-          flare.create(this.player.x + 48 * Math.cos(rad(deg + 90)), this.player.y + 48 * Math.sin(rad(deg + 90)), deg);
+  
+      let shot = (w="nomal") => {
+        if (this.player.augmentor <= 0) {
+          this.player.en -= this.player.getWaepon(w).en;
+        }
+        const tag = this.player.getWaepon(w).tag;
+        if (tag == "m601") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, tag);
+          this.player.weponVar_m601 = this.player.weponVar_m601 == 0 ? 1 : 0;
+        }
+        else if (tag == "l47") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x - 4, this.player.y, 90, tag);
+          let bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x + 4, this.player.y, 90, tag);
+          bullet_2.var_l47 = 1;
+        }
+        else if (tag == "gs60") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, 45, tag);
+          const bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x, this.player.y, 135, tag);
+          const bullet_3 = this.bullets.get();
+          bullet_3.create(this.player.x, this.player.y, 270, tag);
+        }
+        else if (tag == "asraab") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x - 10, this.player.y, 90, tag);
+          const bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x + 10, this.player.y, 90, tag);
+          const bullet_3 = this.bullets.get();
+          bullet_3.create(this.player.x, this.player.y - 10, 90, tag);
+        }
+        else if (tag == "pj234") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, Math.floor(Math.random() * 136) + 45, tag);
+        }
+        else if (tag == "type25") {
+          for (let i = 0; i < 4; i++) {
+            const bullet = this.bullets.get();
+            bullet.create(this.player.x, this.player.y, 90, tag);
+            bullet.var_type25 = i;
+          }
+        }
+        else if (tag == "atm144") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, (this.player.weponVar_atm144 == 0 ? 180 : 0), tag);
+          bullet.var_atm144 = this.player.weponVar_atm144;
+          this.player.weponVar_atm144 = this.player.weponVar_atm144 == 0 ? 1 : 0;
+        }
+        else if (tag == "malc") {
+          for (let i = 0; i < 4; i++) {
+            const bullet = this.bullets.get();
+            bullet.create(this.player.x, this.player.y, 45 + i * 30, tag);
+          }
+        }
+        else if (tag == "gua99") {
+          for (let i = 0; i < 6; i++) {
+            const bullet = this.bullets.get();
+            bullet.create(this.player.x + i * 10 - 25, this.player.y, 90, tag);
+          }
+        }
+        else if (tag == "jdal") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x - 15, this.player.y, 90, tag);
+          const bullet_2 = this.bullets.get();
+          bullet_2.create(this.player.x + 15, this.player.y, 90, tag);
+        }
+        else if (tag == "r53") {
+          for (let i = 0; i < 11; i++) {
+            const bullet = this.bullets.get();
+            bullet.create(this.player.x, this.player.y, 90, tag);
+            bullet.var_r53 = i - 5;
+          }
+        }
+        else if (tag == "ciasa") {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, this.player.weponVar_ciasa, tag);
+          if (this.player.weponVar_ciasa_2 == 0) {
+            this.player.weponVar_ciasa -= 15;
+          }
+          else {
+            this.player.weponVar_ciasa += 15;
+          }
+  
+          if (this.player.weponVar_ciasa >= 150) {
+            this.player.weponVar_ciasa = 150;
+            this.player.weponVar_ciasa_2 = 0;
+          }
+          else if (this.player.weponVar_ciasa <= 30) {
+            this.player.weponVar_ciasa = 30;
+            this.player.weponVar_ciasa_2 = 1;
+          }
+        }
+        else {
+          const bullet = this.bullets.get();
+          bullet.create(this.player.x, this.player.y, 90, tag);
         }
       }
-      this.player.flare--;
-      this.player.flare_overheat = 300;
-      for (let i = this.enemyBullets.getChildren().length - 1; i >= 0; i--) {
-        this.enemyBullets.getChildren()[i].hit();
+  
+      if (((this.key.z.isDown && this.player.en >= this.player.getWaepon().en) || this.player.augmentor > 0) && this.player.augmentor_overheat == 0) {
+        if (this.player.reload == 0) {
+          shot();
+          this.player.reload++;
+        }
+      }
+  
+      if (this.player.augmentor > 0) {
+        if (this.player.reload_2 == 0) {
+          shot("sp");
+          this.player.reload_2++;
+        }
+      }
+  
+      if (this.key.x.isDown) {
+        if (this.player.ab >= 1000 && this.player.augmentor == 0) {
+          this.player.augmentor = 1000;
+          this.player.augmentor_overheat = 0;
+        }
+      }
+  
+      if (this.key.c.isDown && this.player.flare > 0 && this.player.flare_overheat <= 0) {
+        for (let i = 0; i < 12; i++) {
+          const flare = this.flares.get();
+          const rad = deg => {
+            return -deg * (Math.PI / 180.0) + 90 * (Math.PI / 180.0);
+          };
+          if (flare) {
+            const deg = 30 * i;
+            flare.create(this.player.x + 48 * Math.cos(rad(deg + 90)), this.player.y + 48 * Math.sin(rad(deg + 90)), deg);
+          }
+        }
+        this.player.flare--;
+        this.player.flare_overheat = 300;
+        for (let i = this.enemyBullets.getChildren().length - 1; i >= 0; i--) {
+          this.enemyBullets.getChildren()[i].hit();
+        }
+      }
+  
+      if (Phaser.Input.Keyboard.JustDown(this.key.p)) {
+        this.pouse();
+      }
+    }
+    else if (this.window == "pouse") {
+      if (Phaser.Input.Keyboard.JustDown(this.space)) {
+        switch(this.pouse_menu.select) {
+          case 0:
+            this.pouse_cancel();
+            break;
+          case 1:
+            this.nextScene = "option";
+            this.window = "option";
+            this.option.open();
+            break;
+          case 2:
+            break
+        }
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.key.p)) {
+        this.pouse_cancel();
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
+        this.pouse_menu.select = this.pouse_menu.select == 0 ? 2 : this.pouse_menu.select - 1;
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+        this.pouse_menu.select = this.pouse_menu.select == 2 ? 0 : this.pouse_menu.select + 1;
       }
     }
   }
