@@ -19,6 +19,7 @@ class GameScene extends Phaser.Scene {
   preload() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.key = {
       z: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z),
       x: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X),
@@ -30,6 +31,8 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.window = "null";
+
     this.fade = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "fade_layer");
     this.fade.depth = 999;
     this.fade.alpha = 1;

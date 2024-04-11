@@ -138,6 +138,8 @@ class ShootingScene extends GameScene {
 
   create() {
     super.create();
+    this.fl_bar_alpha = 0.0;
+    this.ab_bar_alpha = 0.0;
 
     this.score = 0;
     
@@ -823,6 +825,7 @@ class ShootingScene extends GameScene {
             this.option.open();
             break;
           case 2:
+            this.nextScene = "title";
             break
         }
       }

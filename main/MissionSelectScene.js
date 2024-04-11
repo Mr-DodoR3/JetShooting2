@@ -55,6 +55,9 @@ class MissionSelectScene extends GameScene {
       //     break;
       // }
     }
+    if (Phaser.Input.Keyboard.JustDown(this.esc)) {
+      this.nextScene = "title";
+    }
   }
 
   sceneChange(next) {
@@ -66,7 +69,7 @@ class MissionSelectScene extends GameScene {
     else {
       this.selecter.scaleX = 0;
       this.fade.alpha = 1;
-      next = "aircraftSelectScene";
+      next = this.nextScene == "title" ? "title" : "aircraftSelectScene";
       this.scene.start(next);
     }
   }

@@ -100,7 +100,14 @@ class AircraftSelectScene extends GameScene {
     // }
   }
 
+  resetSelect() {
+    this.page = 0;
+    this.selectAircraft = 0;
+  }
+
   create() {
+    this.resetSelect();
+
     this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "aircraft_select_background");
     this.selecter = this.add.image(96+128, 154+(this.selectAircraft * 32), "select_ui_selecter");
     // this.add.image(96+128, 184+82, "aircraft_select_ui");
@@ -269,6 +276,9 @@ class AircraftSelectScene extends GameScene {
       this.nextScene = this.selectAircraft;
       selectAircraft = this.selectAircraft;
     }
+    if (Phaser.Input.Keyboard.JustDown(this.esc)) {
+      this.nextScene = "missionSelectScene";
+    }
   }
 
   sceneChange(next) {
@@ -280,7 +290,7 @@ class AircraftSelectScene extends GameScene {
     else {
       this.selecter.scaleX = 0;
       this.fade.alpha = 1;
-      next = "tekeoffScene";
+      next = this.nextScene == "missionSelectScene" ? "missionSelectScene" : "tekeoffScene";
       this.scene.start(next);
     }
   }

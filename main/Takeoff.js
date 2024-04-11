@@ -2,8 +2,8 @@ class TekeoffScene extends GameScene {
   constructor () {
     super("tekeoffScene");
 
-    this.eventTimer = 0;
-    this.eventNum = 0;
+    this.eventTimer;
+    this.eventNum;
     
     this.bg_1;
 
@@ -30,6 +30,9 @@ class TekeoffScene extends GameScene {
 
   create() {
     super.create();
+    this.eventTimer = 0;
+    this.eventNum = 0;
+    this.cvn.acceleration = 5;
 
     this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
     this.bg_1.scaleX = this.bg_1.scaleX * 2;
