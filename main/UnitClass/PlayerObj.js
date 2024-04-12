@@ -8,6 +8,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.serial;
 
     this.maxSpeed;
+    this.max_en;
     this.defence;
     this.charge;
     this.waepon_1;
@@ -76,10 +77,6 @@ class PlayerObj extends Phaser.GameObjects.Image {
   }
 
   create(x, y, tag) {
-    this.hp = 1000;
-    this.en = 1000;
-    this.ab = 0;
-
     this.setX(x);
     this.setY(y);
     this.tag = tag;
@@ -135,6 +132,16 @@ class PlayerObj extends Phaser.GameObjects.Image {
           if (UNIT_DATA[i].skil[j] == "nuclear") this.skil.nuclear = true;
         }
       }
+
+      this.max_en = ((e) => {
+        const buff = this.skil.cft ? 0.3 : 0;
+        return Math.floor(e * (1 + buff));
+      })(1000);
+      console.log("EN" + this.max_en)
+
+      this.hp = 1000;
+      this.en = this.max_en;
+      this.ab = 0;
     }
     
     if (this.skil.flare) {
@@ -176,7 +183,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
       if (this.augmentor <= 0) {
         this.augmentor == 0;
         this.ab == 0;
-        this.augmentor_overheat = 240;
+        this.augmentor_overheat = this.skil.supercruise ? 150 : 300;
       }
     }
     if (this.augmentor_overheat > 0) {
@@ -233,9 +240,9 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
     if (this.augmentor == 0) {
       this.charge_counter = this.charge_counter > 5 ? 0 : this.charge_counter + 1;
-      if (this.en < 1000 && this.augmentor_overheat <= 0 && this.charge_counter == 0) {
+      if (this.en < this.max_en && this.augmentor_overheat <= 0 && this.charge_counter == 0) {
         this.en += 5 + this.charge / 2;
-        if (this.en > 1000) this.en = 1000;
+        if (this.en > this.max_en) this.en = this.max_en;
       }
     }
   }

@@ -371,11 +371,12 @@ class ShootingScene extends GameScene {
   
         damage = Math.floor(damage * damage_coefficient);
   
-        console.log(damage);
+        // console.log(damage);
         let returnData = enemy.damage(damage);
         if (!(returnData == -1)) {
           ab_get += 20;
-          this.score += returnData.score;
+          const score = Math.floor(returnData.score * (this.player.skil.coin ? 1.1 : 1.0));
+          this.score += score;
           this.explosion = this.explosions.get();
           this.explosion.create(returnData.x, returnData.y);
           if (returnData.type == "boss") {
@@ -493,7 +494,7 @@ class ShootingScene extends GameScene {
       }
     }
 
-    const en_bar_down = Math.abs(450 * (this.player.en / 1000) - 450);
+    const en_bar_down = Math.abs(450 * (this.player.en / this.player.max_en) - 450);
     this.rect.en_bar.height = 450 - en_bar_down;
     this.rect.en_bar.y = 120 + en_bar_down;
     if (this.player.augmentor_overheat > 0) {

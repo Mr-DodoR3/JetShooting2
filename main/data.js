@@ -28,12 +28,12 @@ const SKIL_DATA = [
   {
     tag : "cft",
     name_jp : "コンフォーマル・フューエル・タンク",
-    explanation : "最大エネルギーチャージ量とエネルギー回復速度を30%向上させます。"
+    explanation : "最大エネルギーチャージ量を30%向上させます。"
   },
   {
     tag : "supercruise",
     name_jp : "スーパークルーズ",
-    explanation : ""
+    explanation : "オーグメンター使用後のタイムラグを半減させる。"
   },
   {
     tag : "swingwing",
@@ -53,7 +53,7 @@ const SKIL_DATA = [
   {
     tag : "asm",
     name_jp : "対艦番長",
-    explanation : ""
+    explanation : "対艦目標に対するダメージを40%向上させる。"
   },
   {
     tag : "armor",
