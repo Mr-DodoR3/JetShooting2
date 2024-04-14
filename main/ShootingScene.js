@@ -126,6 +126,8 @@ class ShootingScene extends GameScene {
     this.ab_bar_alpha = 0.0;
     // this.boss_trigger = 0;
     // this.boss_count = MISSION_DATA[0][0].boss_count;
+
+    this.ucav;
   }
 
   init() {
@@ -243,6 +245,16 @@ class ShootingScene extends GameScene {
     this.ui_text.unit_name.setText(this.player.serial);
     this.ui_text.type_name.setText(this.player.type.toUpperCase());
 
+    this.ucavGroup = this.physics.add.group({
+      classType: UcavObj,
+      maxSize: 1,
+      runChildUpdate: true
+    });
+    if (this.player.skil.ucav) {
+      this.ucav = this.ucavGroup.get();
+      this.ucav.create(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 + 140, "amq28");
+    }
+
     this.ab_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
     this.ab_1.scaleX = this.ab_1.scaleX * 0.5;
     this.ab_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab");
@@ -295,6 +307,8 @@ class ShootingScene extends GameScene {
     this.physics.add.overlap(this.player, this.enemys, this.clash, null, this);
     this.physics.add.overlap(this.player, this.enemyBullets, this.hit_player, null, this);
     this.physics.add.overlap(this.bullets, this.enemys, this.hit, null, this);
+
+    // this.ucav = this.add.ucav(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ucav");
   };
 
   clash(player, enemy) {
@@ -396,6 +410,7 @@ class ShootingScene extends GameScene {
     this.window = "pouse";
     this.pouse_menu.up();
     this.playerGroup.runChildUpdate = false;
+    this.ucavGroup.runChildUpdate = false;
     this.bullets.runChildUpdate = false;
     this.enemys.runChildUpdate = false;
     this.enemyBullets.runChildUpdate = false;
@@ -407,6 +422,7 @@ class ShootingScene extends GameScene {
     this.window = "null";
     this.pouse_menu.close();
     this.playerGroup.runChildUpdate = true;
+    this.ucavGroup.runChildUpdate = true;
     this.bullets.runChildUpdate = true;
     this.enemys.runChildUpdate = true;
     this.enemyBullets.runChildUpdate = true;
@@ -628,127 +644,172 @@ class ShootingScene extends GameScene {
   contller() {
     if (this.window == "null") {
       this.player.move = false;
+      const responseSpeed = this.player.skil.fbl ? 0.8 : (this.player.skil.vt ? 0.6 : 0.4);
+
+      const setUcavMove = (x, y) => {      
+        if (this.player.skil.ucav) {
+          this.ucav.setPosition(this.player.x, this.player.y - 60);
+        }
+      };
           
       let setPlayerMove = (angle, x, y) => {
         if (x == 0) {
-          if (this.player.speed.x > 0.2) this.player.speed.x -= 0.5;
-          else if (this.player.speed.x < -0.2) this.player.speed.x += 0.5;
+          if (this.player.speed.x > 0.2) this.player.speed.x -= responseSpeed;
+          else if (this.player.speed.x < -0.2) this.player.speed.x += responseSpeed;
           else this.player.speed.x = 0;
         }
         else if (x == 1 && this.player.speed.x < this.player.getSpeed()) {
-          this.player.speed.x += 0.5;
+          this.player.speed.x += responseSpeed;
         }
         else if (x == -1 && this.player.speed.x > -this.player.getSpeed()) {
-          this.player.speed.x -= 0.5;
+          this.player.speed.x -= responseSpeed;
         }
   
         if (y == 0) {
-          if (this.player.speed.y > 0.2) this.player.speed.y -= 0.5;
-          else if (this.player.speed.y < -0.2) this.player.speed.y += 0.5;
+          if (this.player.speed.y > 0.2) this.player.speed.y -= responseSpeed;
+          else if (this.player.speed.y < -0.2) this.player.speed.y += responseSpeed;
           else this.player.speed.y = 0;
         }
         else if (y == 1 && this.player.speed.y < this.player.getSpeed()) {
-          this.player.speed.y += 0.5;
+          this.player.speed.y += responseSpeed;
         }
         else if (y == -1 && this.player.speed.y > -this.player.getSpeed()) {
-          this.player.speed.y -= 0.5;
+          this.player.speed.y -= responseSpeed;
         }
+      
+        setUcavMove(x, y);
       };
+      let setPlayerMoveVTOL = (angle, x, y) => {
+        this.player.x += x;
+        this.player.y -= y;
+        this.ab_1.setX(this.player.x - this.player.engine_pos[0]);
+        this.ab_1.setY(this.player.y + this.player.engine_pos[1]);
+        this.ab_2.setX(this.player.x + this.player.engine_pos[0]);
+        this.ab_2.setY(this.player.y + this.player.engine_pos[1]);
+      
+        setUcavMove(x, y);
+      }
       
       if (this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.right.isDown || this.cursors.left.isDown) {
-        this.player.move = true;
-  
-        if (this.cursors.right.isDown && this.cursors.up.isDown) setPlayerMove(45, 1, 1);
-        else if (this.cursors.left.isDown && this.cursors.up.isDown) setPlayerMove(135, -1, 1);
-        else if (this.cursors.left.isDown && this.cursors.down.isDown) setPlayerMove(225, -1, -1);
-        else if (this.cursors.right.isDown && this.cursors.down.isDown) setPlayerMove(315, 1, -1);
-        else if (this.cursors.right.isDown) setPlayerMove(0, 1, 0);
-        else if (this.cursors.up.isDown) setPlayerMove(90, 0, 1);
-        else if (this.cursors.left.isDown) setPlayerMove(180, -1, 0);
-        else if (this.cursors.down.isDown) setPlayerMove(270, 0, -1);
+        if (this.player.skil.vtol && this.player.augmentor > 0) {
+          this.player.move = false;
+    
+          if (this.cursors.right.isDown && this.cursors.up.isDown) setPlayerMoveVTOL(45, this.player.getSpeed(), this.player.getSpeed());
+          else if (this.cursors.left.isDown && this.cursors.up.isDown) setPlayerMoveVTOL(135, -this.player.getSpeed(), this.player.getSpeed());
+          else if (this.cursors.left.isDown && this.cursors.down.isDown) setPlayerMoveVTOL(225, -this.player.getSpeed(), -this.player.getSpeed());
+          else if (this.cursors.right.isDown && this.cursors.down.isDown) setPlayerMoveVTOL(315, this.player.getSpeed(), -this.player.getSpeed());
+          else if (this.cursors.right.isDown) setPlayerMoveVTOL(0, this.player.getSpeed(), 0);
+          else if (this.cursors.up.isDown) setPlayerMoveVTOL(90, 0, this.player.getSpeed());
+          else if (this.cursors.left.isDown) setPlayerMoveVTOL(180, -this.player.getSpeed(), 0);
+          else if (this.cursors.down.isDown) setPlayerMoveVTOL(270, 0, -this.player.getSpeed());
+        }
+        else {
+          this.player.move = true;
+    
+          if (this.cursors.right.isDown && this.cursors.up.isDown) setPlayerMove(45, 1, 1);
+          else if (this.cursors.left.isDown && this.cursors.up.isDown) setPlayerMove(135, -1, 1);
+          else if (this.cursors.left.isDown && this.cursors.down.isDown) setPlayerMove(225, -1, -1);
+          else if (this.cursors.right.isDown && this.cursors.down.isDown) setPlayerMove(315, 1, -1);
+          else if (this.cursors.right.isDown) setPlayerMove(0, 1, 0);
+          else if (this.cursors.up.isDown) setPlayerMove(90, 0, 1);
+          else if (this.cursors.left.isDown) setPlayerMove(180, -1, 0);
+          else if (this.cursors.down.isDown) setPlayerMove(270, 0, -1);
+        }
       }
       else {
-        setPlayerMove(this.player.deg, 0, 0);
+        if (this.player.skil.vtol && this.player.augmentor > 0) {
+          setPlayerMoveVTOL(this.player.deg, 0, 0);
+        }
+        else {
+          setPlayerMove(this.player.deg, 0, 0);
+        }
       }
   
-      let shot = (w="nomal") => {
-        if (this.player.augmentor <= 0) {
-          this.player.en -= this.player.getWaepon(w).en;
+      let shot = (x, y, w="nomal") => {
+        let tag = "";
+        if (!(w == "ucav")) {
+          if (this.player.augmentor <= 0) {
+            this.player.en -= this.player.getWaepon(w).en;
+            tag = this.player.getWaepon(w).tag;
+          }
         }
-        const tag = this.player.getWaepon(w).tag;
+        else {
+          tag = this.ucav.getWaepon().tag;
+        }        
+
         if (tag == "m601") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x + (this.player.weponVar_m601 == 0 ? 8 : - 8), this.player.y, 90, tag);
+          bullet.create(x + (this.player.weponVar_m601 == 0 ? 8 : - 8), y, 90, tag);
           this.player.weponVar_m601 = this.player.weponVar_m601 == 0 ? 1 : 0;
         }
         else if (tag == "l47") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x - 4, this.player.y, 90, tag);
+          bullet.create(x - 4, y, 90, tag);
           let bullet_2 = this.bullets.get();
-          bullet_2.create(this.player.x + 4, this.player.y, 90, tag);
+          bullet_2.create(x + 4, y, 90, tag);
           bullet_2.var_l47 = 1;
         }
         else if (tag == "gs60") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, 45, tag);
+          bullet.create(x, y, 45, tag);
           const bullet_2 = this.bullets.get();
-          bullet_2.create(this.player.x, this.player.y, 135, tag);
+          bullet_2.create(x, y, 135, tag);
           const bullet_3 = this.bullets.get();
-          bullet_3.create(this.player.x, this.player.y, 270, tag);
+          bullet_3.create(x, y, 270, tag);
         }
         else if (tag == "asraab") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x - 10, this.player.y, 90, tag);
+          bullet.create(x - 10, y, 90, tag);
           const bullet_2 = this.bullets.get();
-          bullet_2.create(this.player.x + 10, this.player.y, 90, tag);
+          bullet_2.create(x + 10, y, 90, tag);
           const bullet_3 = this.bullets.get();
-          bullet_3.create(this.player.x, this.player.y - 10, 90, tag);
+          bullet_3.create(x, y - 10, 90, tag);
         }
         else if (tag == "pj234") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, Math.floor(Math.random() * 136) + 45, tag);
+          bullet.create(x, y, Math.floor(Math.random() * 136) + 45, tag);
         }
         else if (tag == "type25") {
           for (let i = 0; i < 4; i++) {
             const bullet = this.bullets.get();
-            bullet.create(this.player.x, this.player.y, 90, tag);
+            bullet.create(x, y, 90, tag);
             bullet.var_type25 = i;
           }
         }
         else if (tag == "atm144") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, (this.player.weponVar_atm144 == 0 ? 180 : 0), tag);
+          bullet.create(x, y, (this.player.weponVar_atm144 == 0 ? 180 : 0), tag);
           bullet.var_atm144 = this.player.weponVar_atm144;
           this.player.weponVar_atm144 = this.player.weponVar_atm144 == 0 ? 1 : 0;
         }
         else if (tag == "malc") {
           for (let i = 0; i < 4; i++) {
             const bullet = this.bullets.get();
-            bullet.create(this.player.x, this.player.y, 45 + i * 30, tag);
+            bullet.create(x, y, 45 + i * 30, tag);
           }
         }
         else if (tag == "gua99") {
           for (let i = 0; i < 6; i++) {
             const bullet = this.bullets.get();
-            bullet.create(this.player.x + i * 10 - 25, this.player.y, 90, tag);
+            bullet.create(x + i * 10 - 25, y, 90, tag);
           }
         }
         else if (tag == "jdal") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x - 15, this.player.y, 90, tag);
+          bullet.create(x - 15, y, 90, tag);
           const bullet_2 = this.bullets.get();
-          bullet_2.create(this.player.x + 15, this.player.y, 90, tag);
+          bullet_2.create(x + 15, y, 90, tag);
         }
         else if (tag == "r53") {
           for (let i = 0; i < 11; i++) {
             const bullet = this.bullets.get();
-            bullet.create(this.player.x, this.player.y, 90, tag);
+            bullet.create(x, y, 90, tag);
             bullet.var_r53 = i - 5;
           }
         }
         else if (tag == "ciasa") {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, this.player.weponVar_ciasa, tag);
+          bullet.create(x, y, this.player.weponVar_ciasa, tag);
           if (this.player.weponVar_ciasa_2 == 0) {
             this.player.weponVar_ciasa -= 15;
           }
@@ -767,21 +828,28 @@ class ShootingScene extends GameScene {
         }
         else {
           const bullet = this.bullets.get();
-          bullet.create(this.player.x, this.player.y, 90, tag);
+          bullet.create(x, y, 90, tag);
         }
       }
   
       if (((this.key.z.isDown && this.player.en >= this.player.getWaepon().en) || this.player.augmentor > 0) && this.player.augmentor_overheat == 0) {
         if (this.player.reload == 0) {
-          shot();
+          shot(this.player.x, this.player.y);
           this.player.reload++;
         }
       }
   
       if (this.player.augmentor > 0) {
         if (this.player.reload_2 == 0) {
-          shot("sp");
+          shot(this.player.x, this.player.y, "sp");
           this.player.reload_2++;
+        }
+      }
+      
+      if (this.player.skil.ucav) {
+        if (this.ucav.reload == 0) {
+          shot(this.ucav.x, this.ucav.y, "ucav");
+          this.ucav.reload++;
         }
       }
   

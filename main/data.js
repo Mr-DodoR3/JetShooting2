@@ -33,7 +33,7 @@ const SKIL_DATA = [
   {
     tag : "supercruise",
     name_jp : "スーパークルーズ",
-    explanation : "オーグメンター使用後のタイムラグを半減させる。"
+    explanation : "オーグメンター使用後のタイムラグを半減させます。"
   },
   {
     tag : "swingwing",
@@ -43,22 +43,22 @@ const SKIL_DATA = [
   {
     tag : "vtol",
     name_jp : "VTOL",
-    explanation : ""
+    explanation : "オーグメンター使用時、VTOLモードになります。"
   },
   {
     tag : "vt",
     name_jp : "推力偏向ノズル",
-    explanation : ""
+    explanation : "オーグメンター時の運動性能が40%向上、反応速度を50%向上させます。"
   },
   {
     tag : "asm",
     name_jp : "対艦番長",
-    explanation : "対艦目標に対するダメージを40%向上させる。"
+    explanation : "対艦目標に対する攻撃力を40%向上させます。"
   },
   {
     tag : "armor",
     name_jp : "防弾装甲",
-    explanation : ""
+    explanation : "ダメージを20%減少させます。"
   },
   {
     tag : "maintain",
@@ -73,7 +73,7 @@ const SKIL_DATA = [
   {
     tag : "irst",
     name_jp : "IRST",
-    explanation : "ステルス目標を探知できます。"
+    explanation : "ステルス目標を探知できます。x"
   },
   {
     tag : "stealth",
@@ -88,7 +88,7 @@ const SKIL_DATA = [
   {
     tag : "fbl",
     name_jp : "フライ・バイ・ライト",
-    explanation : ""
+    explanation : "機体の反応速度を100%向上させます。"
   },
   {
     tag : "coin",
@@ -98,7 +98,7 @@ const SKIL_DATA = [
   {
     tag : "ucav",
     name_jp : "チーミング",
-    explanation : "無人機が随伴します。"
+    explanation : "無人機が随伴します。x"
   },
   {
     tag : "auto",
@@ -113,7 +113,7 @@ const SKIL_DATA = [
   {
     tag : "aesa",
     name_jp : "AESAレーダー",
-    explanation : "レーダースキャン間隔を短くします。また、ECCM能力が向上します。"
+    explanation : "レーダースキャン間隔を短くします。また、ECCM能力が向上します。x"
   },
   // {
   //   tag : "l_band",
@@ -423,7 +423,7 @@ const UNIT_DATA = [
     serial : "YIG-144S",
     name : "Avrora",
     name_jp : "アヴローラ(ロシア語でオーロラ)",
-    explanation : "全体的に高水準な制空戦闘機です。",
+    explanation : "ステルス性はないが、全体的に高水準な最新鋭の制空戦闘機です。",
     type : "fighter",
     spec : [6, 6, 6],
     skil : ["cft", "supercruise", "vt", "irst", "auto", "aesa"],
@@ -449,7 +449,7 @@ const UNIT_DATA = [
     serial : "ISD-4GR",
     name : "SpruhRegen",
     name_jp : "シュプリューレーゲン(ドイツ語で霧雨)",
-    explanation : "可変翼を備えた重武装爆撃機です。",
+    explanation : "可変翼を備え、高い攻撃力を備えた重武装爆撃機です。",
     type : "bomber",
     spec : [2, 6, 8],
     skil : ["swingwing", "flare", "wso", "reverser"],
@@ -462,10 +462,10 @@ const UNIT_DATA = [
     serial : "MD.4000M",
     name : "Azur",
     name_jp : "アズュール(フランス語で紺碧)",
-    explanation : "特徴的な装備はないですが、総合スペックの高い汎用戦闘機です。",
+    explanation : "特徴的な装備はないですが、総合スペックの高いマルチロール戦闘機です。",
     type : "multirole",
     spec : [6, 3, 6],
-    skil : ["supercruise"],
+    skil : ["supercruise", "aesa"],
     weapon : "gua99",
     specail_weapon : "malc",
     engine_pos : [2, 45]

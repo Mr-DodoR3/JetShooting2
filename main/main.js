@@ -7,7 +7,7 @@ var bgm_vol = 10;
 var se_vol = 10;
 
 var selectMission = 0;
-var selectAircraft = 0;
+var selectAircraft = 16;
 var playerData = {
   x: 0,
   y: 0

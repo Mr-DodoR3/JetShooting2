@@ -116,7 +116,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
           if (UNIT_DATA[i].skil[j] == "vtol") this.skil.vtol = true;
           if (UNIT_DATA[i].skil[j] == "vt") this.skil.vt = true;
           if (UNIT_DATA[i].skil[j] == "asm") this.skil.asm = true;
-          if (UNIT_DATA[i].skil[j] == "armor") this.skil.asm = true;
+          if (UNIT_DATA[i].skil[j] == "armor") this.skil.armor = true;
           if (UNIT_DATA[i].skil[j] == "maintain") this.skil.maintain = true;
           if (UNIT_DATA[i].skil[j] == "flare") this.skil.flare = true;
           if (UNIT_DATA[i].skil[j] == "irst") this.skil.irst = true;
@@ -137,7 +137,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
         const buff = this.skil.cft ? 0.3 : 0;
         return Math.floor(e * (1 + buff));
       })(1000);
-      console.log("EN" + this.max_en)
+      // console.log("EN" + this.max_en)
 
       this.hp = 1000;
       this.en = this.max_en;
@@ -161,7 +161,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
   }
 
   getSpeed() {
-    return 4 + this.maxSpeed / 5;
+    return this.augmentor > 0 && this.skil.vt ? Math.floor((4 + this.maxSpeed / 5) * 1.4) : 4 + this.maxSpeed / 5;
   }
 
   augmentorPointGet(point) {
@@ -198,7 +198,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
   }
 
   hit(power) {
-    const damage = power - (power * 0.02 * this.defence);
+    const damage = Math.ceil(power - (power * 0.02 * this.defence) - (this.skil.armor ? power * 0.2 : 0));
     this.hp -= damage;
     if (this.hp < 1) {
       this.hp = 0;

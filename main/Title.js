@@ -42,6 +42,7 @@ class Title extends GameScene {
       this.load.image("unitSelect_" + UNIT_DATA[i].tag, "assets/images/uiButton/unitSelect_" + UNIT_DATA[i].tag +".png");
       this.load.image(UNIT_DATA[i].tag, "assets/images/player/" + UNIT_DATA[i].tag +".png");
     }
+    this.load.image("amq28", "assets/images/amq28.png");
 
     let unittype_temp = ["fighter", "attacker", "multirole", "interceptor", "bomber", "trainer"];
     for (let i = 0; i < unittype_temp.length; i++) {
