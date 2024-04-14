@@ -98,7 +98,7 @@ const SKIL_DATA = [
   {
     tag : "ucav",
     name_jp : "チーミング",
-    explanation : "無人機が随伴します。x"
+    explanation : "無人戦闘機が随伴します。"
   },
   {
     tag : "auto",
@@ -300,8 +300,8 @@ const WEAPON_DATA = [
     name : "",
     name_jp : "",
     explanation : "単発で特徴がないやつ",
-    power : 10,
-    reload : 4,
+    power : 5,
+    reload : 6,
     en : 15
   },
   {

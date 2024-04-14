@@ -730,8 +730,8 @@ class ShootingScene extends GameScene {
         if (!(w == "ucav")) {
           if (this.player.augmentor <= 0) {
             this.player.en -= this.player.getWaepon(w).en;
-            tag = this.player.getWaepon(w).tag;
           }
+          tag = this.player.getWaepon(w).tag;
         }
         else {
           tag = this.ucav.getWaepon().tag;

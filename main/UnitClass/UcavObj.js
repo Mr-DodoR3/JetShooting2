@@ -10,7 +10,7 @@ class UcavObj extends Phaser.GameObjects.Image {
     this.position_log = new Array(10);
     this.create_log = false;
 
-    this.setDepth(59);
+    this.setDepth(61);
   }
 
   colliderSet() {
@@ -31,7 +31,7 @@ class UcavObj extends Phaser.GameObjects.Image {
     this.hp = 1000;
 
     this.weapon;
-    this.weapon_name = "m601";
+    this.weapon_name = "rb88";
 
     for (let i = 0; i < WEAPON_DATA.length; i++) {
       if (this.weapon_name == WEAPON_DATA[i].tag) {

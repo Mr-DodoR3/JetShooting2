@@ -141,7 +141,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
       this.hp = 1000;
       this.en = this.max_en;
-      this.ab = 0;
+      this.ab = 2000;
     }
     
     if (this.skil.flare) {
