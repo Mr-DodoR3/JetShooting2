@@ -38,7 +38,7 @@ const SKIL_DATA = [
   {
     tag : "swingwing",
     name_jp : "可変翼",
-    explanation : ""
+    explanation : "オーグメンター持続時間が20%向上、アイテム効果を20%減少させます。x"
   },
   {
     tag : "vtol",
@@ -108,7 +108,7 @@ const SKIL_DATA = [
   {
     tag : "reverser",
     name_jp : "スラストリバーサ",
-    explanation : ""
+    explanation : "後退する速度が上がります。"
   },
   {
     tag : "aesa",
@@ -586,7 +586,7 @@ const ENEMY_DATA = [
     name_jp : "ネッツ(ヘブライ語で鷹)",
     importance : "nomal",
     attribute : "air",
-    hp : 100,
+    hp : 150,
     score : 100,
     parts : [ ]
   },
@@ -596,7 +596,7 @@ const ENEMY_DATA = [
     name_jp : "ストレーラ(ロシア語で矢)",
     importance : "nomal",
     attribute : "air",
-    hp : 60,
+    hp : 90,
     score : 100,
     parts : [ ]
   },
@@ -606,7 +606,7 @@ const ENEMY_DATA = [
     name_jp : "スーパーパルダウ(ポルトガル語でスーパー雀)",
     importance : "nomal",
     attribute : "air",
-    hp : 150,
+    hp : 250,
     score : 100,
     parts : [ "ea314_propeller" ]
   },
@@ -641,7 +641,7 @@ const ENEMY_DATA = [
     name_jp : "",
     importance : "boss",
     attribute : "air",
-    hp : 1200,
+    hp : 2400,
     score : 2000,
     parts : [ "turbulence_propeller", "turbulence_gun", "turbulence_gun" ]
   }

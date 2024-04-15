@@ -141,7 +141,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
       this.hp = 1000;
       this.en = this.max_en;
-      this.ab = 2000;
+      this.ab = 0;
     }
     
     if (this.skil.flare) {
@@ -178,11 +178,11 @@ class PlayerObj extends Phaser.GameObjects.Image {
       // this.ab += 15;
     }
     else if (this.augmentor > 0) {
-      this.augmentor -= 5;
-      this.ab -= 5;
+      this.augmentor -= this.skil.swingwing ? 4 : 5;
+      this.ab -= this.skil.swingwing ? 4 : 5;
       if (this.augmentor <= 0) {
-        this.augmentor == 0;
-        this.ab == 0;
+        // this.augmentor == 0;
+        // this.ab == 0;
         this.augmentor_overheat = this.skil.supercruise ? 150 : 300;
       }
     }

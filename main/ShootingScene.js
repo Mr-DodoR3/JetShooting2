@@ -490,6 +490,7 @@ class ShootingScene extends GameScene {
       this.graphics.fillRectShape(this.rect.ab_bar[i]);
     }
     
+    // const max_ab = 1000 * (this.player.skil.swingwing ? 1.4 : 1);
     this.graphics.fillStyle(0xFFFFFF, this.ab_bar_alpha);
     if (this.ab_bar_alpha < 0) this.ab_bar_alpha = 1;
     else this.ab_bar_alpha -= 0.01;
@@ -673,8 +674,8 @@ class ShootingScene extends GameScene {
         else if (y == 1 && this.player.speed.y < this.player.getSpeed()) {
           this.player.speed.y += responseSpeed;
         }
-        else if (y == -1 && this.player.speed.y > -this.player.getSpeed()) {
-          this.player.speed.y -= responseSpeed;
+        else if (y == -1 && this.player.speed.y > -(this.player.getSpeed() * (this.player.skil.reverser ? 1.2 : 1))) {
+          this.player.speed.y -= responseSpeed * (this.player.skil.reverser ? 2 : 1);
         }
       
         setUcavMove(x, y);
