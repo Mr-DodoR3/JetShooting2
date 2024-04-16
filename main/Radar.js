@@ -35,8 +35,10 @@ class Radar {
       runChildUpdate: true
     });
 
-    this.update = 60;
-    this.delta = this.update;
+    this.update_time = radar_type == "aesa" ? 30 : 60;
+    this.delta = this.update_time;
+
+    this.radar_type = radar_type;
 
     this.create();
   }
@@ -58,7 +60,7 @@ class Radar {
 
   scan() {
     this.delta++;
-    if (this.delta > this.update) {
+    if (this.delta > this.update_time) {
       this.delta = 0;
       return true;
     }

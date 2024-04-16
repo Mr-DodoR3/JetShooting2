@@ -231,8 +231,6 @@ class ShootingScene extends GameScene {
     this.ui_image.vol.bgm_switch.setRotation(rad(225 - (bgm_vol / 10 * 270)));
     this.ui_image.vol.se_switch.setRotation(rad(225 - (se_vol / 10 * 270)));
 
-    this.radar = new Radar(this);
-
     this.playerGroup = this.physics.add.group({
       classType: PlayerObj,
       maxSize: 1,
@@ -244,6 +242,8 @@ class ShootingScene extends GameScene {
     this.ui_text.special_weapon.setText("WEAPON2:" + this.player.waepon_2_name);
     this.ui_text.unit_name.setText(this.player.serial);
     this.ui_text.type_name.setText(this.player.type.toUpperCase());
+
+    this.radar = new Radar(this, this.player.skil.aesa ? "aesa" : "doppler", this.player.skil.irst);
 
     this.ucavGroup = this.physics.add.group({
       classType: UcavObj,
