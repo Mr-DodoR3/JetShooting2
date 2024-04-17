@@ -38,7 +38,7 @@ const SKIL_DATA = [
   {
     tag : "swingwing",
     name_jp : "可変翼",
-    explanation : "オーグメンター持続時間が20%向上、アイテム効果を20%減少させます。x"
+    explanation : "オーグメンター持続時間が20%向上、アイテム効果を25%減少させます。"
   },
   {
     tag : "vtol",
@@ -63,7 +63,7 @@ const SKIL_DATA = [
   {
     tag : "maintain",
     name_jp : "現地整備",
-    explanation : "アイテム効果を20%増加させます。x"
+    explanation : "アイテム効果を25%増加させます。x"
   },
   {
     tag : "flare",

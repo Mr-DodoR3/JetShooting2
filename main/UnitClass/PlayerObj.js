@@ -141,7 +141,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
       this.hp = 1000;
       this.en = this.max_en;
-      this.ab = 0;
+      this.ab = 0
     }
     
     if (this.skil.flare) {
@@ -209,6 +209,28 @@ class PlayerObj extends Phaser.GameObjects.Image {
     }
     else {
       return false;
+    }
+  }
+
+  get_item_ab(val) {
+    console.log(val)
+    this.ab += val;
+    if (this.ab > 3000) {
+      this.ab = 3000;
+    }
+  }
+
+  get_item_en(val) {
+    this.en += val;
+    if (this.en > max_en) {
+      this.en = max_en;
+    }
+  }
+
+  get_item_hp(val) {
+    this.hp += val;
+    if (this.hp > 1000) {
+      this.hp = 1000;
     }
   }
 

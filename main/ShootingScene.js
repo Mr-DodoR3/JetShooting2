@@ -108,7 +108,7 @@ class ShootingScene extends GameScene {
 
   constructor () {
     super("shootingScene");
-    this.enemyDebugMode = false;
+    this.enemyDebugMode = true;
 
     this.graphics;
     this.rect;
@@ -275,13 +275,6 @@ class ShootingScene extends GameScene {
     });
     // this.enemy = this.enemys.get();
     // this.enemy.create("e");
-    if (this.enemyDebugMode) {
-      this.enemy = this.enemys.get();
-      // this.enemy.create("yig21", 4);
-      this.enemy.create("turbulence", -1);
-      // this.enemy.create("ea314", -1);
-      
-    }
 
     this.enemyBullets = this.physics.add.group({
       classType: BulletObj,
@@ -304,11 +297,29 @@ class ShootingScene extends GameScene {
       runChildUpdate: true
     });
 
+    this.items = this.physics.add.group({
+      classType: ItemObj,
+      runChildUpdate: true
+    });
+
     this.physics.add.overlap(this.player, this.enemys, this.clash, null, this);
     this.physics.add.overlap(this.player, this.enemyBullets, this.hit_player, null, this);
+    this.physics.add.overlap(this.player, this.items, this.get_item, null, this);
     this.physics.add.overlap(this.bullets, this.enemys, this.hit, null, this);
 
     // this.ucav = this.add.ucav(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ucav");
+    
+
+    if (this.enemyDebugMode) {
+      // this.enemy = this.enemys.get();
+      // this.enemy.create("yig21", 4);
+      // this.enemy.create("turbulence", -1);
+      // this.enemy.create("ea314", -1);
+      const item = this.items.get();
+      if (item) {
+        item.create(360, 50);
+      }
+    }
   };
 
   clash(player, enemy) {
@@ -342,6 +353,37 @@ class ShootingScene extends GameScene {
         }
       }
 
+    }
+  }
+
+  get_item(player, item) {
+    const buff = () => {
+      let buff = 1.0;
+      if (player.skil.maintain) {
+        buff += 0.25;
+      }
+      if (player.skil.swingwing) {
+        buff -= 0.25;
+      }
+      return buff;
+    };
+
+    if (this.window == "null") {
+      const type = item.type;
+      item.hit();
+      switch(type) {
+        case 0:
+          player.get_item_ab(Math.floor(8 * buff()));
+          break;
+        case 1:
+          player.get_item_en(Math.floor(4 * buff()));
+          break;
+        case 2:
+          player.get_item_hp(Math.floor(4 * buff()));
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -605,6 +647,10 @@ class ShootingScene extends GameScene {
             bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag);
           }
         });
+      });
+
+      this.items.getChildren().forEach(e => {
+        e.playerPos = this.player.getPositionData();
       });
   
       if (this.player.getWaepon("nomal").tag == "hel" || this.player.getWaepon("sp").tag == "hel")

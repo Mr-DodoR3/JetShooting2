@@ -70,6 +70,10 @@ class Title extends GameScene {
     }
     this.load.image("disp_flare", "assets/images/disp_flare.png");
     
+    this.load.image("particle_blue", "assets/images/particle/particle_blue.png");
+    this.load.image("particle_green", "assets/images/particle/particle_green.png");
+    this.load.image("particle_yellow", "assets/images/particle/particle_yellow.png");
+    
     for (let i = 0; i < ENEMY_DATA.length; i++) {
       this.load.image(ENEMY_DATA[i].tag, "assets/images/npc_unit/" + ENEMY_DATA[i].tag + ".png");
     }
@@ -79,6 +83,7 @@ class Title extends GameScene {
     this.load.image("turbulence_propeller_l", "assets/images/parts/turbulence_propeller_l.png");
     this.load.image("turbulence_gun", "assets/images/parts/turbulence_gun.png");
 
+    this.load.image("flare_obj", "assets/images/flare.png");
     this.load.image("flare_obj", "assets/images/flare.png");
 
     this.load.image("mfd", "assets/images/mfd/mfd.png");
@@ -140,8 +145,8 @@ class Title extends GameScene {
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       switch (this.mode) {
         case 0:
-          this.nextScene = "missionSelectScene";
-          // this.nextScene = "shootingScene";
+          // this.nextScene = "missionSelectScene";
+          this.nextScene = "shootingScene";
           break;
         case 1:
           break;
