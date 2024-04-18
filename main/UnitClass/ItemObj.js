@@ -4,7 +4,7 @@ class ItemObj extends Phaser.GameObjects.Image {
 
     this.playerPos = { x: 0, y: 0 };
   
-    this.setDepth(100);
+    this.setDepth(99);
   }
 
   colliderSet() {
@@ -23,10 +23,10 @@ class ItemObj extends Phaser.GameObjects.Image {
     this.setY(y);
     this.scaleX = 0.4;
     this.scaleY = 0.4;
-    this.deg = 0;
+    this.deg = Math.floor(Math.random() * 360);
     this.speed = 0;
-    // this.type = Math.floor(Math.random() * 3);
-    this.type = 0;
+    this.release = Math.floor(Math.random() * 90) + 1;
+    this.type = Math.floor(Math.random() * 3);
 
     this.counter = 0;
     
@@ -51,18 +51,41 @@ class ItemObj extends Phaser.GameObjects.Image {
     }
 
     const distance = this.pythagorean(this.x, this.y, this.playerPos.x, this.playerPos.y);
-    const deg = this.playerPos.y > this.y ? Math.abs(Math.atan2(this.y - this.playerPos.y, this.x - this.playerPos.x)) + Math.PI : Math.abs(Math.atan2(this.playerPos.y - this.y, this.playerPos.x - this.x))
-    if (distance < 50) {
-      if (this.speed < 90) this.speed += 5;
-    }
-    else {
-      if (this.speed > 0) this.speed -= 5;
+    let deg = this.deg;
+
+    if (this.release <= 0) {
+      deg = this.playerPos.y > this.y ? Math.abs(Math.atan2(this.y - this.playerPos.y, this.x - this.playerPos.x)) + Math.PI : Math.abs(Math.atan2(this.playerPos.y - this.y, this.playerPos.x - this.x));
+      if (distance < 50) {
+        if (this.speed < 90) this.speed += 5;
+      }
+      else {
+        if (this.speed > 0) this.speed -= 5;
+      }
     }
 
-    if (this.speed > 0) {
-      const s = Math.sin(this.speed * Math.PI / 180) * 4;
-      this.x += Math.cos(deg) * s;
-      this.y -= Math.sin(deg) * s;
+    const forward = (speed, deg) => {
+      this.x += Math.cos(deg) * speed;
+      this.y -= Math.sin(deg) * speed;
+    };
+
+    if (this.release <= 0) {
+      if (this.speed > 0) {
+        const s = Math.sin(this.speed * Math.PI / 180) * 4;
+        forward(s, deg);
+      }
+      else {
+        this.y++;
+      }
+    }
+    else {
+      this.release -= 5;
+      const s = Math.sin((this.release > 90 ? 90 : this.release) * Math.PI / 180) * 4;
+      forward(s, deg);
+    }
+
+    if (this.y > 656) {
+      // console.log("アイテム消滅")
+      this.destroy();
     }
   }
 

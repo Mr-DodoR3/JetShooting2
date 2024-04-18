@@ -222,8 +222,8 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
   get_item_en(val) {
     this.en += val;
-    if (this.en > max_en) {
-      this.en = max_en;
+    if (this.en > this.max_en) {
+      this.en = this.max_en;
     }
   }
 

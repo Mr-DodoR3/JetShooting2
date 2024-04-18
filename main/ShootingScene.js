@@ -108,7 +108,7 @@ class ShootingScene extends GameScene {
 
   constructor () {
     super("shootingScene");
-    this.enemyDebugMode = true;
+    this.enemyDebugMode = false;
 
     this.graphics;
     this.rect;
@@ -317,7 +317,7 @@ class ShootingScene extends GameScene {
       // this.enemy.create("ea314", -1);
       const item = this.items.get();
       if (item) {
-        item.create(360, 50);
+        item.create(360, 150);
       }
     }
   };
@@ -435,6 +435,11 @@ class ShootingScene extends GameScene {
           this.score += score;
           this.explosion = this.explosions.get();
           this.explosion.create(returnData.x, returnData.y);
+          const item_len = Math.floor(Math.random() * 4) + 1;
+          for (let i = 0; i < item_len; i++) {
+            const item = this.items.get();
+            item.create(returnData.x, returnData.y);
+          }
           if (returnData.type == "boss") {
             this.boss_trigger++;
             if (this.boss_trigger >= this.boss_count) {

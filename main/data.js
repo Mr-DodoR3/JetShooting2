@@ -63,7 +63,7 @@ const SKIL_DATA = [
   {
     tag : "maintain",
     name_jp : "現地整備",
-    explanation : "アイテム効果を25%増加させます。x"
+    explanation : "アイテム効果を25%増加させます。"
   },
   {
     tag : "flare",
