@@ -28,6 +28,7 @@ class Title extends GameScene {
     this.load.image("mission_select_background", "assets/images/mission_select.png");
     this.load.image("select_ui", "assets/images/mission_select_ui.png");
     this.load.image("select_ui_selecter", "assets/images/ui_selecter.png");
+    this.load.image("pin", "assets/images/map_pin.png");
 
     // aircraftselect
     this.load.image("aircraft_select_background", "assets/images/aircraft_select_select.png");
@@ -145,8 +146,8 @@ class Title extends GameScene {
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       switch (this.mode) {
         case 0:
-          // this.nextScene = "missionSelectScene";
-          this.nextScene = "shootingScene";
+          this.nextScene = "missionSelectScene";
+          // this.nextScene = "shootingScene";
           break;
         case 1:
           break;

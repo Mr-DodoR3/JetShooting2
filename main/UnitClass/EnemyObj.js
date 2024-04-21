@@ -28,6 +28,7 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.life_time = 0;
   
       this.type = "";
+      this.stealth = false;
       this.boss = false;
   
       this.playerPos = { x: 0, y: 0 };
@@ -42,9 +43,12 @@ class EnemyObj extends Phaser.GameObjects.Container {
         this.body.setSize(256, 48, false);
       }
       else {
-        this.body.offset.x = -24;
-        this.body.offset.y = -24;
-        this.body.setSize(48, 48, false);
+        // this.body.offset.x = -24;
+        // this.body.offset.y = -24;
+        // this.body.setSize(48, 48, false);
+        this.body.offset.x = -(this.stealth ? 8 : 16);
+        this.body.offset.y = -(this.stealth ? 8 : 16);
+        this.body.setSize(this.stealth ? 16 : 32, this.stealth ? 16 : 32, false);
       }
     }
   
@@ -68,7 +72,7 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.unit_image = this.add(image);
     }
   
-    create(tag, action) {
+    create(tag, action, irst = false) {
       this.action_type = action;
   
       this.createImage(tag);
@@ -94,6 +98,9 @@ class EnemyObj extends Phaser.GameObjects.Container {
           }
           if (ENEMY_DATA[i].importance == "boss") {
             this.boss = true;
+          }
+          if (!irst) {
+            this.stealth = ENEMY_DATA[i].stealth;
           }
         }
       }

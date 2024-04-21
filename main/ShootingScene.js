@@ -125,7 +125,7 @@ class ShootingScene extends GameScene {
     this.fl_bar_alpha = 0.0;
     this.ab_bar_alpha = 0.0;
     // this.boss_trigger = 0;
-    // this.boss_count = MISSION_DATA[0][0].boss_count;
+    // this.boss_count = MISSION_DATA[selectMission][0].boss_count;
 
     this.ucav;
   }
@@ -151,7 +151,7 @@ class ShootingScene extends GameScene {
     this.enemySleep = 0;
 
     this.boss_trigger = 0;
-    this.boss_count = MISSION_DATA[0][0].boss_count;
+    this.boss_count = MISSION_DATA[selectMission][0].boss_count;
 
     this.pouse_menu.setup(this);
     this.boss_text.setup(this);
@@ -314,11 +314,7 @@ class ShootingScene extends GameScene {
       // this.enemy = this.enemys.get();
       // this.enemy.create("yig21", 4);
       // this.enemy.create("turbulence", -1);
-      // this.enemy.create("ea314", -1);
-      const item = this.items.get();
-      if (item) {
-        item.create(360, 150);
-      }
+      // this.enemy.create("fs35", -1, true);
     }
   };
 
@@ -586,21 +582,21 @@ class ShootingScene extends GameScene {
 
   enemyPrefabFirst() {
     this.enemyProgress = 0;
-    this.enemyCount = MISSION_DATA[0][0].pieces;
+    this.enemyCount = MISSION_DATA[selectMission][0].pieces;
     this.enemyDelta = 0;
   }
 
   enemyPrefab() {
-    if (MISSION_DATA[0].length > this.enemyProgress) {
-      if (this.enemyCount >= MISSION_DATA[0][this.enemyProgress].pieces) {
+    if (MISSION_DATA[selectMission].length > this.enemyProgress) {
+      if (this.enemyCount >= MISSION_DATA[selectMission][this.enemyProgress].pieces) {
         this.enemySleep++;
-        if (this.enemySleep > MISSION_DATA[0][this.enemyProgress].sleep) {
-          if (MISSION_DATA[0].length > this.enemyProgress + 1) {
+        if (this.enemySleep > MISSION_DATA[selectMission][this.enemyProgress].sleep) {
+          if (MISSION_DATA[selectMission].length > this.enemyProgress + 1) {
             this.enemyProgress++;
             this.enemyDelta = 0;
             this.enemySleep = 0;
             this.enemyCount = 0;
-            if (MISSION_DATA[0][this.enemyProgress].repletion == "boss") {
+            if (MISSION_DATA[selectMission][this.enemyProgress].repletion == "boss") {
               this.boss_text.start();
             }
           }
@@ -609,10 +605,10 @@ class ShootingScene extends GameScene {
           }
         }
       }
-      else if (this.enemyDelta > MISSION_DATA[0][this.enemyProgress].interval) {
+      else if (this.enemyDelta > MISSION_DATA[selectMission][this.enemyProgress].interval) {
         const enemy = this.enemys.get();
         if (enemy) {
-          enemy.create(MISSION_DATA[0][this.enemyProgress].tag, MISSION_DATA[0][this.enemyProgress].action_type);
+          enemy.create(MISSION_DATA[selectMission][this.enemyProgress].tag, MISSION_DATA[selectMission][this.enemyProgress].action_type, this.player.skil.stealth);
         }
         this.enemyDelta = 0;
         this.enemyCount++;
@@ -670,10 +666,12 @@ class ShootingScene extends GameScene {
           let send_data = [];
           send_data.push({ type: "player", x: this.player.x - 160, y: this.player.y, d: 90 });
           this.enemys.getChildren().forEach(e => {
-            const enemy_type = e.type == "air" ? "air" : (e.type == "ground" ? "grd" : "sae");
-            send_data.push({ type: enemy_type, x: e.x - 160, y: e.y, d: e.deg });
-            if (e.boss) {
-              send_data.push({ type: "tgt", x: e.x - 160, y: e.y, d: 90 });
+            if (!e.stealth || this.player.skil.irst) {
+              const enemy_type = e.type == "air" ? "air" : (e.type == "ground" ? "grd" : "sae");
+              send_data.push({ type: enemy_type, x: e.x - 160, y: e.y, d: e.deg });
+              if (e.boss) {
+                send_data.push({ type: "tgt", x: e.x - 160, y: e.y, d: 90 });
+              }
             }
           });
           this.radar.setData(send_data);

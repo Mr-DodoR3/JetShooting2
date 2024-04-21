@@ -2,7 +2,7 @@ const MISSION_DATA = [
   // stage 1
   [
     // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
-    { boss_count : 2, map : "sae" },
+    { boss_count : 2, map : "sae", pos : [592, 287], title : "完全平和の消失", overview : "冷戦が終結して15年...\n2つの超大国を中心として結成された\"新国連\"によって世界は安\n定を取り戻した。\nしかしながら、新国連の存在を快く思わない各地の反乱勢力が結\n託し\"自由同盟\"を結成した。" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 240, repletion : "" },
@@ -20,7 +20,37 @@ const MISSION_DATA = [
 
   // stage 2
   [
-    {}
+    { pos : [720, 270], title : "超大国の幸福理論", overview : "none" }
+  ],
+
+  // stage 3
+  [
+    { pos : [720, 270], title : "誰かの希望になれるなら", overview : "none" }
+  ],
+
+  // stage 4
+  [
+    { pos : [720, 270], title : "深海艦隊", overview : "none" }
+  ],
+
+  // stage 5
+  [
+    { pos : [720, 270], title : "アスノカケラ", overview : "none" }
+  ],
+
+  // stage 6
+  [
+    { pos : [720, 270], title : "60マイルと一夜作戦", overview : "none" }
+  ],
+
+  // stage 7
+  [
+    { pos : [720, 270], title : "核の惑星", overview : "none" }
+  ],
+
+  // stage 8
+  [
+    { pos : [720, 270], title : "地球最後の戦争を", overview : "none" }
   ]
 ]
 
@@ -73,7 +103,7 @@ const SKIL_DATA = [
   {
     tag : "irst",
     name_jp : "IRST",
-    explanation : "ステルス目標を探知できます。x"
+    explanation : "ステルス目標を探知できます。"
   },
   {
     tag : "stealth",
@@ -113,7 +143,7 @@ const SKIL_DATA = [
   {
     tag : "aesa",
     name_jp : "AESAレーダー",
-    explanation : "レーダースキャン間隔を短くします。また、ECCM能力が向上します。x"
+    explanation : "レーダースキャン間隔を短くします。"
   },
   // {
   //   tag : "l_band",
@@ -592,7 +622,7 @@ const ENEMY_DATA = [
   },
   {
     tag : "yig21",
-    serial : "YiG-21",
+    serial : "YIG-21",
     name_jp : "ストレーラ(ロシア語で矢)",
     importance : "nomal",
     attribute : "air",
@@ -608,6 +638,7 @@ const ENEMY_DATA = [
     attribute : "air",
     hp : 250,
     score : 100,
+    stealth : false,
     parts : [ "ea314_propeller" ]
   },
   {
@@ -616,14 +647,34 @@ const ENEMY_DATA = [
     name_jp : "マスタングⅡ",
     importance : "nomal",
     attribute : "air",
+    stealth : false,
+    parts : [ ]
+  },
+  {
+    tag : "fs35",
+    serial : "FS-35C",
+    name_jp : "",
+    importance : "nomal",
+    attribute : "air",
+    stealth : true,
     parts : [ ]
   },
   {
     tag : "yig29",
-    serial : "YiG-29S",
+    serial : "YIG-29S",
     name_jp : "",
     importance : "nomal",
     attribute : "air",
+    stealth : false,
+    parts : [ ]
+  },
+  {
+    tag : "yig35",
+    serial : "YIG-35",
+    name_jp : "",
+    importance : "nomal",
+    attribute : "air",
+    stealth : false,
     parts : [ ]
   },
   {
@@ -632,6 +683,7 @@ const ENEMY_DATA = [
     name_jp : "",
     importance : "nomal",
     attribute : "air",
+    stealth : false,
     parts : [ ]
   },
 
@@ -643,6 +695,7 @@ const ENEMY_DATA = [
     attribute : "air",
     hp : 2400,
     score : 2000,
+    stealth : false,
     parts : [ "turbulence_propeller", "turbulence_gun", "turbulence_gun" ]
   }
 ];
