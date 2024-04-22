@@ -175,7 +175,9 @@ class MissionSelectScene extends GameScene {
 
   sceneChange(next) {
     if (this.nextSceneDelta < 1.0) {
-      this.selecter.scaleX = this.selecter.scaleX * 0.8;
+      if (!(next == "title")) {
+        this.selecter.scaleX = this.selecter.scaleX * 0.8;
+      }
       this.fade.alpha = this.nextSceneDelta;
       this.nextSceneDelta += 0.05;
     }

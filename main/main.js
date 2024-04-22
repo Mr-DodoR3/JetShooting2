@@ -15,6 +15,8 @@ var playerData = {
 
 var gamePause = false;
 
+var load_flag = false;
+
 const config = {
   // type: Phaser.CANVAS,
   type: Phaser.WEBGL,
@@ -22,7 +24,7 @@ const config = {
   width: DISPLAY_WIDTH,
   height: DISPLAY_HEIGHT,
   canvas: document.getElementById("canvas"),
-  scene: [ Title, MissionSelectScene, AircraftSelectScene, TekeoffScene, ShootingScene ],
+  scene: [ Title, MissionSelectScene, AircraftSelectScene, TekeoffScene, ShootingScene, StoryScene ],
   physics: {
     default: "arcade",
     arcade: {

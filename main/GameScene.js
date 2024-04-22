@@ -26,8 +26,6 @@ class GameScene extends Phaser.Scene {
       c: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C),
       p: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P)
     };
-    
-    this.load.image("fade_layer", "assets/images/fade_layer.png");
   }
 
   create() {
@@ -107,10 +105,11 @@ class GameScene extends Phaser.Scene {
     if (this.nextSceneDelta > 0) {
       this.fade.alpha = this.nextSceneDelta;
       this.nextSceneDelta -= 0.05;
-    }
-    else {
-      this.fade.alpha = 0;
-      this.nextSceneDelta = 0;
+
+      if (this.nextSceneDelta <= 0){
+        this.fade.alpha = 0;
+        this.nextSceneDelta = 0;
+      }
     }
   }
 

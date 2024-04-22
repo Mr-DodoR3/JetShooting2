@@ -2,7 +2,13 @@ const MISSION_DATA = [
   // stage 1
   [
     // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
-    { boss_count : 2, map : "sae", pos : [592, 287], title : "完全平和の消失", overview : "冷戦が終結して15年...\n2つの超大国を中心として結成された\"新国連\"によって世界は安\n定を取り戻した。\nしかしながら、新国連の存在を快く思わない各地の反乱勢力が結\n託し\"自由同盟\"を結成した。" },
+    {
+      boss_count : 2,
+      map : "sae",
+      pos : [592, 287],
+      title : "新秩序の消失",
+      overview : `同盟軍の爆撃機部隊は国連軍基地に対して攻撃を仕掛けた。\n`
+    },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 2, action_type : 1, interval : 45, sleep : 240, repletion : "" },
@@ -20,37 +26,37 @@ const MISSION_DATA = [
 
   // stage 2
   [
-    { pos : [720, 270], title : "超大国の幸福理論", overview : "none" }
+    { pos : [720, 270], title : "超大国の幸福理論", overview : `` }
   ],
 
   // stage 3
   [
-    { pos : [720, 270], title : "誰かの希望になれるなら", overview : "none" }
+    { pos : [720, 270], title : "誰かの希望になれるなら", overview : `` }
   ],
 
   // stage 4
   [
-    { pos : [720, 270], title : "深海艦隊", overview : "none" }
+    { pos : [720, 270], title : "深海艦隊", overview : `` }
   ],
 
   // stage 5
   [
-    { pos : [720, 270], title : "アスノカケラ", overview : "none" }
+    { pos : [720, 270], title : "アスノカケラ", overview : `` }
   ],
 
   // stage 6
   [
-    { pos : [720, 270], title : "60マイルと一夜作戦", overview : "none" }
+    { pos : [720, 270], title : "60マイルと一夜作戦", overview : `` }
   ],
 
   // stage 7
   [
-    { pos : [720, 270], title : "核の惑星", overview : "none" }
+    { pos : [720, 270], title : "核の惑星", overview : `` }
   ],
 
   // stage 8
   [
-    { pos : [720, 270], title : "地球最後の戦争を", overview : "none" }
+    { pos : [720, 270], title : "地球最後の戦争を", overview : `` }
   ]
 ]
 
