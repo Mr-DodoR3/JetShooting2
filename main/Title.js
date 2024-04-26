@@ -22,10 +22,10 @@ class Title extends GameScene {
       this.load.image("title_ui", "assets/images/title_ui.png");
       this.load.image("fade_layer", "assets/images/fade_layer.png");
       
-      this.load.image("option", "assets/images/option/option.png");
-      this.load.image("option_noselect", "assets/images/option/option_noselect.png");
-      this.load.image("option_select", "assets/images/option/option_select.png");
-      this.load.image("close_ui", "assets/images/option/close.png");
+      this.load.image("option", "assets/images/window/option.png");
+      this.load.image("option_noselect", "assets/images/window/option_noselect.png");
+      this.load.image("option_select", "assets/images/window/option_select.png");
+      this.load.image("close_ui", "assets/images/window/close.png");
   
       // MissionSelect
       this.load.image("mission_select_background", "assets/images/mission_select.png");
@@ -118,6 +118,15 @@ class Title extends GameScene {
       this.load.spritesheet("exp_red", "assets/images/explosion/weapon_explosion_red.png", { frameWidth: 64, frameHeight: 64 });
       this.load.spritesheet("exp_blue", "assets/images/explosion/weapon_explosion_blue.png", { frameWidth: 64, frameHeight: 64 });
       this.load.spritesheet("explosion", "assets/images/explosion/explosion.png", { frameWidth: 64, frameHeight: 64 });
+
+      // gameover
+      this.load.image("gameover", "assets/images/window/gameover.png");
+      this.load.image("restart", "assets/images/window/restart.png");
+
+      // story
+      for (let i = 0; i < 7; i++) {
+        this.load.image("story_0" + i, "assets/images/story/story_0" + i + ".jpg");
+      }
 
       load_flag = true;
     }

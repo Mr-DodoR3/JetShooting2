@@ -625,7 +625,7 @@ class ShootingScene extends GameScene {
       this.background_disp();
       this.disp_ui();
   
-      if (this.player.augmentor > 0) {
+      if (this.player.augmentor > 0 && this.player.hp > 0) {
         this.ab_1.setVisible(true);
         this.ab_1.setX(this.player.x - this.player.engine_pos[0]);
         this.ab_1.setY(this.player.y + this.player.engine_pos[1]);
@@ -692,7 +692,7 @@ class ShootingScene extends GameScene {
   }
 
   contller() {
-    if (this.window == "null") {
+    if (this.window == "null" && this.player.hp > 0) {
       this.player.move = false;
       const responseSpeed = this.player.skil.fbl ? 0.8 : (this.player.skil.vt ? 0.6 : 0.4);
 
