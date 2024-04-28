@@ -165,7 +165,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
   }
 
   augmentorPointGet(point) {
-    if (this.augmentor == 0) {
+    if (this.augmentor == 0 && this.hp > 0) {
       this.ab += point;
       if (this.ab > 3000) {
         this.ab = 3000;

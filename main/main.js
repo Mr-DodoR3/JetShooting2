@@ -8,6 +8,9 @@ var se_vol = 10;
 
 var selectMission = 0;
 var selectAircraft = 0;
+var clearData = {
+  score: 0
+};
 var playerData = {
   x: 0,
   y: 0
@@ -24,7 +27,7 @@ const config = {
   width: DISPLAY_WIDTH,
   height: DISPLAY_HEIGHT,
   canvas: document.getElementById("canvas"),
-  scene: [ Title, MissionSelectScene, AircraftSelectScene, TekeoffScene, ShootingScene, StoryScene ],
+  scene: [ Title, MissionSelectScene, AircraftSelectScene, TekeoffScene, ShootingScene, LandingScene, StoryScene ],
   physics: {
     default: "arcade",
     arcade: {

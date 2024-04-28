@@ -5,3 +5,4 @@ Microsoft Designer
 フォント
 Monospace
 装甲明朝
+GN-きんいろサンセリフ

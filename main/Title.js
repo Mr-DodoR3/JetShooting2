@@ -58,6 +58,7 @@ class Title extends GameScene {
       }
   
       // takeoff
+      this.load.image("cvn-96", "assets/images/npc/cvn-96.png");
       this.load.image("cvn-96_2", "assets/images/npc/cvn-96_2.png");
   
       this.load.image("ab", "assets/images/augmentor.png");
@@ -111,6 +112,8 @@ class Title extends GameScene {
       this.load.image("key_p", "assets/images/key/key_p.png");
   
       this.load.image("boss_text", "assets/images/boss_text.png");
+      this.load.image("complete_text", "assets/images/complete.png");
+      this.load.image("complete_white_text", "assets/images/complete_white.png");
       
       // for (let i = 0; i < 10; i++) {
       //   this.load.image("exp_" + i, "assets/images/explosion/exp_" + i + ".png");
@@ -122,6 +125,9 @@ class Title extends GameScene {
       // gameover
       this.load.image("gameover", "assets/images/window/gameover.png");
       this.load.image("restart", "assets/images/window/restart.png");
+
+      // result
+      this.load.image("result", "assets/images/window/result.png");
 
       // story
       for (let i = 0; i < 7; i++) {
@@ -163,6 +169,7 @@ class Title extends GameScene {
         case 0:
           this.nextScene = "missionSelectScene";
           // this.nextScene = "shootingScene";
+          // this.nextScene = "landingScene";
           break;
         case 1:
           this.nextScene = "storyScene";

@@ -22,7 +22,7 @@ class Option extends Window {
     this.group.add(this.vol_select[1]);
     this.group.add(this.close_select);
     this.group.add(this.button);
-    
+
     this.group.setVisible(false);
     this.group.setDepth(500);
 
@@ -44,8 +44,8 @@ class Option extends Window {
   update() {
     if (this.status == "open") {
       if (this.nextSceneDelta < 1.0) {
-        this.maskBox.y -= 9;
-        this.maskBox.height += 18;
+        this.maskBox.y -= 10;
+        this.maskBox.height += 20;
         this.nextSceneDelta += 0.05;
       }
       else {
@@ -55,8 +55,8 @@ class Option extends Window {
     }
     else if (this.status == "close") {
       if (this.nextSceneDelta < 1.0) {
-        this.maskBox.y += 9;
-        this.maskBox.height -= 18;
+        this.maskBox.y += 10;
+        this.maskBox.height -= 20;
         this.close_select.scaleX = this.close_select.scaleX * 0.8;
         this.nextSceneDelta += 0.05;
       }
@@ -79,7 +79,6 @@ class Option extends Window {
   }
 
   control() {
-
     this.renew();
   }
 }

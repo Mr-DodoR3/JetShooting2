@@ -1,6 +1,6 @@
 class TekeoffScene extends GameScene {
-  constructor () {
-    super("tekeoffScene");
+  constructor (str="tekeoffScene") {
+    super(str);
 
     this.eventTimer;
     this.eventNum;
@@ -24,8 +24,6 @@ class TekeoffScene extends GameScene {
 
   preload() {
     super.preload();
-
-    // this.load.image("cvn-96", "assets/images/npc/cvn-96_2.png");
   }
 
   create() {
@@ -78,6 +76,7 @@ class TekeoffScene extends GameScene {
       this.cvn.image.setY(this.cvn.image.y + this.cvn.acceleration);
       this.player.image.setY(this.player.image.y -= 8);
       if (this.player.image.y < -100) {
+        // console.log("size:"+this.player.image.scaleX)
         this.nextScene = "shootingScene"
       }
     }

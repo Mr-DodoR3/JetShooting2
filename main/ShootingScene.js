@@ -1,18 +1,49 @@
+class Menu {
+  constructor() {
+    this.rad = deg => {
+      return deg * (Math.PI / 180.0);
+    };
+
+    this.select = 0;
+    this.alpha = 90;
+  }
+
+  setup(scene) {
+    this.group = scene.add.group();
+    this.graphics = scene.add.graphics({ fillStyle: { color: 0x910006 }, lineStyle: { width: 0, color: 0x000000 } });
+    this.selecter = new Phaser.Geom.Ellipse(480, 300, 600, 28);
+    this.select = 0;
+    
+    this.group.add(this.graphics);
+  }
+
+  up() {
+    this.group.setVisible(true);
+  }
+
+  close() {
+    this.group.setVisible(false);
+    this.select = 0;
+    this.selecter.y = 300;
+    this.disp();
+  }
+  
+  disp() {
+    this.alpha += 2;
+    if (this.alpha >= 180) this.alpha = 0;
+
+    this.graphics.clear();
+    this.graphics.setAlpha(Math.sin(this.rad(this.alpha)));
+    this.graphics.fillEllipseShape(this.selecter);
+    this.selecter.y = 300 + this.select * 60;
+  }
+};
+
 class ShootingScene extends GameScene {
-  pouse_menu = new class {
-    constructor() {
-      this.rad = deg => {
-        return deg * (Math.PI / 180.0);
-      };
-
-      this.select = 0;
-      this.alpha = 90;
-    }
-
+  pouse_menu = new class extends Menu {
     setup(scene) {
-      this.group = scene.add.group();
-      this.graphics = scene.add.graphics({ fillStyle: { color: 0x910006 }, lineStyle: { width: 0, color: 0x000000 } });
-      this.selecter = new Phaser.Geom.Ellipse(480, 300, 600, 28);
+      super.setup(scene);
+
       this.title_txt = scene.add.text(480, 220, '=  =  =  P  O  U  S  E  =  =  =', { font: '32px monospace', fill: '#ffffff' }).setOrigin(0.5);
       this.back_txt = scene.add.text(480, 300, 'B  A  C  K    T  O    G  A  M  E', { font: '28px monospace', fill: '#ffffff' }).setOrigin(0.5);
       this.option_txt = scene.add.text(480, 360, 'O  P  T  I  O  N', { font: '28px monospace', fill: '#ffffff' }).setOrigin(0.5);
@@ -22,7 +53,6 @@ class ShootingScene extends GameScene {
       this.option_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
       this.exit_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
 
-      this.group.add(this.graphics);
       this.group.add(this.title_txt);
       this.group.add(this.back_txt);
       this.group.add(this.option_txt);
@@ -30,26 +60,107 @@ class ShootingScene extends GameScene {
 
       this.group.setDepth(499).setVisible(false);
     }
+  }();
 
-    up() {
-      this.group.setVisible(true);
+  gameover_menu = new class extends Menu {
+    setup(scene) {
+      this.disp_rug = 90;
+      this.timer_start = false;
+
+      this.background_graphics = scene.add.graphics({ fillStyle: { color: 0x000000 }, lineStyle: { width: 0, color: 0x000000 } }).setAlpha(0.6);
+      this.background = new Phaser.Geom.Rectangle(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+      this.background_graphics.fillRectShape(this.background);
+      
+      super.setup(scene);
+
+      this.title_txt = scene.add.text(480, 220, '=  =  =  G A M E   O V E R  =  =  =', { font: '32px monospace', fill: '#ffffff' }).setOrigin(0.5);
+      this.restart_txt = scene.add.text(480, 300, 'R E S T A R T', { font: '28px monospace', fill: '#ffffff' }).setOrigin(0.5);
+      this.back_txt = scene.add.text(480, 360, 'T I T L E', { font: '28px monospace', fill: '#ffffff' }).setOrigin(0.5);
+      this.title_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
+      this.restart_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
+      this.back_txt.preFX.addShadow(0, 0, 0.05, 5, 0x0000000, 5, 1);
+      
+      this.group.add(this.background_graphics);
+      this.group.add(this.graphics);
+      this.group.add(this.title_txt);
+      this.group.add(this.restart_txt);
+      this.group.add(this.back_txt);
+
+      this.group.setDepth(499).setVisible(false);
     }
 
-    close() {
-      this.group.setVisible(false);
-      this.select = 0;
-      this.selecter.y = 300;
-      this.disp();
+    disp_timer() {
+      if (this.disp_rug > 0) {
+        this.disp_rug--;
+        return false;
+      }
+      else {
+        return true;
+      }
     }
-    
-    disp() {
-      this.alpha += 2;
-      if (this.alpha >= 180) this.alpha = 0;
+  }();
 
-      this.graphics.clear();
-      this.graphics.setAlpha(Math.sin(this.rad(this.alpha)));
-      this.graphics.fillEllipseShape(this.selecter);
-      this.selecter.y = 300 + this.select * 60;
+  clear_text = new class {
+    constructor() {
+      this.disp = false;
+      this.life_time = 0;
+      this.img = null;
+    }
+
+    setup(scene) {
+      this.disp = false;
+      this.life_time = 0;
+
+      this.light_mask = scene.add.rectangle(140, 320, 120, 40, 0x000000).setVisible(false);
+      this.light_mask.setRotation(-30 * (Math.PI / 180.0) + 90 * (Math.PI / 180.0));
+      this.mask = this.light_mask.createGeometryMask();
+
+      this.img = scene.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "complete_text");
+      this.img_white = scene.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "complete_white_text");
+      this.img_back = scene.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "complete_white_text");
+
+      this.light_mask.setDepth(99);
+      this.img.setDepth(100);
+      this.img_white.setDepth(101);
+      this.img_back.setDepth(99);
+
+      this.img_white.setMask(this.mask);
+
+      // this.start();
+    }
+
+    start() {
+      this.disp = true;
+    }
+
+    update() {
+      if (this.disp) {
+        this.img.setVisible(true);
+        this.img_white.setVisible(true);
+        this.life_time++;
+        if (this.life_time < 120) {
+          this.light_mask.x += 8;
+        }
+        else if (this.life_time < 150) {
+          this.img_back.setVisible(true);
+          this.img_back.scaleX += 0.01;
+          this.img_back.scaleY += 0.01;
+          this.img_back.setAlpha((150 - this.life_time) / 30);
+        }
+        else if (this.life_time < 240) {
+          this.img_back.setVisible(false);
+        }
+        else {
+          return true;
+        }
+      }
+      else {
+        this.img.setVisible(false);
+        this.img_white.setVisible(false);
+        this.img_back.setVisible(false);
+      }
+
+      return false;
     }
   }();
 
@@ -154,7 +265,9 @@ class ShootingScene extends GameScene {
     this.boss_count = MISSION_DATA[selectMission][0].boss_count;
 
     this.pouse_menu.setup(this);
+    this.gameover_menu.setup(this);
     this.boss_text.setup(this);
+    this.clear_text.setup(this);
 
     this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
     this.bg_1.scaleX = this.bg_1.scaleX * 2;
@@ -230,6 +343,12 @@ class ShootingScene extends GameScene {
     const rad = d => { return -d * (Math.PI / 180.0) + 90 * (Math.PI / 180.0) }
     this.ui_image.vol.bgm_switch.setRotation(rad(225 - (bgm_vol / 10 * 270)));
     this.ui_image.vol.se_switch.setRotation(rad(225 - (se_vol / 10 * 270)));
+
+    this.player_lost = () => {
+      this.explosion = this.explosions.get();
+      this.explosion.create(this.player.x, this.player.y);
+      this.gameover_menu.timer_start = true;
+    };
 
     this.playerGroup = this.physics.add.group({
       classType: PlayerObj,
@@ -329,8 +448,7 @@ class ShootingScene extends GameScene {
         }
 
         if (player.hit(player.skil.auto ? 200 : 300)) {
-          this.explosion = this.explosions.get();
-          this.explosion.create(this.player.x, this.player.y);
+          this.player_lost();
         }
       }
 
@@ -344,8 +462,7 @@ class ShootingScene extends GameScene {
       if (this.player.life) {
         enemyBullet.hit();
         if (player.hit(enemyBullet.power)) {
-          this.explosion = this.explosions.get();
-          this.explosion.create(this.player.x, this.player.y);
+          this.player_lost();
         }
       }
 
@@ -353,32 +470,34 @@ class ShootingScene extends GameScene {
   }
 
   get_item(player, item) {
-    const buff = () => {
-      let buff = 1.0;
-      if (player.skil.maintain) {
-        buff += 0.25;
-      }
-      if (player.skil.swingwing) {
-        buff -= 0.25;
-      }
-      return buff;
-    };
-
-    if (this.window == "null") {
-      const type = item.type;
-      item.hit();
-      switch(type) {
-        case 0:
-          player.get_item_ab(Math.floor(8 * buff()));
-          break;
-        case 1:
-          player.get_item_en(Math.floor(4 * buff()));
-          break;
-        case 2:
-          player.get_item_hp(Math.floor(4 * buff()));
-          break;
-        default:
-          break;
+    if (player.hp > 0) {
+      const buff = () => {
+        let buff = 1.0;
+        if (player.skil.maintain) {
+          buff += 0.25;
+        }
+        if (player.skil.swingwing) {
+          buff -= 0.25;
+        }
+        return buff;
+      };
+  
+      if (this.window == "null") {
+        const type = item.type;
+        item.hit();
+        switch(type) {
+          case 0:
+            player.get_item_ab(Math.floor(8 * buff()));
+            break;
+          case 1:
+            player.get_item_en(Math.floor(4 * buff()));
+            break;
+          case 2:
+            player.get_item_hp(Math.floor(4 * buff()));
+            break;
+          default:
+            break;
+        }
       }
     }
   }
@@ -421,9 +540,13 @@ class ShootingScene extends GameScene {
           damage_coefficient += 0.4;
         }
   
-        damage = Math.floor(damage * damage_coefficient);
+        if (this.player.hp > 0) {
+          damage = Math.floor(damage * damage_coefficient);
+        }
+        else {
+          damage = 0;
+        }
   
-        // console.log(damage);
         let returnData = enemy.damage(damage);
         if (!(returnData == -1)) {
           ab_get += 20;
@@ -439,7 +562,8 @@ class ShootingScene extends GameScene {
           if (returnData.type == "boss") {
             this.boss_trigger++;
             if (this.boss_trigger >= this.boss_count) {
-              console.log("GAME CLEAR")
+              // console.log("GAME CLEAR")
+              this.clear_text.start();
             }
           }
         }
@@ -459,6 +583,7 @@ class ShootingScene extends GameScene {
     this.enemyBullets.runChildUpdate = false;
     this.flares.runChildUpdate = false;
     this.explosions.runChildUpdate = false;
+    this.items.runChildUpdate = false;
   }
 
   pouse_cancel() {
@@ -471,6 +596,20 @@ class ShootingScene extends GameScene {
     this.enemyBullets.runChildUpdate = true;
     this.flares.runChildUpdate = true;
     this.explosions.runChildUpdate = true;
+    this.items.runChildUpdate = false;
+  }
+
+  gameover() {
+    this.window = "gameover";
+    this.gameover_menu.up();
+    this.playerGroup.runChildUpdate = false;
+    this.ucavGroup.runChildUpdate = false;
+    this.bullets.runChildUpdate = false;
+    this.enemys.runChildUpdate = false;
+    this.enemyBullets.runChildUpdate = false;
+    this.flares.runChildUpdate = false;
+    this.explosions.runChildUpdate = false;
+    this.items.runChildUpdate = false;
   }
 
   background_disp() {
@@ -679,9 +818,22 @@ class ShootingScene extends GameScene {
       }
   
       this.boss_text.update();
+      if (this.clear_text.update()) {
+        clearData.score = this.score;
+        this.nextScene = "landingScene";
+      }
+
+      if (this.gameover_menu.timer_start) {
+        if (this.gameover_menu.disp_timer()) {
+          this.gameover();
+        }
+      }
     }
     else if (this.window == "pouse") {
       this.pouse_menu.disp();
+    }
+    else if (this.window == "gameover") {
+      this.gameover_menu.disp();
     }
     
     super.update();
@@ -945,7 +1097,7 @@ class ShootingScene extends GameScene {
             break;
           case 2:
             this.nextScene = "title";
-            break
+            break;
         }
       }
       if (Phaser.Input.Keyboard.JustDown(this.key.p)) {
@@ -956,6 +1108,43 @@ class ShootingScene extends GameScene {
       }
       if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
         this.pouse_menu.select = this.pouse_menu.select == 2 ? 0 : this.pouse_menu.select + 1;
+      }
+    }
+    else if (this.window == "gameover") {
+      if (Phaser.Input.Keyboard.JustDown(this.space)) {
+        switch(this.gameover_menu.select) {
+          case 0:
+            this.nextScene = "shootingScene";
+            break;
+          case 1:
+            this.nextScene = "title";
+            break;
+        }
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+        this.gameover_menu.select = this.gameover_menu.select == 0 ? 1 : 0;
+      }
+    }
+  }
+
+  sceneChange(next) {
+    if (next == "option") {
+      if (this.nextSceneDelta < 1.0) {
+        this.nextSceneDelta += 0.05;
+      }
+      else {
+        this.nextSceneDelta = 0;
+        this.nextScene = -1;
+      }
+    }
+    else {
+      if (this.nextSceneDelta < 1.0) {
+        this.fade.alpha = this.nextSceneDelta;
+        this.nextSceneDelta += 0.05;
+      }
+      else {
+        this.fade.alpha = 1;
+        this.scene.start(next);
       }
     }
   }
