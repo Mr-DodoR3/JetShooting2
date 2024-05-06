@@ -19,7 +19,7 @@ const MISSION_DATA = [
       map : "sae",
       pos : [592, 287],
       title : "新秩序の消失",
-      overview : `同盟軍の爆撃機部隊は国連軍基地に対して攻撃を仕掛けた。\n`
+      overview : `同盟軍の爆撃機部隊は国連軍基地に対しての攻撃を決定。\n貴官らの部隊はこれを迎撃せよとの命令を受けることとなる。\nだが、爆撃機部隊には多数の護衛戦闘機も付いていた。`
     },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
@@ -38,12 +38,12 @@ const MISSION_DATA = [
 
   // stage 2
   [
-    { pos : [720, 270], title : "超大国の幸福理論", overview : `` }
+    { pos : [720, 270], title : "超大国の平和理論", overview : `` }
   ],
 
   // stage 3
   [
-    { pos : [720, 270], title : "誰かの希望になれるなら", overview : `` }
+    { pos : [720, 270], title : "誰かの希望になれたなら", overview : `` }
   ],
 
   // stage 4
@@ -58,7 +58,7 @@ const MISSION_DATA = [
 
   // stage 6
   [
-    { pos : [720, 270], title : "60マイルと一夜作戦", overview : `` }
+    { pos : [720, 270], title : "600マイルと一夜物語", overview : `` }
   ],
 
   // stage 7
@@ -67,6 +67,11 @@ const MISSION_DATA = [
   ],
 
   // stage 8
+  [
+    { pos : [720, 270], title : "地球最後の戦争を", overview : `` }
+  ],
+
+  // stage 9
   [
     { pos : [720, 270], title : "地球最後の戦争を", overview : `` }
   ]
@@ -430,15 +435,15 @@ const UNIT_DATA = [
   {
     tag : "xb44",
     serial : "XB-44A",
-    name : "Meteorite",
-    name_jp : "ミーティアライト(隕石)",
+    name : "Sentinel",
+    name_jp : "センチネル(監視者)",
     explanation : "高いステルス性と搭載量を備えた新型戦闘爆撃機です。",
     type : "bomber",
     spec : [4, 7, 10],
     skil : ["supercruise", "vt", "irst","stealth", "fbl", "auto", "aesa"],
     weapon : "hel",
     specail_weapon : "atm144",
-    engine_pos : [0, 0]
+    engine_pos : [3, 45]
   },
   {
     tag : "sy25",
@@ -477,7 +482,7 @@ const UNIT_DATA = [
     skil : ["cft", "supercruise", "vt", "irst", "auto", "aesa"],
     weapon : "malc",
     specail_weapon : "l50",
-    engine_pos : [0, 0]
+    engine_pos : [3, 43]
   },
   {
     tag : "va8",
@@ -503,7 +508,7 @@ const UNIT_DATA = [
     skil : ["swingwing", "flare", "wso", "reverser"],
     weapon : "tcc2",
     specail_weapon : "pj234",
-    engine_pos : [0, 0]
+    engine_pos : [2, 44]
   },
   {
     tag : "md4000",
@@ -542,7 +547,7 @@ const UNIT_DATA = [
     skil : ["supercruise", "maintain", "auto", "reverser"],
     weapon : "l50",
     specail_weapon : "asraab",
-    engine_pos : [0, 0]
+    engine_pos : [0, 47]
   },
   {
     tag : "ab2",
@@ -581,7 +586,7 @@ const UNIT_DATA = [
     skil : [],
     weapon : "l47",
     specail_weapon : "gs60",
-    engine_pos : [0, 0]
+    engine_pos : [0, 47]
   },
   {// TFX
     tag : "tf24",
@@ -607,8 +612,47 @@ const UNIT_DATA = [
     skil : ["stealth"],
     weapon : "tcc2",
     specail_weapon : "ciasa",
-    engine_pos : [0, 0]
-  }
+    engine_pos : [2, 47]
+  },
+  // {
+  //   tag : "fi22n",
+  //   serial : "FI-22N",
+  //   name : "SilentCat",
+  //   name_jp : "サイレントキャット",
+  //   explanation : "可変翼を備え、高い運動性能と速度性能を兼ね備えた試作ステルス戦闘機です。",
+  //   type : "prototype",
+  //   spec : [0, 0, 0],
+  //   skil : ["stealth"],
+  //   weapon : "",
+  //   specail_weapon : "",
+  //   engine_pos : [0, 0]
+  // },
+  // {
+  //   tag : "s47km",
+  //   serial : "S-47KM",
+  //   name : "",
+  //   name_jp : "",
+  //   explanation : "前進翼で安定性を犠牲に機動性を極限まで突き詰めたハイエンド戦闘機です。",
+  //   type : "prototype",
+  //   spec : [0, 0, 0],
+  //   skil : [""],
+  //   weapon : "",
+  //   specail_weapon : "",
+  //   engine_pos : [0, 0]
+  // },
+  // {
+  //   tag : "ab3",
+  //   serial : "AB3G1",
+  //   name : "Meteor",
+  //   name_jp : "最新技術を惜しげもなく投入し開発された次世代戦闘機です。",
+  //   explanation : "",
+  //   type : "prototype",
+  //   spec : [0, 0, 0],
+  //   skil : ["stealth"],
+  //   weapon : "",
+  //   specail_weapon : "",
+  //   engine_pos : [0, 0]
+  // }
 ];
 // 追加候補
 // fighter : MiG-1.44

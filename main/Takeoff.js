@@ -14,7 +14,8 @@ class TekeoffScene extends GameScene {
       acceleration : 5
     }
     this.player = {
-      image : null
+      image : null,
+      engine_pos : [0, 0]
     };
   }
 
@@ -40,9 +41,24 @@ class TekeoffScene extends GameScene {
     this.cvn.image.scaleX = this.cvn.image.scaleX * 0.5;
     this.cvn.image.scaleY = this.cvn.image.scaleY * 0.5;
 
-    this.player.image = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, UNIT_DATA[selectAircraft].tag);
+    this.player.image = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, UNIT_DATA[selectAircraft].tag).setDepth(10);
     this.player.image.scaleX = this.player.image.scaleX * 0.5;
     this.player.image.scaleY = this.player.image.scaleY * 0.5;
+
+    console.log(selectAircraft)
+    this.ab_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab").setVisible(false).setDepth(selectAircraft == 11 ? 11 : 0);
+    this.ab_1.scaleX = this.ab_1.scaleX * 0.5;
+    this.ab_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab").setVisible(false).setDepth(selectAircraft == 11 ? 11 : 0);
+    this.ab_2.scaleX = this.ab_2.scaleX * 0.5;
+    this.player.engine_pos[0] = UNIT_DATA[selectAircraft].engine_pos[0];
+    this.player.engine_pos[1] = UNIT_DATA[selectAircraft].engine_pos[1];
+  }
+
+  disp_ab() {
+    this.ab_1.setX(this.player.image.x - this.player.engine_pos[0]);
+    this.ab_1.setY(this.player.image.y + this.player.engine_pos[1]);
+    this.ab_2.setX(this.player.image.x + this.player.engine_pos[0]);
+    this.ab_2.setY(this.player.image.y + this.player.engine_pos[1]);
   }
 
   update() {
@@ -57,6 +73,9 @@ class TekeoffScene extends GameScene {
           this.eventNum = 1;
           this.eventTimer = 0;
         }
+        this.disp_ab();
+        this.ab_1.setVisible(true);
+        this.ab_2.setVisible(true);
       }
     }
     else if (this.eventNum == 1) {
@@ -65,7 +84,10 @@ class TekeoffScene extends GameScene {
       if (this.cvn.image.y > 1200) {
         this.eventNum = 2;
         this.eventTimer = 0;
+        this.ab_1.setVisible(false);
+        this.ab_2.setVisible(false);
       }
+      this.disp_ab();
     }
     else if (this.eventNum == 2) {
       if (this.eventTimer < 50) {

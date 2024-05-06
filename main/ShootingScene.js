@@ -765,16 +765,26 @@ class ShootingScene extends GameScene {
       this.disp_ui();
   
       if (this.player.augmentor > 0 && this.player.hp > 0) {
-        this.ab_1.setVisible(true);
+        if (!this.ab_1.visible) {
+          this.ab_1.setVisible(true);
+          this.ab_2.setVisible(true);
+          if (this.player.skil.swingwing) {
+            this.player.swingwingOpen();
+          }
+        }
         this.ab_1.setX(this.player.x - this.player.engine_pos[0]);
         this.ab_1.setY(this.player.y + this.player.engine_pos[1]);
-        this.ab_2.setVisible(true);
         this.ab_2.setX(this.player.x + this.player.engine_pos[0]);
         this.ab_2.setY(this.player.y + this.player.engine_pos[1]);
       }
       else {
-        this.ab_1.setVisible(false);
-        this.ab_2.setVisible(false);
+        if (this.ab_1.visible) {
+          this.ab_1.setVisible(false);
+          this.ab_2.setVisible(false);
+          if (this.player.skil.swingwing) {
+            this.player.swingwingClose();
+          }
+        }
       }
   
       if (!this.enemyDebugMode) this.enemyPrefab();

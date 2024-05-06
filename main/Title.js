@@ -45,6 +45,11 @@ class Title extends GameScene {
       for (let i = 0; i < UNIT_DATA.length; i++) {
         this.load.image("unitSelect_" + UNIT_DATA[i].tag, "assets/images/uiButton/unitSelect_" + UNIT_DATA[i].tag +".png");
         this.load.image(UNIT_DATA[i].tag, "assets/images/player/" + UNIT_DATA[i].tag +".png");
+        for (let j = 0; j < UNIT_DATA[i].skil.length; j++) {
+          if (UNIT_DATA[i].skil[j] == "swingwing") {
+            this.load.image(UNIT_DATA[i].tag + "_2", "assets/images/player/" + UNIT_DATA[i].tag +"_2.png");
+          }
+        }
       }
       this.load.image("amq28", "assets/images/amq28.png");
   
