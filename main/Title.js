@@ -139,6 +139,10 @@ class Title extends GameScene {
         this.load.image("story_0" + i, "assets/images/story/story_0" + i + ".jpg");
       }
 
+      // --------------------------------------
+      this.load.audio("decision", "assets/se/decision.mp3");
+      this.load.audio("select", "assets/se/select.mp3");
+
       load_flag = true;
     }
   }
@@ -162,26 +166,31 @@ class Title extends GameScene {
 
   contller() {
     if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
+      this.se.select.play();
       this.mode--;
       if (this.mode < 0) this.mode = 4;
     }
     if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+      this.se.select.play();
       this.mode++;
       if (this.mode > 4) this.mode = 0;
     }
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
       switch (this.mode) {
         case 0:
+          this.se.decision.play();
           this.nextScene = "missionSelectScene";
           // this.nextScene = "shootingScene";
           // this.nextScene = "landingScene";
           break;
         case 1:
+          this.se.decision.play();
           this.nextScene = "storyScene";
           break;
         case 2:
           break;
         case 3:
+          this.se.decision.play();
           this.nextScene = "option";
           this.window = "option";
           this.option.open();

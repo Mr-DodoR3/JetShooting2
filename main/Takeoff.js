@@ -45,7 +45,7 @@ class TekeoffScene extends GameScene {
     this.player.image.scaleX = this.player.image.scaleX * 0.5;
     this.player.image.scaleY = this.player.image.scaleY * 0.5;
 
-    console.log(selectAircraft)
+    // console.log(selectAircraft)
     this.ab_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab").setVisible(false).setDepth(selectAircraft == 11 ? 11 : 0);
     this.ab_1.scaleX = this.ab_1.scaleX * 0.5;
     this.ab_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ab").setVisible(false).setDepth(selectAircraft == 11 ? 11 : 0);

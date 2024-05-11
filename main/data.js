@@ -18,7 +18,7 @@ const MISSION_DATA = [
       boss_count : 2,
       map : "sae",
       pos : [592, 287],
-      title : "新秩序の消失",
+      title : "秩序の消失",
       overview : `同盟軍の爆撃機部隊は国連軍基地に対しての攻撃を決定。\n貴官らの部隊はこれを迎撃せよとの命令を受けることとなる。\nだが、爆撃機部隊には多数の護衛戦闘機も付いていた。`
     },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
@@ -38,42 +38,68 @@ const MISSION_DATA = [
 
   // stage 2
   [
-    { pos : [720, 270], title : "超大国の平和理論", overview : `` }
+    // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
+    {
+      boss_count : 1,
+      map : "sae",
+      pos : [534, 276],
+      title : "反撃の鐘",
+      overview : `大規模な同盟軍の蜂起により国連軍は防戦一方だった。\nしかしながら、ついに本格的な敵拠点への攻撃の火蓋が切って落\nとされる。\nその前段階として爆撃機部隊の道を築くため、貴官らの部隊には\n敵防空陣地の破壊が命じられる。\n味方電子線妨害機の援護により長射程SAMからの攻撃はない。\nしかしながらそれでも非常に危険な作戦には変わりなかった。`
+    },
   ],
 
   // stage 3
   [
-    { pos : [720, 270], title : "誰かの希望になれたなら", overview : `` }
+    // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
+    {
+      boss_count : 1,
+      map : "sae",
+      pos : [509, 231],
+      title : "補給ハブを叩け",
+      overview : `ユーロ=トランス鉄道の長距離貨物路線は同盟軍に協力し、彼らの\n支援をしているとの情報が入った。\n国連軍は地と空からハブ駅である"ダルスーヤ駅"への攻撃を行う\nが、そこに駐屯する列車要塞"XXXXXX"に行く手を阻まれている。\n貴官ら部隊はこれを破壊せよとの命令を受ける。`
+    },
   ],
 
   // stage 4
   [
-    { pos : [720, 270], title : "深海艦隊", overview : `` }
+    // tag : 読み込み画像, pieces : 生成機数, action_type : 行動パターン, interval : 生成間隔, sleep : 次のグループの生成までの間隔, repletion : 特殊設定
+    {
+      boss_count : 1,
+      map : "sae",
+      pos : [504, 274],
+      title : "オイルショック",
+      overview : `大規模油田施設であるペトーロ油田は同盟軍に対して石油を大量\nに提供していたことが判明した。\n国連軍はこのことを受けペトーロ油田に対しての空爆を決定した。\nその第一陣として貴官らが選ばれたのであった。`
+    },
   ],
 
   // stage 5
   [
-    { pos : [720, 270], title : "アスノカケラ", overview : `` }
+    { pos : [720, 270], title : "", overview : `` }
   ],
 
   // stage 6
   [
-    { pos : [720, 270], title : "600マイルと一夜物語", overview : `` }
+    { pos : [720, 270], title : "", overview : `` }
   ],
 
   // stage 7
   [
-    { pos : [720, 270], title : "核の惑星", overview : `` }
+    { pos : [720, 270], title : "", overview : `` }
   ],
 
   // stage 8
   [
-    { pos : [720, 270], title : "地球最後の戦争を", overview : `` }
+    { pos : [720, 270], title : "", overview : `` }
   ],
 
   // stage 9
   [
-    { pos : [720, 270], title : "地球最後の戦争を", overview : `` }
+    { pos : [720, 270], title : "", overview : `` }
+  ],
+
+  // stage 9
+  [
+    { pos : [720, 270], title : "", overview : `` }
   ]
 ]
 
@@ -439,7 +465,7 @@ const UNIT_DATA = [
     name_jp : "センチネル(監視者)",
     explanation : "高いステルス性と搭載量を備えた新型戦闘爆撃機です。",
     type : "bomber",
-    spec : [4, 7, 10],
+    spec : [4, 8, 8],
     skil : ["supercruise", "vt", "irst","stealth", "fbl", "auto", "aesa"],
     weapon : "hel",
     specail_weapon : "atm144",
@@ -543,7 +569,7 @@ const UNIT_DATA = [
     name_jp : "フリヘット(スウェーデン語で自由)",
     explanation : "高い運動性能と信頼性がウリの軽量級戦闘機です。",
     type : "interceptor",
-    spec : [7, 2, 2],
+    spec : [8, 1, 5],
     skil : ["supercruise", "maintain", "auto", "reverser"],
     weapon : "l50",
     specail_weapon : "asraab",
@@ -556,7 +582,7 @@ const UNIT_DATA = [
     name_jp : "涼風",
     explanation : "対艦攻撃も想定され開発された高い攻撃力を持つ攻撃機です。",
     type : "attacker",
-    spec : [7, 2, 6],
+    spec : [7, 3, 6],
     skil : ["asm", "fbl", "aesa"],
     weapon : "gua99",
     specail_weapon : "type25",
@@ -644,10 +670,10 @@ const UNIT_DATA = [
   //   tag : "ab3",
   //   serial : "AB3G1",
   //   name : "Meteor",
-  //   name_jp : "最新技術を惜しげもなく投入し開発された次世代戦闘機です。",
-  //   explanation : "",
+  //   name_jp : "ミーティア",
+  //   explanation : "最新技術を惜しげもなく投入し開発された次世代戦闘機です。",
   //   type : "prototype",
-  //   spec : [0, 0, 0],
+  //   spec : [8, 7, 10],
   //   skil : ["stealth"],
   //   weapon : "",
   //   specail_weapon : "",

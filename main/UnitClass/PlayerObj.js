@@ -175,7 +175,7 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
   augmentorControl() {
     if (this.ab < 3000 && this.augmentor == 0) {
-      this.ab += 15;
+      // this.ab += 15;
     }
     else if (this.augmentor > 0) {
       this.augmentor -= this.skil.swingwing ? 4 : 5;

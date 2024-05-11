@@ -245,6 +245,7 @@ class AircraftSelectScene extends GameScene {
 
   contller() {
     if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
+      this.se.select.play();
       this.selectAircraft--;
       if (this.selectAircraft < 0) {
         if (UNIT_DATA.length < 14) {
@@ -262,6 +263,7 @@ class AircraftSelectScene extends GameScene {
     }
     if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
       console.log(UNIT_DATA.length)
+      this.se.select.play();
       this.selectAircraft++;
       if (this.selectAircraft > UNIT_DATA.length - 1) {
         this.page = 0;
@@ -273,6 +275,7 @@ class AircraftSelectScene extends GameScene {
       this.updateData();
     }
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
+      this.se.decision.play();
       this.nextScene = this.selectAircraft;
       selectAircraft = this.selectAircraft;
     }

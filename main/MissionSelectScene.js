@@ -156,16 +156,19 @@ class MissionSelectScene extends GameScene {
 
   contller() {
     if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
+      this.se.select.play();
       selectMission--;
       if (selectMission < 0) selectMission = 3;
       this.textBox.setText(MISSION_DATA[selectMission][0].title, MISSION_DATA[selectMission][0].overview);
     }
     if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+      this.se.select.play();
       selectMission++;
       if (selectMission > 3) selectMission = 0;
       this.textBox.setText(MISSION_DATA[selectMission][0].title, MISSION_DATA[selectMission][0].overview);
     }
     if (Phaser.Input.Keyboard.JustDown(this.space)) {
+      this.se.decision.play();
       this.nextScene = selectMission;
     }
     if (Phaser.Input.Keyboard.JustDown(this.esc)) {

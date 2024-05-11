@@ -1096,6 +1096,7 @@ class ShootingScene extends GameScene {
     }
     else if (this.window == "pouse") {
       if (Phaser.Input.Keyboard.JustDown(this.space)) {
+        this.se.decision.play();
         switch(this.pouse_menu.select) {
           case 0:
             this.pouse_cancel();
@@ -1114,14 +1115,17 @@ class ShootingScene extends GameScene {
         this.pouse_cancel();
       }
       if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
+        this.se.select.play();
         this.pouse_menu.select = this.pouse_menu.select == 0 ? 2 : this.pouse_menu.select - 1;
       }
       if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+        this.se.select.play();
         this.pouse_menu.select = this.pouse_menu.select == 2 ? 0 : this.pouse_menu.select + 1;
       }
     }
     else if (this.window == "gameover") {
       if (Phaser.Input.Keyboard.JustDown(this.space)) {
+        this.se.decision.play();
         switch(this.gameover_menu.select) {
           case 0:
             this.nextScene = "shootingScene";
@@ -1132,6 +1136,7 @@ class ShootingScene extends GameScene {
         }
       }
       if (Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+        this.se.select.play();
         this.gameover_menu.select = this.gameover_menu.select == 0 ? 1 : 0;
       }
     }

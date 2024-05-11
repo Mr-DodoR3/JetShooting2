@@ -34,7 +34,13 @@ class GameScene extends Phaser.Scene {
     this.fade = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "fade_layer");
     this.fade.depth = 999;
     this.fade.alpha = 1;
-    
+
+    this.se = {
+      decision: this.sound.add("decision"),
+      select: this.sound.add("select")
+    }
+    this.allSetVolume(bgm_vol, se_vol);
+
     if (DEBUG_MODE) {
       this.input.on("pointerdown", function(pointer) {
         console.log(pointer.x + "," + pointer.y)
@@ -73,23 +79,35 @@ class GameScene extends Phaser.Scene {
   option_contller() {
     if (this.option.status == "disp") {
       if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
+        this.se.select.play();
         this.option.selectOption--;
         if (this.option.selectOption < 0) this.option.selectOption = 2;
       }
       if (Phaser.Input.Keyboard.JustDown(this.cursors.left)) {
+        if (this.option.selectOption == 0 || this.option.selectOption == 1) {
+          this.allSetVolume(bgm_vol, se_vol);
+          this.se.select.play();
+        }
         if (this.option.selectOption == 0 && bgm_vol > 0) bgm_vol--;
         if (this.option.selectOption == 1 && se_vol > 0) se_vol--;
       }
       if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
+        this.se.select.play();
         this.option.selectOption++;
         if (this.option.selectOption > 2) this.option.selectOption = 0;
       }
       if (Phaser.Input.Keyboard.JustDown(this.cursors.right)) {
-        if (this.option.selectOption == 0 && bgm_vol < 10) bgm_vol++;
+        if (this.option.selectOption == 0 || this.option.selectOption == 1) {
+          this.allSetVolume(bgm_vol, se_vol);
+          this.se.select.play();
+        }
+        if (this.option.selectOption == 0 && bgm_vol < 10) {bgm_vol++;}
         if (this.option.selectOption == 1 && se_vol < 10) se_vol++;
       }
       if (Phaser.Input.Keyboard.JustDown(this.space)) {
         if (this.option.selectOption == 2) {
+          this.allSetVolume(bgm_vol, se_vol);
+          this.se.decision.play();
           this.option.status = "close";
         }
       }
@@ -133,5 +151,12 @@ class GameScene extends Phaser.Scene {
         this.scene.start(next);
       }
     }
+  }
+
+  allSetVolume(bgm=10, se=10) {
+    bgm /= 10;
+    se /= 10;
+    this.se.decision.setVolume(se);
+    this.se.select.setVolume(se);
   }
 }
