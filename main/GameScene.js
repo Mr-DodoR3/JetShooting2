@@ -111,6 +111,9 @@ class GameScene extends Phaser.Scene {
           this.option.status = "close";
         }
       }
+      if (Phaser.Input.Keyboard.JustDown(this.esc)) {
+        this.option.status = "close";
+      }
       this.option.renew();
     }
   }

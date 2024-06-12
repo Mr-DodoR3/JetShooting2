@@ -430,7 +430,8 @@ const UNIT_DATA = [
     skil : ["swingwing", "irst", "wso"],
     weapon : "type25",
     specail_weapon : "jdal",
-    engine_pos : [5, 45]
+    engine_pos : [5, 45],
+    wing_pos : 11
   },
   {
     tag : "b15",

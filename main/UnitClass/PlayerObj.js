@@ -80,7 +80,6 @@ class PlayerObj extends Phaser.GameObjects.Image {
     this.setX(x);
     this.setY(y);
     this.tag = tag;
-    this.setTexture(tag);
     this.scaleX = this.scaleX * 0.5;
     this.scaleY = this.scaleY * 0.5;
     this.flare = 3;
@@ -131,6 +130,23 @@ class PlayerObj extends Phaser.GameObjects.Image {
           if (UNIT_DATA[i].skil[j] == "l_band") this.skil.l_band = true;
           if (UNIT_DATA[i].skil[j] == "nuclear") this.skil.nuclear = true;
         }
+
+        if (this.skil.swingwing) {
+          this.setTexture(tag + "_body");
+          this.wing_r = this.scene.add.image(this.x, this.y, tag + "_wing");
+          this.wing_r.scaleX = this.wing_r.scaleX * 0.5;
+          this.wing_r.scaleY = this.wing_r.scaleY * 0.5;
+          this.wing_l = this.scene.add.image(this.x, this.y, tag + "_wing");
+          this.wing_l.flipX = true;
+          this.wing_l.scaleX = this.wing_l.scaleX * 0.5;
+          this.wing_l.scaleY = this.wing_l.scaleY * 0.5;
+          this.wing_pos = UNIT_DATA[i].wing_pos;
+          this.wing_deg = 0;
+          this.wing_maxDeg = 25;
+        }
+        else {
+          this.setTexture(tag);
+        }
       }
 
       this.max_en = ((e) => {
@@ -147,7 +163,6 @@ class PlayerObj extends Phaser.GameObjects.Image {
     if (this.skil.flare) {
       this.flare++;
     }
-
     this.colliderSet();
   }
 
@@ -191,12 +206,21 @@ class PlayerObj extends Phaser.GameObjects.Image {
     }
   }
 
-  swingwingOpen() {
-    this.setTexture(this.tag + "_2");
-  }
-
-  swingwingClose() {
-    this.setTexture(this.tag);
+  swingwing_control() {
+    this.wing_r.x = this.x;
+    this.wing_r.y = this.y + this.wing_pos;
+    this.wing_r.setRotation(this.rad_wing(this.wing_deg + 90));
+    this.wing_l.x = this.x;
+    this.wing_l.y = this.y + this.wing_pos;
+    this.wing_l.setRotation(-this.rad_wing(this.wing_deg + 90));
+    if (this.augmentor > 0 && this.wing_deg > -this.wing_maxDeg) {
+      this.wing_deg -= 1;
+      if (this.wing_deg < -this.wing_maxDeg) this.wing_deg = -this.wing_maxDeg;
+    }
+    else if (this.wing_deg < 0) {
+      this.wing_deg += 1;
+      if (this.wing_deg > 0) this.wing_deg = 0;
+    }
   }
 
   flareControl() {
@@ -262,6 +286,9 @@ class PlayerObj extends Phaser.GameObjects.Image {
     if (nextPosY > 608) nextPosY = 608;
     this.setX(nextPosX);
     this.setY(nextPosY);
+    if (this.skil.swingwing) {
+      this.swingwing_control();
+    }
     
     if (this.reload > this.getWaepon().reload) this.reload = 0;
     else if (this.reload > 0) this.reload++;
@@ -283,5 +310,9 @@ class PlayerObj extends Phaser.GameObjects.Image {
 
   rad(deg) {
     return deg * (Math.PI / 180.0);
+  }
+
+  rad_wing(deg) {
+    return -deg * (Math.PI / 180.0) + 90 * (Math.PI / 180.0);
   }
 }

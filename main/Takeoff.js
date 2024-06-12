@@ -36,6 +36,11 @@ class TekeoffScene extends GameScene {
     this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
     this.bg_1.scaleX = this.bg_1.scaleX * 2;
     this.bg_1.scaleY = this.bg_1.scaleY * 2;
+    this.bg_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 - DISPLAY_HEIGHT, "background_sae");
+    this.bg_2.scaleX = this.bg_2.scaleX * 2;
+    this.bg_2.scaleY = this.bg_2.scaleY * 2;
+    this.bg_2.setRotation(((deg) => { return -deg * (Math.PI / 180.0) + 90 * (Math.PI / 180.0); })(90));
+    this.bg_2.flipY = true;
 
     this.cvn.image = this.add.image(this.cvn.relativeX, this.cvn.relativeY - 100, "cvn-96_2");
     this.cvn.image.scaleX = this.cvn.image.scaleX * 0.5;
@@ -102,6 +107,18 @@ class TekeoffScene extends GameScene {
         this.nextScene = "shootingScene"
       }
     }
+    
+    if (this.cvn.image.y > DISPLAY_HEIGHT * 3 + (DISPLAY_HEIGHT / 2))
+      this.bg_1.setY((this.cvn.image.y + 4) - DISPLAY_HEIGHT * 4);
+    else if (this.cvn.image.y > DISPLAY_HEIGHT + (DISPLAY_HEIGHT / 2))
+      this.bg_1.setY((this.cvn.image.y + 4) - DISPLAY_HEIGHT * 2);
+    else
+      this.bg_1.setY(this.cvn.image.y + 4);
+
+    if (this.cvn.image.y > DISPLAY_HEIGHT * 2 + (DISPLAY_HEIGHT / 2))
+      this.bg_2.setY((this.cvn.image.y + 4) - DISPLAY_HEIGHT * 3);
+    else
+    this.bg_2.setY((this.cvn.image.y + 4) - DISPLAY_HEIGHT);
 
     super.update();
   }

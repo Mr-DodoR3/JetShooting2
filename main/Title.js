@@ -48,6 +48,8 @@ class Title extends GameScene {
         for (let j = 0; j < UNIT_DATA[i].skil.length; j++) {
           if (UNIT_DATA[i].skil[j] == "swingwing") {
             this.load.image(UNIT_DATA[i].tag + "_2", "assets/images/player/" + UNIT_DATA[i].tag +"_2.png");
+            this.load.image(UNIT_DATA[i].tag + "_body", "assets/images/player/" + UNIT_DATA[i].tag +"_body.png");
+            this.load.image(UNIT_DATA[i].tag + "_wing", "assets/images/player/" + UNIT_DATA[i].tag +"_wing.png");
           }
         }
       }
@@ -68,7 +70,7 @@ class Title extends GameScene {
   
       this.load.image("ab", "assets/images/augmentor.png");
   
-      this.load.image("background_sae", "assets/images/background/" + "sae.png");
+      this.load.image("background_sae", "assets/images/background/" + "sae_2.png");
   
       // GameScene
       for (let i = 0; i < WEAPON_DATA.length; i++) {

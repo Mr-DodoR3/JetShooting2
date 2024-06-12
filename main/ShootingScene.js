@@ -232,6 +232,7 @@ class ShootingScene extends GameScene {
     
     this.bg_1;
     this.bg_2;
+    this.bg_speed = 1;
 
     this.fl_bar_alpha = 0.0;
     this.ab_bar_alpha = 0.0;
@@ -275,6 +276,7 @@ class ShootingScene extends GameScene {
     this.bg_2 = this.add.image(DISPLAY_WIDTH / 2, -DISPLAY_HEIGHT / 2, "background_sae");
     this.bg_2.scaleX = this.bg_2.scaleX * 2;
     this.bg_2.scaleY = this.bg_2.scaleY * 2;
+    this.bg_2.flipY = true;
 
     this.graphics = this.add.graphics({ fillStyle: { color: 0x333333 }, lineStyle: { width: 2, color: 0x000000 } });
     this.rect = {
@@ -613,18 +615,15 @@ class ShootingScene extends GameScene {
   }
 
   background_disp() {
-    // if (this.bg_1.y > DISPLAY_HEIGHT * 1.5) {
-    //   this.bg_1.y = -DISPLAY_HEIGHT / 2;
-    // }
-    // else {
-    //   this.bg_1.y += 5;
-    // }
-    // if (this.bg_2.y > DISPLAY_HEIGHT * 1.5) {
-    //   this.bg_2.y = -DISPLAY_HEIGHT / 2;
-    // }
-    // else {
-    //   this.bg_2.y += 5;
-    // }
+    if (this.bg_1.y > DISPLAY_HEIGHT * 1.5 ) {
+      this.bg_1.y = this.bg_2.y;
+      this.bg_1.flipY = this.bg_1.flipY ? false : true;
+      this.bg_2.flipY = this.bg_1.flipY ? false : true;
+    }
+    else {
+      this.bg_1.y += this.bg_speed;
+    }
+    this.bg_2.y = this.bg_1.y - DISPLAY_HEIGHT;
   }
 
   disp_ui() {
@@ -769,7 +768,7 @@ class ShootingScene extends GameScene {
           this.ab_1.setVisible(true);
           this.ab_2.setVisible(true);
           if (this.player.skil.swingwing) {
-            this.player.swingwingOpen();
+            // this.player.swingwingOpen();
           }
         }
         this.ab_1.setX(this.player.x - this.player.engine_pos[0]);
@@ -782,7 +781,7 @@ class ShootingScene extends GameScene {
           this.ab_1.setVisible(false);
           this.ab_2.setVisible(false);
           if (this.player.skil.swingwing) {
-            this.player.swingwingClose();
+            // this.player.swingwingClose();
           }
         }
       }
