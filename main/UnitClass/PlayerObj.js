@@ -136,10 +136,12 @@ class PlayerObj extends Phaser.GameObjects.Image {
           this.wing_r = this.scene.add.image(this.x, this.y, tag + "_wing");
           this.wing_r.scaleX = this.wing_r.scaleX * 0.5;
           this.wing_r.scaleY = this.wing_r.scaleY * 0.5;
+          this.wing_r.setDepth(59);
           this.wing_l = this.scene.add.image(this.x, this.y, tag + "_wing");
           this.wing_l.flipX = true;
           this.wing_l.scaleX = this.wing_l.scaleX * 0.5;
           this.wing_l.scaleY = this.wing_l.scaleY * 0.5;
+          this.wing_l.setDepth(59);
           this.wing_pos = UNIT_DATA[i].wing_pos;
           this.wing_deg = 0;
           this.wing_maxDeg = 25;
@@ -237,6 +239,12 @@ class PlayerObj extends Phaser.GameObjects.Image {
       this.life = false;
       this.setActive(false);
       this.setVisible(false);
+      if (this.skil.swingwing) {
+        this.wing_r.setActive(false);
+        this.wing_r.setVisible(false);
+        this.wing_l.setActive(false);
+        this.wing_l.setVisible(false);
+      }
       return true;
     }
     else {
@@ -245,7 +253,6 @@ class PlayerObj extends Phaser.GameObjects.Image {
   }
 
   get_item_ab(val) {
-    console.log(val)
     this.ab += val;
     if (this.ab > 3000) {
       this.ab = 3000;

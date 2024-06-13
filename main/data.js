@@ -19,7 +19,8 @@ const MISSION_DATA = [
       map : "sae",
       pos : [592, 287],
       title : "秩序の消失",
-      overview : `同盟軍の爆撃機部隊は国連軍基地に対しての攻撃を決定。\n貴官らの部隊はこれを迎撃せよとの命令を受けることとなる。\nだが、爆撃機部隊には多数の護衛戦闘機も付いていた。`
+      overview : `同盟軍の爆撃機部隊は国連軍基地に対しての攻撃を決定。\n貴官らの部隊はこれを迎撃せよとの命令を受けることとなる。\nだが、爆撃機部隊には多数の護衛戦闘機も付いていた。`,
+      weather : "sunny"
     },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
     { tag : "iac1", pieces : 3, action_type : 0, interval : 45, sleep : 180, repletion : "" },
@@ -535,7 +536,8 @@ const UNIT_DATA = [
     skil : ["swingwing", "flare", "wso", "reverser"],
     weapon : "tcc2",
     specail_weapon : "pj234",
-    engine_pos : [2, 44]
+    engine_pos : [2, 44],
+    wing_pos : 8
   },
   {
     tag : "md4000",

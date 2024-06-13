@@ -9,6 +9,7 @@ class ExplosionObj extends Phaser.GameObjects.Image {
     this.setActive(true);
     this.setVisible(true);
 
+    this.setDepth(55);
     this.setX(x);
     this.setY(y);
   }

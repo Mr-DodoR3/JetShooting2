@@ -217,6 +217,37 @@ class ShootingScene extends GameScene {
     }
   }();
 
+  weather_manager = new class {
+    constructor(weather) {
+      this.weather = weather;
+
+      this.lineDelta = 0;
+      this.lineBetween = 15;
+
+      this.cloudDelta = 0;
+      this.cloudBetween = Math.floor(Math.random() * 240) + 60;
+    }
+
+    update() {
+      let data = [];
+      this.lineDelta++;
+      if (this.lineDelta > this.lineBetween) {
+        this.lineDelta = 0;
+        data.push("line");
+      }
+
+      if (this.weather == "sunny") {
+        this.cloudDelta++;
+        if (this.cloudDelta > this.cloudBetween) {
+          this.cloudDelta = 0;
+          data.push("cloud");
+        }
+      }
+
+      return data;
+    }
+  }(MISSION_DATA[selectMission][0].weather);
+
   constructor () {
     super("shootingScene");
     this.enemyDebugMode = false;
@@ -423,6 +454,11 @@ class ShootingScene extends GameScene {
       runChildUpdate: true
     });
 
+    this.weather = this.physics.add.group({
+      classType: DisplayEffectObj,
+      runChildUpdate: true
+    });
+
     this.physics.add.overlap(this.player, this.enemys, this.clash, null, this);
     this.physics.add.overlap(this.player, this.enemyBullets, this.hit_player, null, this);
     this.physics.add.overlap(this.player, this.items, this.get_item, null, this);
@@ -430,7 +466,6 @@ class ShootingScene extends GameScene {
 
     // this.ucav = this.add.ucav(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ucav");
     
-
     if (this.enemyDebugMode) {
       // this.enemy = this.enemys.get();
       // this.enemy.create("yig21", 4);
@@ -586,6 +621,7 @@ class ShootingScene extends GameScene {
     this.flares.runChildUpdate = false;
     this.explosions.runChildUpdate = false;
     this.items.runChildUpdate = false;
+    this.weather.runChildUpdate = false;
   }
 
   pouse_cancel() {
@@ -598,7 +634,8 @@ class ShootingScene extends GameScene {
     this.enemyBullets.runChildUpdate = true;
     this.flares.runChildUpdate = true;
     this.explosions.runChildUpdate = true;
-    this.items.runChildUpdate = false;
+    this.items.runChildUpdate = true;
+    this.weather.runChildUpdate = true;
   }
 
   gameover() {
@@ -612,6 +649,7 @@ class ShootingScene extends GameScene {
     this.flares.runChildUpdate = false;
     this.explosions.runChildUpdate = false;
     this.items.runChildUpdate = false;
+    this.weather.runChildUpdate = false;
   }
 
   background_disp() {
@@ -762,6 +800,14 @@ class ShootingScene extends GameScene {
       
       this.background_disp();
       this.disp_ui();
+
+      const weatherData = this.weather_manager.update();
+      weatherData.forEach(e => {
+        const weather = this.weather.get();
+        if (weather) {
+          weather.create(e);
+        }
+      });
   
       if (this.player.augmentor > 0 && this.player.hp > 0) {
         if (!this.ab_1.visible) {

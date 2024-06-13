@@ -128,6 +128,10 @@ class Title extends GameScene {
       this.load.spritesheet("exp_red", "assets/images/explosion/weapon_explosion_red.png", { frameWidth: 64, frameHeight: 64 });
       this.load.spritesheet("exp_blue", "assets/images/explosion/weapon_explosion_blue.png", { frameWidth: 64, frameHeight: 64 });
       this.load.spritesheet("explosion", "assets/images/explosion/explosion.png", { frameWidth: 64, frameHeight: 64 });
+      
+      for (let i = 1; i <= 3; i++) {
+        this.load.image("cloud_" + i, "assets/images/weather/cloud_" + i + ".png");
+      }
 
       // gameover
       this.load.image("gameover", "assets/images/window/gameover.png");

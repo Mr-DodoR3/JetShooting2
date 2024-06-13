@@ -6,6 +6,7 @@ class LandingScene extends GameScene {
     this.eventNum;
     
     this.bg_1;
+    this.bg_2;
 
     this.graphics;
 
@@ -41,6 +42,11 @@ class LandingScene extends GameScene {
     this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
     this.bg_1.scaleX = this.bg_1.scaleX * 2;
     this.bg_1.scaleY = this.bg_1.scaleY * 2;
+    this.bg_2 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2 - DISPLAY_HEIGHT, "background_sae");
+    this.bg_2.scaleX = this.bg_2.scaleX * 2;
+    this.bg_2.scaleY = this.bg_2.scaleY * 2;
+    this.bg_2.setRotation(((deg) => { return -deg * (Math.PI / 180.0) + 90 * (Math.PI / 180.0); })(90));
+    this.bg_2.flipY = true;
 
     this.cvn.image = this.add.image(this.cvn.relativeX, this.cvn.relativeY - 1200, "cvn-96");
     this.cvn.image.setRotation(-82 * (Math.PI / 180.0) + 90 * (Math.PI / 180.0));
@@ -106,6 +112,17 @@ class LandingScene extends GameScene {
         this.nextScene = "missionSelectScene";
       }
     }
+
+    if (this.bg_1.y > DISPLAY_HEIGHT * 1.5 ) {
+      this.bg_1.y = this.bg_2.y;
+      this.bg_1.flipY = this.bg_1.flipY ? false : true;
+      this.bg_2.flipY = this.bg_1.flipY ? false : true;
+    }
+    else {
+      this.bg_1.y += (this.eventNum == 0 ? 5 : this.acceleration);
+    }
+    this.bg_2.y = this.bg_1.y - DISPLAY_HEIGHT;
+
     super.update();
   }
 
