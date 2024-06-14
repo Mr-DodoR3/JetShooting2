@@ -23,8 +23,6 @@ class BulletObj extends Phaser.GameObjects.Image {
     this.var_r53_2 = 0;
 
     this.collision_active = true;
-  
-    this.setDepth(50);
   }
 
   colliderSet(size=24) {
@@ -45,23 +43,35 @@ class BulletObj extends Phaser.GameObjects.Image {
     }
   }
 
-  create(x, y, d, tag) {
+  create(x, y, d, tag, layer, img="default") {
     this.setActive(true);
     this.setVisible(true);
+    this.setDepth(layer);
 
     this.tag = tag;
     this.setX(x);
     this.setY(y);
     this.setRotation(this.rad(d));
     this.deg = d;
-    for (let i = 0; i < WEAPON_DATA.length; i++) {
-      if (tag == WEAPON_DATA[i].tag) {
-        this.type = i;
-        this.power = WEAPON_DATA[i].power;
+
+    if (tag.substr(0, 2) == "e_") {
+      for (let i = 0; i < ENEMY_WEAPON_DATA.length; i++) {
+        if (tag == "e_" + ENEMY_WEAPON_DATA[i].tag) {
+          this.type = i;
+          this.power = ENEMY_WEAPON_DATA[i].power;
+        }
+      }
+    }
+    else {
+      for (let i = 0; i < WEAPON_DATA.length; i++) {
+        if (tag == WEAPON_DATA[i].tag) {
+          this.type = i;
+          this.power = WEAPON_DATA[i].power;
+        }
       }
     }
     
-    let img_tag = tag;
+    let img_tag = img == "default" ? tag : img;
     if (img_tag.substr(0, 2) == "e_") {
       img_tag = img_tag.substr(2, img_tag.length);
     }
@@ -214,6 +224,7 @@ class BulletObj extends Phaser.GameObjects.Image {
         this.setY(this.y - 12);
         break;
       case "e_m601":
+      case "e_m601b":
         this.setX(this.xForward(5));
         this.setY(this.yForward(5));
         break;

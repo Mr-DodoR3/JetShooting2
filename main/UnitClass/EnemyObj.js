@@ -15,12 +15,13 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.type = 0;
       this.del = false;
       this.tag = "";
+      this.weapon = "";
       this.reload = 0;
-      this.reload_time = 60;
+      this.RELOAD_TIME = 60;
       this.burst_reload = 0;
-      this.burst_reload_time = -1;
+      this.BURST_RELOAD_TIME = -1;
       this.burst = 0;
-      this.burst_now = 0;
+      this.burst_counter = 0;
   
       this.hp = 100;
   
@@ -82,20 +83,27 @@ class EnemyObj extends Phaser.GameObjects.Container {
           this.tag = tag;
           this.hp = ENEMY_DATA[i].hp;
           this.type = ENEMY_DATA[i].attribute;
-          let continued_num = 0;
-          let continued_name = "";
+          
+          this.weapon = ENEMY_DATA[i].weapon;
+          this.reload = 0;
+          this.burst_reload = 0;
+          this.burst_counter = 0;
+          for (let j = 0; j < ENEMY_WEAPON_DATA.length; j++) {
+            if (ENEMY_WEAPON_DATA[j].tag == this.weapon) {
+              if (ENEMY_WEAPON_DATA[j].burst > 1) {
+                this.burst = ENEMY_WEAPON_DATA[j].burst;
+                this.BURST_RELOAD_TIME = ENEMY_WEAPON_DATA[j].burst_reload;
+              }
+              break;
+            }
+          }
+          
           for (let j = 0; j < ENEMY_DATA[i].parts.length; j++) {
-            if (continued_name == ENEMY_DATA[i].parts[j]) {
-              continued_num++;
-            }
-            else {
-              continued_name = ENEMY_DATA[i].parts[j];
-              continued_num = 0;
-            }
             const part = this.parts.get();
-            part.create(ENEMY_DATA[i].parts[j], continued_num);
+            part.create(ENEMY_DATA[i].parts[j], j);
             this.add(part);
           }
+
           if (ENEMY_DATA[i].importance == "boss") {
             this.boss = true;
           }
@@ -241,16 +249,32 @@ class EnemyObj extends Phaser.GameObjects.Container {
   
     shot() {
       let shot_data = [];
-      if (this.reload_time < this.reload) {
-        switch(this.tag) {
-          case "iac1":
-            shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
-            break;
-          case "yig21":
-            shot_data.push({tag: "e_m601", x: this.x, y: this.y, deg: this.deg});
-            break;
+      if (this.RELOAD_TIME < this.reload) {
+        if ((this.burst < 2) || (this.BURST_RELOAD_TIME < this.burst_reload)) {
+          const tag = "e_" + this.weapon;
+          switch (this.weapon) {
+            case "m601":
+              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: 39, img: tag});
+              break;
+            case "m601b":
+              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: 39, img: "m601"});
+              break;
+          }
+          if (this.burst > 1) {
+            this.burst_counter++;
+            this.burst_reload = 0;
+            if (this.burst_counter >= this.burst) {
+              this.burst_counter = 0;
+              this.reload = 0;
+            }
+          }
+          else {
+            this.reload = 0;
+          }
         }
-        this.reload = 0;
+        else if (this.burst > 1) {
+          this.burst_reload++;
+        }
       }
       else {
         this.reload++;

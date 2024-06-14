@@ -71,6 +71,7 @@ class Title extends GameScene {
       this.load.image("ab", "assets/images/augmentor.png");
   
       this.load.image("background_sae", "assets/images/background/" + "sae_2.png");
+      this.load.image("background_land_1", "assets/images/background/" + "land_1.png");
   
       // GameScene
       for (let i = 0; i < WEAPON_DATA.length; i++) {

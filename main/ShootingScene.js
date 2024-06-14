@@ -250,7 +250,7 @@ class ShootingScene extends GameScene {
 
   constructor () {
     super("shootingScene");
-    this.enemyDebugMode = false;
+    this.ENEMYDEBUGMODE = false;
 
     this.graphics;
     this.rect;
@@ -301,10 +301,10 @@ class ShootingScene extends GameScene {
     this.boss_text.setup(this);
     this.clear_text.setup(this);
 
-    this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_sae");
+    this.bg_1 = this.add.image(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "background_" + MISSION_DATA[selectMission][0].map);
     this.bg_1.scaleX = this.bg_1.scaleX * 2;
     this.bg_1.scaleY = this.bg_1.scaleY * 2;
-    this.bg_2 = this.add.image(DISPLAY_WIDTH / 2, -DISPLAY_HEIGHT / 2, "background_sae");
+    this.bg_2 = this.add.image(DISPLAY_WIDTH / 2, -DISPLAY_HEIGHT / 2, "background_" + MISSION_DATA[selectMission][0].map);
     this.bg_2.scaleX = this.bg_2.scaleX * 2;
     this.bg_2.scaleY = this.bg_2.scaleY * 2;
     this.bg_2.flipY = true;
@@ -466,11 +466,9 @@ class ShootingScene extends GameScene {
 
     // this.ucav = this.add.ucav(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, "ucav");
     
-    if (this.enemyDebugMode) {
-      // this.enemy = this.enemys.get();
-      // this.enemy.create("yig21", 4);
-      // this.enemy.create("turbulence", -1);
-      // this.enemy.create("fs35", -1, true);
+    if (this.ENEMYDEBUGMODE) {
+      this.enemy = this.enemys.get();
+      this.enemy.create("yig29", 0, true);
     }
   };
 
@@ -583,7 +581,7 @@ class ShootingScene extends GameScene {
         else {
           damage = 0;
         }
-  
+
         let returnData = enemy.damage(damage);
         if (!(returnData == -1)) {
           ab_get += 20;
@@ -832,14 +830,14 @@ class ShootingScene extends GameScene {
         }
       }
   
-      if (!this.enemyDebugMode) this.enemyPrefab();
+      if (!this.ENEMYDEBUGMODE) this.enemyPrefab();
       this.enemys.getChildren().forEach(e => {
         e.playerPos = this.player.getPositionData();
   
         e.shot().forEach(shot_type => {
           const bullet = this.enemyBullets.get();
           if (bullet) {
-            bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag);
+            bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag, shot_type.layer, shot_type.img);
           }
         });
       });
