@@ -53,7 +53,28 @@ const MISSION_DATA = [
     { tag: "yig21", pieces: 1, action_type: 3, interval: 0, sleep: 0, repletion: "" },
     { tag: "yig21", pieces: 1, action_type: 4, interval: 0, sleep: 90, repletion: "" },
     { tag: "yig21", pieces: 1, action_type: 3, interval: 0, sleep: 0, repletion: "" },
-    { tag: "yig21", pieces: 1, action_type: 4, interval: 0, sleep: 90, repletion: "" }
+    { tag: "yig21", pieces: 1, action_type: 4, interval: 0, sleep: 120, repletion: "" },
+    { tag: "t63", pieces: 1, action_type: [680, 0], interval: 0, sleep: 45, repletion: "" },
+    { tag: "m543", pieces: 1, action_type: 5, interval: 0, sleep: 15, repletion: "" },
+    { tag: "t63", pieces: 1, action_type: [480, 0], interval: 0, sleep: 45, repletion: "" },
+    { tag: "m543", pieces: 1, action_type: 5, interval: 0, sleep: 15, repletion: "" },
+    { tag: "t63", pieces: 1, action_type: [280, 0], interval: 0, sleep: 45, repletion: "" },
+    { tag: "m543", pieces: 1, action_type: 5, interval: 0, sleep: 90, repletion: "" },
+    { tag: "yig29", pieces: 3, action_type: 0, interval: 45, sleep: 180, repletion: "" },
+    { tag: "iac1", pieces: 3, action_type: 2, interval: 45, sleep: 60, repletion: "" },
+    { tag: "m543", pieces: 1, action_type: 5, interval: 0, sleep: 0, repletion: "" },
+    { tag: "m543", pieces: 1, action_type: 6, interval: 0, sleep: 180, repletion: "" },
+    { tag: "m543", pieces: 1, action_type: 5, interval: 0, sleep: 0, repletion: "" },
+    { tag: "m543", pieces: 1, action_type: 6, interval: 0, sleep: 0, repletion: "" },
+    { tag: "yig29", pieces: 3, action_type: 1, interval: 45, sleep: 180, repletion: "" },
+    { tag: "m543", pieces: 2, action_type: 5, interval: 45, sleep: 0, repletion: "" },
+    { tag: "m543", pieces: 2, action_type: 6, interval: 45, sleep: 90, repletion: "" },
+    { tag: "yig21", pieces: 1, action_type: 3, interval: 0, sleep: 0, repletion: "" },
+    { tag: "yig21", pieces: 1, action_type: 4, interval: 0, sleep: 90, repletion: "" },
+    { tag: "yig21", pieces: 1, action_type: 3, interval: 0, sleep: 0, repletion: "" },
+    { tag: "yig21", pieces: 1, action_type: 4, interval: 0, sleep: 90, repletion: "" },
+    { tag: "yig21", pieces: 1, action_type: 3, interval: 0, sleep: 0, repletion: "" },
+    { tag: "turbulence", pieces: 1, action_type: 1000, interval: 0, sleep: 180, repletion: "boss" }
   ],
 
   // stage 3
@@ -435,6 +456,30 @@ const ENEMY_WEAPON_DATA = [
     reload: 60,
     burst: 6,
     burst_reload: 10
+  },
+  {
+    tag: "rb88",
+    img: "rb88",
+    power: 40,
+    reload: 90,
+    burst: 2,
+    burst_reload: 5
+  },
+  {
+    tag: "gs60",
+    img: "gs60",
+    power: 60,
+    reload: 45,
+    burst: 0,
+    burst_reload: 0
+  },
+  {
+    tag: "eml12",
+    img: "eml12",
+    power: 60,
+    reload: 120,
+    burst: 0,
+    burst_reload: 0
   }
 ]
 
@@ -754,7 +799,8 @@ const ENEMY_DATA = [
     attribute: "air",
     hp: 90,
     score: 100,
-    parts: [ ]
+    parts: [ ],
+    weapon: "rb88"
   },
   {
     tag: "ea314",
@@ -797,7 +843,7 @@ const ENEMY_DATA = [
     score: 100,
     stealth: false,
     parts: [ ],
-    weapon: "m601b"
+    weapon: "gs60"
   },
   {
     tag: "yig35",
@@ -832,8 +878,11 @@ const ENEMY_DATA = [
     name_jp: "",
     importance: "nomal",
     attribute: "air",
+    hp: 100,
+    score: 100,
     stealth: false,
-    parts: [ ]
+    parts: [ ],
+    weapon: "gs60"
   },
   {
     tag: "ck1",      // F-CK-1
@@ -843,6 +892,73 @@ const ENEMY_DATA = [
     attribute: "air",
     stealth: false,
     parts: [ ]
+  },
+
+  {
+    tag: "t63",   // T-64
+    serial: "T-63B",
+    name_jp: "",
+    importance: "nomal",
+    attribute: "grd",
+    hp: 150,
+    score: 100,
+    parts: [ "t63_gun" ],
+    weapon: "none"
+  },
+  {
+    tag: "blitz",   // レオパルト2
+    serial: "BlitzⅡ",
+    name_jp: "",
+    importance: "nomal",
+    attribute: "grd",
+    hp: 300,
+    score: 150,
+    parts: [ "" ],
+    weapon: "none"
+  },
+  {
+    tag: "nelke",   // ゲパルト
+    serial: "nelke",
+    name_jp: "",
+    importance: "nomal",
+    attribute: "grd",
+    hp: 80,
+    score: 100,
+    parts: [ "" ],
+    weapon: "none"
+  },
+  {
+    tag: "mi23",   // MIM-23
+    serial: "MI-23",
+    name_jp: "",
+    importance: "nomal",
+    attribute: "grd",
+    hp: 50,
+    score: 150,
+    parts: [ "" ],
+    weapon: "none"
+  },
+  {
+    tag: "mishmaru",   // アイアンドーム
+    serial: "mishmaru",
+    name_jp: "",
+    importance: "nomal",
+    attribute: "grd",
+    hp: 50,
+    score: 150,
+    parts: [ "" ],
+    weapon: "none"
+  },
+  {
+    tag: "dragonFlame",   // ドラゴンファイア
+    serial: "DragonFlame",
+    name_jp: "",
+    importance: "nomal",
+    attribute: "grd",
+    hp: 50,
+    score: 150,
+    parts: [ "" ],
+    weapon: "none"
   },
 
   {

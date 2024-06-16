@@ -5,6 +5,7 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
     this.deg = 0;
     this.type = 0;
     this.del = false;
+    this.layer = 0;
     this.tag = "";
     this.weapon = "none";
     this.reload = 0;
@@ -21,7 +22,7 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
 
     this.reciprocating = 0;
     this.rotation_speed = 0;
-    this.parentPos = { x: 0, y: 0 };
+    this.parentPos = { x: 0, y: 0, deg: 0 };
   
     this.playerPos = { x: 0, y: 0 };
   }
@@ -55,7 +56,7 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
         
         this.rotation_speed = 1;
         this.deg = 270;
-        if (num == 0) {
+        if (num == 1) {
           this.setX(0);
           this.setY(0);
         }
@@ -63,6 +64,17 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
           this.setX(0);
           this.setY(90);
         }
+        break;
+
+      case "t63_gun":
+        this.setTexture(tag);
+
+        this.weapon = "eml12";
+        this.rotation_speed = 0.5;
+        break;
+
+      default:
+        this.setTexture(tag);
         break;
     }
     
@@ -82,7 +94,15 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
 
   create(tag, num=0) {
     this.tag = tag;
-    this.setDepth(42);
+    switch (tag) {
+      case "t63_gun":
+        this.layer = 32;
+        break;
+      default:
+        this.layer = 42;
+        break;
+    }
+    this.setDepth(this.layer);
     this.createSetup(tag, num);
     this.colliderSet();
   }
@@ -109,10 +129,14 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
     let shot_data = [];
     if (this.RELOAD_TIME < this.reload) {
       if ((this.burst < 2) || (this.BURST_RELOAD_TIME < this.burst_reload)) {
+        const tag = "e_" + this.weapon;
         switch (this.tag) {
           case "turbulence_gun":
-            shot_data.push({tag: "e_m601b", x: this.x + this.yForward(-5), y: this.y + this.xForward(5), deg: this.deg, layer: 41, img: "m601"});
-            shot_data.push({tag: "e_m601b", x: this.x + this.yForward(5), y: this.y + this.xForward(-5), deg: this.deg, layer: 41, img: "m601"});
+            shot_data.push({tag: "e_m601b", x: this.x + this.yForward(-5), y: this.y + this.xForward(5), deg: this.deg, layer: this.layer - 1, img: "m601"});
+            shot_data.push({tag: "e_m601b", x: this.x + this.yForward(5), y: this.y + this.xForward(-5), deg: this.deg, layer: this.layer - 1, img: "m601"});
+            break;
+          default:
+            shot_data.push({tag: tag, x: this.x + this.yForward(-5), y: this.y + this.xForward(5), deg: this.deg, layer: this.layer - 1, img: tag});
             break;
         }
         if (this.burst > 1) {
@@ -181,6 +205,7 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
   }
 
   update() {
+    const landSetRotation = () => { this.setRotation(this.rad(this.deg - (this.parentPos.deg - 90))); }
     switch(this.tag) {
       case "ea314_propeller":
       case "turbulence_propeller":
@@ -196,6 +221,10 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
       case "turbulence_gun":
         this.deg = this.rotate_target(this.playerPos.x, this.playerPos.y);
         this.setRotation(this.rad(this.deg));
+        break;
+      case "t63_gun":
+        this.deg = this.rotate_target(this.playerPos.x, this.playerPos.y);
+        landSetRotation();
         break;
     }
   }

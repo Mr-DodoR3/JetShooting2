@@ -10,7 +10,7 @@ class Radar {
       this.setTexture(type + "_symbol");
       this.setX(Math.round(x / 640 * 96) - 48);
       this.setY(Math.round(y / 640 * 96) - 48);
-      this.setRotation(this.rad(d));
+      if (type == "air") this.setRotation(this.rad(d));
 
       if (type == "tgt") {
         this.setDepth(103);

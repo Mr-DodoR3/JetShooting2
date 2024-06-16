@@ -167,7 +167,6 @@ class ShootingScene extends GameScene {
   boss_text = new class {
     constructor() {
       this.disp = false;
-      this.life_time = 0;
       this.img = null;
       this.now_size = { w: null, h: null };
       this.default_size = { w: null, h: null };
@@ -184,6 +183,7 @@ class ShootingScene extends GameScene {
 
     start() {
       this.disp = true;
+      this.life_time = 0;
       this.now_size.w = 0.5;
       this.now_size.h = 0.5;
     }
@@ -468,7 +468,7 @@ class ShootingScene extends GameScene {
     
     if (this.ENEMYDEBUGMODE) {
       this.enemy = this.enemys.get();
-      this.enemy.create("yig29", 0, true);
+      this.enemy.create("t63", [400, 180], true);
     }
   };
 
@@ -782,7 +782,7 @@ class ShootingScene extends GameScene {
       else if (this.enemyDelta > MISSION_DATA[selectMission][this.enemyProgress].interval) {
         const enemy = this.enemys.get();
         if (enemy) {
-          enemy.create(MISSION_DATA[selectMission][this.enemyProgress].tag, MISSION_DATA[selectMission][this.enemyProgress].action_type, this.player.skil.stealth);
+          enemy.create(MISSION_DATA[selectMission][this.enemyProgress].tag, MISSION_DATA[selectMission][this.enemyProgress].action_type, this.player.skil.stealth, this.bg_speed);
         }
         this.enemyDelta = 0;
         this.enemyCount++;
@@ -835,9 +835,11 @@ class ShootingScene extends GameScene {
         e.playerPos = this.player.getPositionData();
   
         e.shot().forEach(shot_type => {
-          const bullet = this.enemyBullets.get();
-          if (bullet) {
-            bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag, shot_type.layer, shot_type.img);
+          if (!(shot_type.tag == "none" || shot_type.tag == "e_none")) {
+            const bullet = this.enemyBullets.get();
+            if (bullet) {
+              bullet.create(shot_type.x, shot_type.y, shot_type.deg, shot_type.tag, shot_type.layer, shot_type.img);
+            }
           }
         });
       });

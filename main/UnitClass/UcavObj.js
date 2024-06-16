@@ -79,7 +79,7 @@ class UcavObj extends Phaser.GameObjects.Image {
       const pos = { x: x, y: y }
       this.position_log.push(pos);
 
-      console.log(this.position_log)
+      // console.log(this.position_log)
     }
   }
 }

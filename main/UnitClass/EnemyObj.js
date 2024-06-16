@@ -34,7 +34,7 @@ class EnemyObj extends Phaser.GameObjects.Container {
   
       this.playerPos = { x: 0, y: 0 };
 
-      this.setDepth(40);
+      this.setDepth(30);
     }
   
     colliderSet(tag) {
@@ -73,8 +73,19 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.unit_image = this.add(image);
     }
   
-    create(tag, action, irst = false) {
-      this.action_type = action;
+    create(tag, action, irst=false, bg_speed=1) {
+      this.setRotate = true;
+      this.bg_speed = bg_speed;
+
+      if (action.length == undefined) {
+        this.action_type = action;
+      }
+      else if (action.length == 2) {
+        this.action_type = action;
+        this.x = action[0];
+        this.y = -32;
+        this.deg = action[1];
+      }
   
       this.createImage(tag);
       for (let i = 0; i < ENEMY_DATA.length; i++) {
@@ -132,6 +143,22 @@ class EnemyObj extends Phaser.GameObjects.Container {
     }
   
     action() {
+      if (this.action_type.length == undefined) {
+        this.airUnitAction();
+      }
+      else {
+        this.landUnitAction();
+      }
+    }
+
+    landUnitAction() {
+      this.setY(this.y + this.bg_speed);
+      if (this.y > 832) {
+        this.destroy();
+      }
+    }
+
+    airUnitAction() {
       switch (this.action_type) {
         case 0:
           if (this.life_time == 0) {
@@ -216,6 +243,38 @@ class EnemyObj extends Phaser.GameObjects.Container {
             this.destroy();
           }
           break;
+        case 5:
+          if (this.life_time == 0) {
+            this.setRotate = false;
+            this.setX(128);
+            this.setY(480);
+            this.deg = 0;
+          }
+          else if (this.y > -32) {
+            this.setX(this.xForward(2.5));
+            this.setY(this.yForward(2.5));
+            this.deg += 0.5;
+          }
+          else {
+            this.destroy();
+          }
+          break;
+        case 6:
+          if (this.life_time == 0) {
+            this.setRotate = false;
+            this.setX(832);
+            this.setY(480);
+            this.deg = 180;
+          }
+          else if (this.y > -32) {
+            this.setX(this.xForward(2.5));
+            this.setY(this.yForward(2.5));
+            this.deg -= 0.5;
+          }
+          else {
+            this.destroy();
+          }
+          break;
         case 1000:
           if (this.life_time == 0) {
             this.setX(600);
@@ -253,12 +312,11 @@ class EnemyObj extends Phaser.GameObjects.Container {
         if ((this.burst < 2) || (this.BURST_RELOAD_TIME < this.burst_reload)) {
           const tag = "e_" + this.weapon;
           switch (this.weapon) {
-            case "m601":
-              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: 39, img: tag});
-              break;
             case "m601b":
               shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: 39, img: "m601"});
               break;
+            default:
+              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: 39, img: tag});
           }
           if (this.burst > 1) {
             this.burst_counter++;
@@ -293,11 +351,11 @@ class EnemyObj extends Phaser.GameObjects.Container {
   
     update() {
       this.action();
-      this.setRotation(this.rad(this.deg));
+      if (this.setRotate) this.setRotation(this.rad(this.deg));
       this.life_time++;
       
       this.parts.getChildren().forEach(e => {
-        e.parentPos = { x: this.x, y: this.y };
+        e.parentPos = { x: this.x, y: this.y, deg: this.deg };
         e.playerPos = this.playerPos;
       });
     }

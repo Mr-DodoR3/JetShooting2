@@ -225,8 +225,16 @@ class BulletObj extends Phaser.GameObjects.Image {
         break;
       case "e_m601":
       case "e_m601b":
+      case "e_rb88":
         this.setX(this.xForward(5));
         this.setY(this.yForward(5));
+        break;
+      case "e_eml12":
+        this.setX(this.xForward(12));
+        this.setY(this.yForward(12));
+        break;
+      case "e_gs60":
+        this.setY(this.y + 4);
         break;
     }
 
