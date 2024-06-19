@@ -529,8 +529,8 @@ const UNIT_DATA = [
   {
     tag: "xfs23",
     serial: "FS-23A",
-    name: "Rapier",
-    name_jp: "レイピア",
+    name: "BlackGhost",
+    name_jp: "ブラックゴースト",
     explanation: "ステルス性や超音速巡航性能などの最新機能を備えた高性能戦闘機です。",
     type: "fighter",
     spec: [9, 2, 5],
@@ -725,8 +725,8 @@ const UNIT_DATA = [
   // {
   //   tag: "fi22n",
   //   serial: "FI-22N",
-  //   name: "SilentCat",
-  //   name_jp: "サイレントキャット",
+  //   name: "Rapier",
+  //   name_jp: "レイピア",
   //   explanation: "可変翼を備え、高い運動性能と速度性能を兼ね備えた試作ステルス戦闘機です。",
   //   type: "prototype",
   //   spec: [0, 0, 0],
@@ -924,18 +924,7 @@ const ENEMY_DATA = [
     attribute: "grd",
     hp: 80,
     score: 100,
-    parts: [ "" ],
-    weapon: "none"
-  },
-  {
-    tag: "mi23",   // MIM-23
-    serial: "MI-23",
-    name_jp: "",
-    importance: "nomal",
-    attribute: "grd",
-    hp: 50,
-    score: 150,
-    parts: [ "" ],
+    parts: [ "nelke_gun" ],
     weapon: "none"
   },
   {
@@ -946,7 +935,7 @@ const ENEMY_DATA = [
     attribute: "grd",
     hp: 50,
     score: 150,
-    parts: [ "" ],
+    parts: [ "mishmaru_rack" ],
     weapon: "none"
   },
   {
@@ -957,7 +946,7 @@ const ENEMY_DATA = [
     attribute: "grd",
     hp: 50,
     score: 150,
-    parts: [ "" ],
+    parts: [ "dragonFlame_cannon" ],
     weapon: "none"
   },
 

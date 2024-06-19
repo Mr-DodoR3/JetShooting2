@@ -10,9 +10,9 @@ class EnemyObj extends Phaser.GameObjects.Container {
       this.unit_image = null;
 
       this.score = 0;
+      this.layer = 30;
 
       this.deg = 0;
-      this.type = 0;
       this.del = false;
       this.tag = "";
       this.weapon = "";
@@ -111,7 +111,7 @@ class EnemyObj extends Phaser.GameObjects.Container {
           
           for (let j = 0; j < ENEMY_DATA[i].parts.length; j++) {
             const part = this.parts.get();
-            part.create(ENEMY_DATA[i].parts[j], j);
+            part.create(ENEMY_DATA[i].parts[j], j, this.type);
             this.add(part);
           }
 
@@ -122,6 +122,15 @@ class EnemyObj extends Phaser.GameObjects.Container {
             this.stealth = ENEMY_DATA[i].stealth;
           }
         }
+      }
+
+      switch (this.type) {
+        case "grd":
+          this.layer = 30;
+          break;
+        default:
+          this.layer = 40;
+          break;
       }
       
       this.createSetup(tag);
@@ -313,10 +322,10 @@ class EnemyObj extends Phaser.GameObjects.Container {
           const tag = "e_" + this.weapon;
           switch (this.weapon) {
             case "m601b":
-              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: 39, img: "m601"});
+              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: this.layer - 1, img: "m601"});
               break;
             default:
-              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: 39, img: tag});
+              shot_data.push({tag: tag, x: this.x, y: this.y, deg: this.deg, layer: this.layer - 1, img: tag});
           }
           if (this.burst > 1) {
             this.burst_counter++;

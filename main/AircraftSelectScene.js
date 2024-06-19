@@ -177,6 +177,7 @@ class AircraftSelectScene extends GameScene {
       if (UNIT_DATA[this.selectAircraft].type == "interceptor") txt = "迎撃機:時限強化時に威力の補正が付きます。";
       if (UNIT_DATA[this.selectAircraft].type == "bomber") txt = "爆撃機:ボスに対して威力の補正が付きます。";
       if (UNIT_DATA[this.selectAircraft].type == "trainer") txt = "練習機:威力の補正はありません。";
+      if (UNIT_DATA[this.selectAircraft].type == "prototype") txt = "試験機:威力補正がない代わり、固有スキルを有しています。";
       // const txt = UNIT_DATA[this.selectAircraft].type == "fighter" ? "戦闘機:対空目標に対して威力の補正が付きます。";
       this.selectEx = txt;
     }

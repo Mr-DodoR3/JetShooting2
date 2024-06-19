@@ -3,7 +3,6 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
     super(scene, 0, 0, "");
 
     this.deg = 0;
-    this.type = 0;
     this.del = false;
     this.layer = 0;
     this.tag = "";
@@ -73,6 +72,13 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
         this.rotation_speed = 0.5;
         break;
 
+      case "nelke_gun":
+        this.setTexture(tag);
+
+        this.weapon = "m601b";
+        this.rotation_speed = 1;
+        break;
+
       default:
         this.setTexture(tag);
         break;
@@ -92,16 +98,20 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
     }
   }
 
-  create(tag, num=0) {
+  create(tag, num=0, type) {
     this.tag = tag;
-    switch (tag) {
-      case "t63_gun":
+    this.type = type;
+    
+    switch (type) {
+      case "grd":
         this.layer = 32;
         break;
       default:
         this.layer = 42;
         break;
     }
+    console.log("parts"+this.layer)
+    
     this.setDepth(this.layer);
     this.createSetup(tag, num);
     this.colliderSet();
@@ -132,6 +142,7 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
         const tag = "e_" + this.weapon;
         switch (this.tag) {
           case "turbulence_gun":
+          case "nelke_gun":
             shot_data.push({tag: "e_m601b", x: this.x + this.yForward(-5), y: this.y + this.xForward(5), deg: this.deg, layer: this.layer - 1, img: "m601"});
             shot_data.push({tag: "e_m601b", x: this.x + this.yForward(5), y: this.y + this.xForward(-5), deg: this.deg, layer: this.layer - 1, img: "m601"});
             break;
@@ -223,6 +234,7 @@ class EnemyPartsObj extends Phaser.GameObjects.Image {
         this.setRotation(this.rad(this.deg));
         break;
       case "t63_gun":
+      case "nelke_gun":
         this.deg = this.rotate_target(this.playerPos.x, this.playerPos.y);
         landSetRotation();
         break;

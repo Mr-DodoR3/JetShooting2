@@ -250,7 +250,7 @@ class ShootingScene extends GameScene {
 
   constructor () {
     super("shootingScene");
-    this.ENEMYDEBUGMODE = false;
+    this.ENEMYDEBUGMODE = true;
 
     this.graphics;
     this.rect;
@@ -468,7 +468,7 @@ class ShootingScene extends GameScene {
     
     if (this.ENEMYDEBUGMODE) {
       this.enemy = this.enemys.get();
-      this.enemy.create("t63", [400, 180], true);
+      this.enemy.create("nelke", [400, 180], true);
     }
   };
 

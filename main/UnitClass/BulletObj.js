@@ -46,6 +46,7 @@ class BulletObj extends Phaser.GameObjects.Image {
   create(x, y, d, tag, layer, img="default") {
     this.setActive(true);
     this.setVisible(true);
+    
     this.setDepth(layer);
 
     this.tag = tag;

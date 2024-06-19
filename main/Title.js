@@ -47,7 +47,6 @@ class Title extends GameScene {
         this.load.image(UNIT_DATA[i].tag, "assets/images/player/" + UNIT_DATA[i].tag +".png");
         for (let j = 0; j < UNIT_DATA[i].skil.length; j++) {
           if (UNIT_DATA[i].skil[j] == "swingwing") {
-            this.load.image(UNIT_DATA[i].tag + "_2", "assets/images/player/" + UNIT_DATA[i].tag +"_2.png");
             this.load.image(UNIT_DATA[i].tag + "_body", "assets/images/player/" + UNIT_DATA[i].tag +"_body.png");
             this.load.image(UNIT_DATA[i].tag + "_wing", "assets/images/player/" + UNIT_DATA[i].tag +"_wing.png");
           }
@@ -55,7 +54,7 @@ class Title extends GameScene {
       }
       this.load.image("amq28", "assets/images/amq28.png");
   
-      let unittype_temp = ["fighter", "attacker", "multirole", "interceptor", "bomber", "trainer"];
+      let unittype_temp = ["fighter", "attacker", "multirole", "interceptor", "bomber", "trainer", "prototype"];
       for (let i = 0; i < unittype_temp.length; i++) {
         this.load.image("unittype_" + unittype_temp[i], "assets/images/unittype_" + unittype_temp[i] + ".png");
       }
@@ -96,6 +95,9 @@ class Title extends GameScene {
       this.load.image("turbulence_propeller_l", "assets/images/parts/turbulence_propeller_l.png");
       this.load.image("turbulence_gun", "assets/images/parts/turbulence_gun.png");
       this.load.image("t63_gun", "assets/images/parts/t63_gun.png");
+      this.load.image("nelke_gun", "assets/images/parts/nelke_gun.png");
+      this.load.image("mishmaru_rack", "assets/images/parts/mishmaru_rack.png");
+      this.load.image("dragonFlame_cannon", "assets/images/parts/dragonFlame_cannon.png");
   
       this.load.image("flare_obj", "assets/images/flare.png");
       this.load.image("flare_obj", "assets/images/flare.png");
